@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 #include <iomanip>
 #include <conio.h>
@@ -56,11 +57,23 @@ void Moore::setAbsPosition(pos target)
 	std::thread yt(&Asse::setPosition, &Yaxis, target.y);
 	std::thread zt(&Asse::setPosition, &Zaxis, target.z);
 	
+=======
+#include "Moore.h"
+#include "Asse.h"
+
+void Moore::setCurrentPosition(float x, float y, float z)
+{
+	xt = std::thread(Xaxis.setPosition, x);
+	yt = std::thread(Yaxis.setPosition, y);
+	zt = std::thread(Zaxis.setPosition, z);
+
+>>>>>>> ab36b7f (Added moore class for movement)
 	xt.join();
 	yt.join();
 	zt.join();
 }
 
+<<<<<<< HEAD
 void Moore::updatePosition()
 {
 	abs.x = this->Xaxis.getPosition();
@@ -137,3 +150,31 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 	Xaxis.stopMeasure(); // mi fermo
 	if (track) t.join();
 }
+=======
+void Moore::setAxes(Asse x, Asse y, Asse z)
+{
+	Xaxis = x;
+	Yaxis = y;
+	Zaxis = z;
+}
+
+void Moore::startProcess()
+{
+	 t = std::thread(&Moore::process, this);
+}
+
+void Moore::stopProcess()
+{
+	t.detach();
+}
+
+void Moore::process()
+{
+	while (true)
+	{
+		currentPos.x = Xaxis.getPosition();
+		currentPos.y = Yaxis.getPosition();
+		currentPos.z = Zaxis.getPosition();
+	}
+}
+>>>>>>> ab36b7f (Added moore class for movement)
