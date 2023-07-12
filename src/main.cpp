@@ -7,6 +7,7 @@
 #include "Asse.h"
 #include "CHRocodile.h"
 #include "IkOptical.h"
+#include "Moore.h"
 
 void connectMicro(SimpleSerial& ser);
 void check(CHRocodile* CHR);
@@ -23,7 +24,7 @@ int main()
 
 		CHRocodile CHR;
 		Laser las;
-		IkOptical scale;
+		IkOptical scales;
 
 		asseX.init((PosInstr*) &las, ser, 'X');
 		asseY.init((PosInstr*) &CHR, ser, 'Y');
@@ -39,7 +40,7 @@ int main()
 			switch (com)
 			{
 			case 'o':
-				measScale(scale);
+				measScale(scales);
 				break;
 			case 'm':
 				std::cout << "Keep range control during movement? (y/n) ";

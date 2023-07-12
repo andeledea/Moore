@@ -12,10 +12,10 @@
 #define SIG_VPP 1
 
 struct HEIDparams
-	{
-		ULONG encoderType;
-		ULONG signalType;
-	};
+{
+	ULONG encoderType;
+	ULONG signalType;
+};
 
 class Scale : PosInstr
 {
