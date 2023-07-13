@@ -3,7 +3,7 @@
 #include <conio.h>
 #include "Scale.h"
 
-void Scale::setParams(ULONG encoderType = ENC_INCREMENTAL, ULONG signalType = SIG_11UA)
+void Scale::setParams(ULONG encoderType, ULONG signalType)
 {
 	if (!IK220WritePar(ax, 1, encoderType)) std::cout << "Error in writePar";
 	else std::cout << "Setting Encoder Type to incremental" << std::endl;
@@ -26,15 +26,9 @@ HEIDparams Scale::getParams()
 float Scale::readInstr()
 {
 	double	CntVal; // Counter value
-	while (!_kbhit())
-	{
-		if (!IK220Read48 (ax, 0, &CntVal))  std::cout << "Error: IK220Read48 card " << ax;	// Read counter value 
-		else printf ("Axis %d: %12.4f     ", ax, CntVal);
-		
-		printf ("\r");
-		Sleep (200);
-	}
-	_getch();
+	
+	if (!IK220Read48 (ax, 0, &CntVal))  
+		std::cout << "Error: IK220Read48 card " << ax;	// Read counter value 
 	return (float) CntVal;
 }
 

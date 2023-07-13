@@ -1,6 +1,9 @@
 #pragma once
 #include <thread>
 #include "Asse.h"
+#include "IkOptical.h"
+#include "Scale.h"
+#include "SimpleSerial.h"
 
 struct pos {
 	float x;
@@ -18,21 +21,16 @@ public:
 	float getY() { return currentPos.y; }
 	float getZ() { return currentPos.z; }
 
-	void setAxes(Asse x, Asse y, Asse z);
-
-	void startProcess();
-	void stopProcess();
+	void init();
 
 private:
+	SimpleSerial ser;
+
 	Asse Xaxis, Yaxis, Zaxis;
-
-	std::thread t;
-
+	
+	Laser las;
+	IkOptical ik;
+	Scale yScale, zScale;
+	
 	pos currentPos;
-
-	/*
-	Process used to loop read the position
-	of the Moore machine
-	*/
-	void process();
 };

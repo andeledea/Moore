@@ -65,13 +65,13 @@ void Asse::setPosition(float targetPosition)
 	float distance = abs(targetPosition - startP); //calcolo la dist totale
 	float travel = 0;
 
-	while (distance - travel > 0) // finchè non raggiungo il target
+	while (distance - travel > 0) // finchÃ¨ non raggiungo il target
 	{
-		setVelocity(distance, travel); //imposto la velocità istantanea
+		setVelocity(distance, travel); //imposto la velocitÃ  istantanea
 		travel = abs(instrPT->readInstr() - startP); //calcolo il percorso fatto
 	};
 	char s = 0;
-	ser.WriteSerialPort(&s, 1); // termino l'invio di velocità
+	ser.WriteSerialPort(&s, 1); // termino l'invio di velocitÃ 
 
 	this -> velocity = 0;
 	this -> lock(); // riblocco l'asse
@@ -113,7 +113,7 @@ Asse::~Asse()
 
 // private methods
 
-/* Calcola la velocità istantanea seguendo la rampa di
+/* Calcola la velocitÃ  istantanea seguendo la rampa di
    acc e dec. Con il parametro ramp e acc si possono settare
    durata e pendenza della rampa 
    DIST: total distance
@@ -137,9 +137,10 @@ void Asse::setVelocity(float dist, float trav)
 
 	if (velocity >= maxV) 
 		velocity = maxV;
-
-	char mapV = (char)velocity; // map della velocità
-
+	
+	char mapV = (char)velocity; // map della velocitÃ 
+	
+	ser.WriteSerialPort(&axisName);
 	ser.WriteSerialPort(&mapV, 1);
 }
 
@@ -179,12 +180,12 @@ void Asse::startMeasure(int v, bool d)
 	this->sendToMicro("V");
 
 	char val = (unsigned char)v;
-	ser.WriteSerialPort(&val, 1); //parto a velocità per la misura
+	ser.WriteSerialPort(&val, 1); //parto a velocitÃ  per la misura
 }
 
 void Asse::stopMeasure()
 {
 	char s = 0;
-	ser.WriteSerialPort(&s, 1); // termino l'invio di velocità
+	ser.WriteSerialPort(&s, 1); // termino l'invio di velocitÃ 
 	this->lock();
 }
