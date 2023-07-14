@@ -33,13 +33,16 @@ void Moore::init()
 	yScale = ik.getYscale();
 	zScale = ik.getZscale();
 	
+	yScale.setParams();
+	zScale.setParams();
+	
 	// INIT THE 3 AXIS
 	
 	Xaxis.init((PosInstr*) &las, ser, 'X');
 	Yaxis.init((PosInstr*) &yScale, ser, 'Y');
 	Zaxis.init((PosInstr*) &zScale, ser, 'Z');
 	
-	Xaxis.setRamp(1000, 25, 255, 15);
-	Yaxis.setRamp(1000, 25, 255, 15);
+	Xaxis.setRamp(500, 25, 255, 15);
+	Yaxis.setRamp(15, 25, 150, 15);
 	Zaxis.setRamp(2.0f, 180, 200, 5, inv_mov);
 }

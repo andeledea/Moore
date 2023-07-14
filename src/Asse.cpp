@@ -70,6 +70,7 @@ void Asse::setPosition(float targetPosition)
 		setVelocity(distance, travel); //imposto la velocità istantanea
 		travel = abs(instrPT->readInstr() - startP); //calcolo il percorso fatto
 	};
+	
 	char s = 0;
 	ser.WriteSerialPort(&s, 1); // termino l'invio di velocità
 
@@ -120,6 +121,7 @@ Asse::~Asse()
    TRAV: distance already done*/
 void Asse::setVelocity(float dist, float trav)
 {
+	unsigned int oldV = velocity;
 	if (trav < dist / 2) //accelerazione
 	{
 		velocity = (unsigned int) acceleration * trav;
@@ -138,10 +140,13 @@ void Asse::setVelocity(float dist, float trav)
 	if (velocity >= maxV) 
 		velocity = maxV;
 	
-	char mapV = (char)velocity; // map della velocità
+	if (velocity != oldV)
+	{
+		char mapV = (char)velocity; // map della velocità
 	
-	ser.WriteSerialPort(&axisName);
-	ser.WriteSerialPort(&mapV, 1);
+		char send[3] = {axisName, mapV};
+		ser.WriteSerialPort(send);
+	}
 }
 
 void Asse::sendToMicro(std::string toSend)

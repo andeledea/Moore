@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <direct.h>
+#include <conio.h>
 #include <cmath>
 
 #include "methods.h"
@@ -163,5 +164,12 @@ void measScale(IkOptical& scale)
 	Y.setParams();
 	Z.setParams();
 	
-	Y.readInstr();
+	float v;
+	while (!_kbhit())
+	{
+		v = Y.readInstr();
+		std::cout << v;
+		printf("\r");
+	}
+	_getch();
 }

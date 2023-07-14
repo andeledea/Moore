@@ -25,12 +25,15 @@ int main()
 		CHRocodile CHR;
 		Laser las;
 		IkOptical scales;
+		scales.connect();
+		Scale yScale = scales.getYscale();
+		yScale.setParams();
 
 		asseX.init((PosInstr*) &las, ser, 'X');
-		asseY.init((PosInstr*) &CHR, ser, 'Y');
+		asseY.init((PosInstr*) &yScale, ser, 'Y');
 
-		asseX.setRamp(1000, 25, 255, 15);
-		asseY.setRamp(2.0f, 180, 200, 5, inv_mov);
+		asseX.setRamp(500, 25, 255, 15);
+		asseY.setRamp(15, 25, 150, 15);
 
 		char com;
 		do
@@ -48,10 +51,10 @@ int main()
 				if (com == 'y')
 				{
 					std::thread checkCHR(check, &CHR); // avvio il controllo 
-					move(asseX);
+					move(asseY);
 					checkCHR.detach();
 				}
-				else move(asseX);
+				else move(asseY);
 				break;
 			case 's':
 				std::thread checkCHR(check, &CHR); // avvio il controllo 
@@ -65,6 +68,7 @@ int main()
 	{
 		lock_error(_e.what());
 	}
+	return 0;
 }
 
 void connectMicro(SimpleSerial& ser)
