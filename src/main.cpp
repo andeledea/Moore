@@ -9,106 +9,35 @@
 #include "IkOptical.h"
 #include "Moore.h"
 
-void connectMicro(SimpleSerial& ser);
-void check(CHRocodile* CHR);
-void lock_error(std::string err_msg);
-
-Asse asseX, asseY; // variabili globali, MEH
+void move(Moore& m);
 
 int main()
 {
-	try
-	{
-		SimpleSerial ser;
-		connectMicro(ser); // connessione per entrambi gli assi
-
-		CHRocodile CHR;
-		Laser las;
-		IkOptical scales;
-		scales.connect();
-		Scale yScale = scales.getYscale();
-		yScale.setParams();
-
-		asseX.init((PosInstr*) &las, ser, 'X');
-		asseY.init((PosInstr*) &yScale, ser, 'Y');
-
-		asseX.setRamp(500, 25, 255, 15);
-		asseY.setRamp(15, 25, 150, 15);
-
-		char com;
-		do
-		{
-			std::cout << "m: move, s: start measure, o: optical, q: quit" << std::endl;
-			std::cin >> com;
-			switch (com)
-			{
-			case 'o':
-				measScale(scales);
-				break;
-			case 'm':
-				std::cout << "Keep range control during movement? (y/n) ";
-				std::cin >> com;
-				if (com == 'y')
-				{
-					std::thread checkCHR(check, &CHR); // avvio il controllo 
-					move(asseY);
-					checkCHR.detach();
-				}
-				else move(asseY);
-				break;
-			case 's':
-				std::thread checkCHR(check, &CHR); // avvio il controllo 
-				measure(asseX, asseY, las, CHR);
-				checkCHR.detach();
-				break;
-			}
-		} while (com != 'q');
-	}
-	catch (std::runtime_error & _e)
-	{
-		lock_error(_e.what());
-	}
+	Moore moore;
+	moore.init();
+	
+	move(moore);
+	
 	return 0;
 }
 
-void connectMicro(SimpleSerial& ser)
+void move(Moore& m)
 {
-	char port[] = "COM5";
-	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
-	{
-		std::cout << "Asse connesso" << std::endl;
-	}
-	else
-	{
-		throw std::runtime_error("Unable to connect micro");
-	}
-}
+	std::cout << std::fixed << std::setw(11) << std::setprecision(6) << std::setfill('0');
+	
+	pos p = m.getCurrentPosition();
+	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 
-void check(CHRocodile* CHR)
-{
-	while (true)
-	{
-		while (CHR->cnt_check > 0)
-		{
-			Sleep(50);
-			CHR->cnt_check--;
-		}
-		try
-		{
-			CHR->readInstr();
-			// std::cout << "check OK" << std::endl;
-		}
-		catch (std::runtime_error & _e)
-		{
-			lock_error(_e.what());
-			exit(-2);
-		}
-	}
-}
-
-void lock_error(std::string err_msg)
-{
-	std::cerr << "Terminating: " << err_msg << std::endl;
-	asseX.stopMeasure(); //fermo i motori e li blocco
-	asseY.stopMeasure();
+	float xpos, ypos, zpos;
+	std::cout << "Where to go? x ";
+	std::cin >> xpos;
+	std::cout << "Where to go? y ";
+	std::cin >> ypos;
+	std::cout << "Where to go? z ";
+	std::cin >> zpos;
+	
+	m.setCurrentPosition(xpos, ypos, zpos);
+	
+	p = m.getCurrentPosition();
+	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 }

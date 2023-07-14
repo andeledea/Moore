@@ -96,6 +96,7 @@ std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax
 
 bool SimpleSerial::WriteSerialPort(char* data_sent)
 {
+	// prova ad aggiungere il mutex
 	DWORD bytes_sent;
 
 	unsigned int data_sent_length = (unsigned int)strlen(data_sent);

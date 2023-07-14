@@ -2,15 +2,24 @@
 #include "Moore.h"
 #include "Asse.h"
 
+pos Moore::getCurrentPosition()
+{
+	currentPos.x = Xaxis.getPosition();
+	currentPos.y = Yaxis.getPosition();
+	currentPos.z = Zaxis.getPosition();
+	
+	return currentPos;
+}
+
 void Moore::setCurrentPosition(float x, float y, float z)
 {
 	std::thread xt(&Asse::setPosition, Xaxis, x);
 	std::thread yt(&Asse::setPosition, Yaxis, y);
-	std::thread zt(&Asse::setPosition, Zaxis, z);
+	// std::thread zt(&Asse::setPosition, Zaxis, z);
 
 	xt.join();
 	yt.join();
-	zt.join();
+	// zt.join();
 }
 
 void Moore::init()

@@ -14,7 +14,7 @@ struct pos {
 class Moore
 {
 public:
-	pos getCurrentPosition() { return currentPos; }
+	pos getCurrentPosition();
 	void setCurrentPosition(float x, float y, float z);
 
 	float getX() { return currentPos.x; }
