@@ -10,6 +10,10 @@
 
 #define inv_mov true
 
+#define x_lab 0b00000000
+#define y_lab 0b01000000
+#define z_lab 0b10000000
+
 class Asse
 {
 public:
@@ -22,15 +26,10 @@ public:
 	void setPosition(float targetPos); //per movimento no misura
 	void setRamp(float acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
 
-	bool isLocked();
-	void lock();
-	void unlock();
-	void setDirectionForeward();
-	void setDirectionBackward();
-
+	bool isLocked() { return lock; };
 	void retension(float pos, int v);
 
-	//inizia la misura a velocit‡ v e direzione d (for = true)
+	//inizia la misura a velocit√† v e direzione d (for = true)
 	void startMeasure(int v = 1, bool d = true); 
 	void stopMeasure(); //ferma l'asse per la misura
 
@@ -40,16 +39,18 @@ public:
 
 private:
 	void setVelocity(float dist, float trav);
-	void sendToMicro(std::string toSend);
+	void sendVelocityToMicro();
+	void sendCommandToMicro();
 
-	char axisName = 0;
+	char axisName = x_lab;
 
-	bool lockB = true;
+	bool lock = true;
+	bool direction = dir_fore;
 	bool invertedMovement = false;
 
-	int acceleration = 800.0f;
+	int acceleration = 250.0f;
 	unsigned int startV = 1;
-	unsigned int maxV = 255;
+	unsigned int maxV = 63;
 	unsigned int stopV = 1;
 
 	unsigned int velocity = 0;

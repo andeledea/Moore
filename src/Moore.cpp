@@ -17,8 +17,9 @@ void Moore::setCurrentPosition(float x, float y, float z)
 	std::thread yt(&Asse::setPosition, Yaxis, y);
 	// std::thread zt(&Asse::setPosition, Zaxis, z);
 
-	xt.join();
+	
 	yt.join();
+	xt.join();
 	// zt.join();
 }
 
@@ -66,14 +67,15 @@ void Moore::init()
 	
 	yScale.setParams();
 	zScale.setParams();
+	las.setParams();
 	
 	// INIT THE 3 AXIS
 	
-	Xaxis.init((PosInstr*) &las, ser, 'X');
-	Yaxis.init((PosInstr*) &yScale, ser, 'Y');
-	Zaxis.init((PosInstr*) &zScale, ser, 'Z');
+	Xaxis.init((PosInstr*) &las, ser, x_lab);
+	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
+	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
 	
-	Xaxis.setRamp(500, 25, 255, 15);
-	Yaxis.setRamp(15, 25, 150, 15);
+	Xaxis.setRamp(80, 20, 63, 15);
+	Yaxis.setRamp(8, 30, 55, 25);
 	Zaxis.setRamp(2.0f, 180, 200, 5, inv_mov);
 }

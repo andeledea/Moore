@@ -31,15 +31,17 @@ void move(Moore& m)
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 	
 
-	float xpos, ypos, zpos;
-	std::cout << "Where to go? x ";
-	std::cin >> xpos;
-	std::cout << "Where to go? y ";
-	std::cin >> ypos;
-	std::cout << "Where to go? z ";
-	std::cin >> zpos;
+	//float xpos, ypos, zpos;
+	//std::cout << "Where to go? x ";
+	//std::cin >> xpos;
+	//std::cout << "Where to go? y ";
+	//std::cin >> ypos;
+	//std::cout << "Where to go? z ";
+	//std::cin >> zpos;
 	
-	m.setCurrentPosition(xpos, ypos, zpos);
+	char in;
+	std::cin >> in;
+	m.setCurrentPosition(0, 0, 0);
 	
 	p = m.getCurrentPosition();
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;

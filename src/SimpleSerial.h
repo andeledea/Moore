@@ -35,5 +35,7 @@ public:
 	bool CloseSerialPort();
 	~SimpleSerial();
 	bool connected_;
+	
+	//std::mutex sendMutex;
 };
 

@@ -4,12 +4,12 @@
 
 Asse::Asse()
 {
-	lockB = true;
+	lock = true;
 }
 
 Asse::Asse(PosInstr *instrument, SimpleSerial &serial, char name)
 {
-	lockB = true;
+	lock = true;
 	
 	ser = serial;
 	instrPT = instrument;
@@ -46,21 +46,20 @@ void Asse::setPosition(float targetPosition)
 	if (invertedMovement == false)
 	{
 		if (startP < targetPosition) //decido la direzione del movimento
-			this->setDirectionForeward();
+			direction = dir_fore;
 		else
-			this->setDirectionBackward();
+			direction = dir_back;
 	}
 	else
 	{
 		if (startP < targetPosition) //decido la direzione del movimento
-			this->setDirectionBackward();
+			direction = dir_back;
 		else
-			this->setDirectionForeward();
+			direction = dir_fore;
 	}
 	
-	this -> unlock(); //sblocco per il movimento
-
-	this->sendToMicro("V");
+	lock = false;
+	sendCommandToMicro();
 
 	float distance = abs(targetPosition - startP); //calcolo la dist totale
 	float travel = 0;
@@ -71,11 +70,11 @@ void Asse::setPosition(float targetPosition)
 		travel = abs(instrPT->readInstr() - startP); //calcolo il percorso fatto
 	};
 	
-	char s = 0;
-	ser.WriteSerialPort(&s, 1); // termino l'invio di velocità
+	velocity = 0;
+	sendVelocityToMicro();
 
-	this -> velocity = 0;
-	this -> lock(); // riblocco l'asse
+	lock = true;
+	sendCommandToMicro();
 }
 
 void Asse::setRamp(float acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement)
@@ -87,25 +86,6 @@ void Asse::setRamp(float acc, unsigned int startv, unsigned int maxv, unsigned i
 
 	invertedMovement = invertMovement;
 }
-
-bool Asse::isLocked()
-{
-	return lockB;
-}
-
-void Asse::lock()
-{
-	lockB = true;
-	this->sendToMicro("L");
-}
-
-void Asse::unlock()
-{
-	lockB = false;
-	this->sendToMicro("U");
-}
-
-
 
 Asse::~Asse()
 {
@@ -121,7 +101,7 @@ Asse::~Asse()
    TRAV: distance already done*/
 void Asse::setVelocity(float dist, float trav)
 {
-	unsigned int oldV = velocity;
+	unsigned int old = velocity;
 	if (trav < dist / 2) //accelerazione
 	{
 		velocity = (unsigned int) acceleration * trav;
@@ -140,31 +120,31 @@ void Asse::setVelocity(float dist, float trav)
 	if (velocity >= maxV) 
 		velocity = maxV;
 	
-	if (velocity != oldV)
-	{
-		char mapV = (char)velocity; // map della velocità
 	
-		char send[3] = {axisName, mapV};
-		ser.WriteSerialPort(send);
-	}
+	if (velocity != old) sendVelocityToMicro();
 }
 
-void Asse::sendToMicro(std::string toSend)
+void Asse::sendVelocityToMicro()
 {
-	toSend = axisName + toSend; //indico il nome dell'asse da muovere al micro
-	std::cout << toSend;
-	ser.WriteSerialPort((char*)toSend.c_str());
-	std::cout << ser.ReadSerialPort(1, "square") << std::endl;
+	char toSend = (char) velocity;
+	
+	toSend = toSend & 0b00111111 | axisName; // attach axis bits
+	
+	std::cout << (int) toSend << std::endl;
+	ser.WriteSerialPort(&toSend, 1);
 }
 
-void Asse::setDirectionForeward()
+void Asse::sendCommandToMicro()
 {
-	this -> sendToMicro("F");
-}
-
-void Asse::setDirectionBackward()
-{
-	this->sendToMicro("B");
+	char toSend = 0b00000001;
+	
+	toSend |= axisName; // attach axis bits
+	
+	if (lock) toSend |= 0b00000010;  // attach lock bit
+	if (!direction) toSend |= 0b00000100;  // attach dir bit
+	
+	std::cout << (int) toSend << std::endl;
+	ser.WriteSerialPort(&toSend, 1);
 }
 
 void Asse::retension(float pos, int v)
@@ -176,21 +156,21 @@ void Asse::retension(float pos, int v)
 
 void Asse::startMeasure(int v, bool d)
 {
-	this -> unlock();
+	lock = false;
 	if (d) //decido la direzione del movimento
-		this->setDirectionForeward();
+		direction = dir_fore;
 	else
-		this->setDirectionBackward();
+		direction = dir_back;
 	
-	this->sendToMicro("V");
+	sendCommandToMicro();
 
-	char val = (unsigned char)v;
-	ser.WriteSerialPort(&val, 1); //parto a velocità per la misura
+	velocity = v;
+	sendVelocityToMicro();
 }
 
 void Asse::stopMeasure()
 {
-	char s = 0;
-	ser.WriteSerialPort(&s, 1); // termino l'invio di velocità
-	this->lock();
+	velocity = 0;
+	sendVelocityToMicro();
+	lock = true;
 }

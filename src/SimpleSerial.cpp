@@ -114,6 +114,7 @@ bool SimpleSerial::WriteSerialPort(char* data_sent)
 
 bool SimpleSerial::WriteSerialPort(char* data_sent, unsigned int n)
 {
+	//const std::lock_guard<std::mutex> lock(sendMutex);
 	DWORD bytes_sent;
 
 	unsigned int data_sent_length = n;
