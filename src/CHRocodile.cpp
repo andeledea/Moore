@@ -50,7 +50,7 @@ float CHRocodile::readInstr()
 	// Every sample comes as an array of double.	
 	int nCount = 0;
 	
-	params to_ret;
+	CHRparams to_ret;
 	int j = 0;
 	do
 	{

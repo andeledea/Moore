@@ -16,6 +16,9 @@ class Moore
 public:
 	pos getCurrentPosition();
 	void setCurrentPosition(float x, float y, float z);
+	
+	void moveX();
+	void moveY();
 
 	float getX() { return currentPos.x; }
 	float getY() { return currentPos.y; }

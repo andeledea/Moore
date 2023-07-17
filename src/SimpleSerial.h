@@ -1,13 +1,14 @@
 #pragma once
+
 #include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <string.h>
 #include <chrono>
+#include <mutex>
 #include <thread>
 #include <time.h>
-
 
 class SimpleSerial
 {

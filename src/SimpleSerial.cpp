@@ -63,8 +63,10 @@ void SimpleSerial::CustomSyntax(std::string syntax_type) { // json grater_less_t
 		throw std::runtime_error("No file custom syntax");
 }
 
-std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax_type) {
-
+std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax_type) 
+{
+	//std::lock_guard<std::mutex> lock(sendMutex);	
+	
 	DWORD bytes_read;
 	char inc_msg[1];
 	std::string complete_inc_msg;
@@ -96,7 +98,8 @@ std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax
 
 bool SimpleSerial::WriteSerialPort(char* data_sent)
 {
-	// prova ad aggiungere il mutex
+	//std::lock_guard<std::mutex> lock(sendMutex);
+	
 	DWORD bytes_sent;
 
 	unsigned int data_sent_length = (unsigned int)strlen(data_sent);

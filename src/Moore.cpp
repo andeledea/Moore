@@ -22,6 +22,28 @@ void Moore::setCurrentPosition(float x, float y, float z)
 	// zt.join();
 }
 
+void Moore::moveX()
+{
+	pos p = getCurrentPosition();
+	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
+
+	float xpos;
+	std::cout << "Where to go? x ";
+	std::cin >> xpos;
+	Xaxis.setPosition(xpos);
+}
+
+void Moore::moveY()
+{
+	pos p = getCurrentPosition();
+	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
+
+	float ypos;
+	std::cout << "Where to go? y ";
+	std::cin >> ypos;
+	Yaxis.setPosition(ypos);
+}
+
 void Moore::init()
 {
 	// CONFIFG THE SERIAL COM WITH UC
