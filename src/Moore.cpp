@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 #include "Moore.h"
 #include "Asse.h"
 
@@ -45,6 +46,16 @@ void Moore::moveY()
 	Yaxis.setPosition(ypos);
 }
 
+void Moore::measScales()
+{
+	while (!_kbhit())
+	{
+		std::cout << yScale.readInstr() << "\t" << zScale.readInstr();
+		printf("\r");
+	}
+	_getch();
+}
+
 void Moore::init()
 {
 	// CONFIFG THE SERIAL COM WITH UC
@@ -75,7 +86,7 @@ void Moore::init()
 	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
 	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
 	
-	Xaxis.setRamp(200, 25, 63, 15);
-	Yaxis.setRamp(5, 25, 63, 25);
+	Xaxis.setRamp(100, 25, 63, 15);
+	Yaxis.setRamp(100, 25, 63, 15);
 	Zaxis.setRamp(2.0f, 180, 200, 5, inv_mov);
 }

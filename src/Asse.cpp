@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <thread>
+#include <chrono>
 #include "Asse.h"
 
 Asse::Asse()
@@ -72,6 +74,8 @@ void Asse::setPosition(float targetPosition)
 			position = instrPT->readInstr();
 		} while (position == 0.0f); // non accettare gli 0.0 perche sono errori di lettura
 		travel = abs(position - startP); //calcolo il percorso fatto
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	};
 	
 	velocity = 0;

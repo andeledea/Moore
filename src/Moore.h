@@ -23,6 +23,8 @@ public:
 	float getX() { return currentPos.x; }
 	float getY() { return currentPos.y; }
 	float getZ() { return currentPos.z; }
+	
+	void measScales();
 
 	void init();
 
