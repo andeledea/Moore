@@ -75,7 +75,7 @@ void Moore::init()
 	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
 	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
 	
-	Xaxis.setRamp(80, 20, 63, 15);
-	Yaxis.setRamp(8, 30, 55, 25);
+	Xaxis.setRamp(200, 25, 63, 15);
+	Yaxis.setRamp(5, 25, 63, 25);
 	Zaxis.setRamp(2.0f, 180, 200, 5, inv_mov);
 }

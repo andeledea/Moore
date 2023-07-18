@@ -67,7 +67,11 @@ void Asse::setPosition(float targetPosition)
 	while (distance - travel > 0) // finchè non raggiungo il target
 	{
 		setVelocity(distance, travel); //imposto la velocità istantanea
-		travel = abs(instrPT->readInstr() - startP); //calcolo il percorso fatto
+		do
+		{
+			position = instrPT->readInstr();
+		} while (position == 0.0f); // non accettare gli 0.0 perche sono errori di lettura
+		travel = abs(position - startP); //calcolo il percorso fatto
 	};
 	
 	velocity = 0;
@@ -130,7 +134,7 @@ void Asse::sendVelocityToMicro()
 	
 	toSend = toSend & 0b00111111 | axisName; // attach axis bits
 	
-	std::cout << (int) toSend << std::endl;
+	std::cout << (int) toSend << " " << position << std::endl;
 	ser.WriteSerialPort(&toSend, 1);
 }
 
