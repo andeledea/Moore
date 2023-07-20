@@ -25,6 +25,9 @@ void CHRocodile::setParams()
 	int MeasMode = 0;
 	int ScanRate = 2000;
 	int DataAverage = 1;
+	
+	max = 0.10;  // mm
+	min = 0;
 
 	// Set measurement mode to confocal mode:
 	SetMeasuringMode(handle, MeasMode);
@@ -71,7 +74,8 @@ float CHRocodile::readInstr()
 		if(to_ret.dist > 97 || to_ret.dist < 3) throw std::runtime_error("CHR out of range");
 		else {
 			this->cnt_check = check_period;
-			return to_ret.dist;
+			value = to_ret.dist / 1000; // convert in mm
+			return to_ret.dist / 1000;
 		}
 }
 

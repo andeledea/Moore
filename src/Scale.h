@@ -11,7 +11,8 @@
 #define SIG_11UA 0
 #define SIG_VPP 1
 
-#define M_SIG_PERIOD 0.020
+#define M_SIG_PERIOD_Y 0.020
+#define M_SIG_PERIOD_Z 0.004
 
 struct HEIDparams
 {
@@ -32,7 +33,7 @@ public:
 	
 	void setParams(ULONG encoderType = ENC_INCREMENTAL, 
 				   ULONG signalType = SIG_11UA,
-				   float signalPeriod = M_SIG_PERIOD);
+				   float signalPeriod = M_SIG_PERIOD_Y);
 	HEIDparams getParams();
 	
 	float readInstr();

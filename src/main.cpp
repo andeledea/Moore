@@ -16,6 +16,7 @@ int main()
 	moore.init();
 	
 	//moore.measScales();
+	//moore.moveY();
 	move(moore);
 	
 	return 0;

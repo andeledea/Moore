@@ -1,6 +1,7 @@
 #pragma once
 #include <thread>
 #include "Asse.h"
+#include "CHRocodile.h"
 #include "IkOptical.h"
 #include "Scale.h"
 #include "SimpleSerial.h"
@@ -25,6 +26,7 @@ public:
 	float getZ() { return currentPos.z; }
 	
 	void measScales();
+	void measCHR(bool dir);
 
 	void init();
 

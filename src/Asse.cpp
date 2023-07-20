@@ -15,12 +15,9 @@ Asse::Asse(PosInstr *instrument, SimpleSerial &serial, char name)
 	
 	ser = serial;
 	instrPT = instrument;
-
-	instrPT -> connect();
-	instrPT -> setParams();
-	// position = instrPT -> readInstr();
-
 	axisName = name;
+	
+	position = 0;
 }
 
 void Asse::init(PosInstr* instrument, SimpleSerial& serial, char name)
@@ -29,8 +26,6 @@ void Asse::init(PosInstr* instrument, SimpleSerial& serial, char name)
 	instrPT = instrument;
 	axisName = name;
 
-	instrPT->connect();
-	instrPT->setParams();
 	position = 0;
 	// position = instrPT->readInstr();
 }
@@ -100,13 +95,6 @@ Asse::~Asse()
 	//ser.CloseSerialPort(); //lo distruggo nella seriale
 }
 
-// private methods
-
-/* Calcola la velocità istantanea seguendo la rampa di
-   acc e dec. Con il parametro ramp e acc si possono settare
-   durata e pendenza della rampa 
-   DIST: total distance
-   TRAV: distance already done*/
 void Asse::setVelocity(float dist, float trav)
 {
 	unsigned int old = velocity;
@@ -138,7 +126,7 @@ void Asse::sendVelocityToMicro()
 	
 	toSend = toSend & 0b00111111 | axisName; // attach axis bits
 	
-	std::cout << (int) toSend << " " << position << std::endl;
+	// std::cout << (int) toSend << " " << position << std::endl;
 	ser.WriteSerialPort(&toSend, 1);
 }
 
@@ -151,7 +139,7 @@ void Asse::sendCommandToMicro()
 	if (lock) toSend |= 0b00000010;  // attach lock bit
 	if (!direction) toSend |= 0b00000100;  // attach dir bit
 	
-	std::cout << (int) toSend << std::endl;
+	// std::cout << (int) toSend << std::endl;
 	ser.WriteSerialPort(&toSend, 1);
 }
 
@@ -162,9 +150,32 @@ void Asse::retension(float pos, int v)
 	this->stopMeasure();
 }
 
+void Asse::track(float pos)
+{
+	float bound = (measPT -> max - measPT -> min) * 10 / 100;
+	while (measuring)
+	{
+		current = measPT -> readInstr();
+		disp = abs(current - pos);
+		if (current > (pos + bound)) setPosition(getPosition() - disp);
+		if (current < (pos - bound)) setPosition(getPosition() + disp);
+	}
+}
+
+void Asse::startTracking(float pos)
+{
+	trackThread = std::thread(track, this, pos);
+}
+
+void Asse::stopTracking()
+{
+	trackThread.join();
+}
+
 void Asse::startMeasure(int v, bool d)
 {
 	lock = false;
+	measuring = true;
 	if (d) //decido la direzione del movimento
 		direction = dir_fore;
 	else
@@ -178,7 +189,10 @@ void Asse::startMeasure(int v, bool d)
 
 void Asse::stopMeasure()
 {
+	measuring = false;
+	
 	velocity = 0;
 	sendVelocityToMicro();
 	lock = true;
+	sendCommandToMicro();
 }
