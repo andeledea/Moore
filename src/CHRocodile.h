@@ -27,7 +27,7 @@ public:
 	void setParams();
 
 	float readInstr();
-	int cnt_check = check_period;
+	// int cnt_check = check_period;
 
 	~CHRocodile();
 

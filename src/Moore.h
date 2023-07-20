@@ -26,7 +26,7 @@ public:
 	float getZ() { return currentPos.z; }
 	
 	void measScales();
-	void measCHR(bool dir);
+	void measCHR();
 
 	void init();
 

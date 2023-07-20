@@ -55,11 +55,11 @@ void Moore::setCurrentPosition(float x, float y, float z)
 {
 	std::thread xt(&Asse::setPosition, Xaxis, x);
 	std::thread yt(&Asse::setPosition, Yaxis, y);
-	// std::thread zt(&Asse::setPosition, Zaxis, z);
+	//std::thread zt(&Asse::setPosition, Zaxis, z);
 	
 	yt.join();
 	xt.join();
-	// zt.join();
+	//zt.join();
 }
 
 void Moore::moveX()
@@ -107,8 +107,21 @@ void Moore::measCHR()
 	CHR.connect();
 	CHR.setParams();
 	
-	Yaxis.setMeasInstrument((PosInstr*) &CHR);
-	Xaxis.startMeasure(20, dir_fore);
-	Yaxis.startTracking();
+	bool dir = dir_fore;
+
+	Xaxis.startMeasure(20, dir);
+	//std::thread t(&Asse::track, Yaxis, 0.050f);
 	
+	while (true)
+	{
+		// ost << pos << '\t' << dis + totalDisplacement << std::endl;
+		// Sleep(100); // un punto ogni 100 ms
+		if (GetKeyState('S') & 0x8000) // mi fermo se 's' o fine del campione
+		{
+			break;
+		}
+	}
+	
+	Xaxis.stopMeasure(); // mi fermo
+	//t.join();
 }

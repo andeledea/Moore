@@ -14,8 +14,8 @@ public:
 	~PosInstr() {}
 
 	float value;
-	float max = 0;
-	float min = 0;
+	float max;
+	float min;
 	int handle;
 };
 

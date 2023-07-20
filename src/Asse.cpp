@@ -152,7 +152,9 @@ void Asse::retension(float pos, int v)
 
 void Asse::track(float pos)
 {
+	float current, disp;
 	float bound = (measPT -> max - measPT -> min) * 10 / 100;
+	
 	while (measuring)
 	{
 		current = measPT -> readInstr();
@@ -160,16 +162,6 @@ void Asse::track(float pos)
 		if (current > (pos + bound)) setPosition(getPosition() - disp);
 		if (current < (pos - bound)) setPosition(getPosition() + disp);
 	}
-}
-
-void Asse::startTracking(float pos)
-{
-	trackThread = std::thread(track, this, pos);
-}
-
-void Asse::stopTracking()
-{
-	trackThread.join();
 }
 
 void Asse::startMeasure(int v, bool d)

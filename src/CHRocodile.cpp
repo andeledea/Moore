@@ -73,7 +73,7 @@ float CHRocodile::readInstr()
 	else
 		if(to_ret.dist > 97 || to_ret.dist < 3) throw std::runtime_error("CHR out of range");
 		else {
-			this->cnt_check = check_period;
+			// this->cnt_check = check_period;
 			value = to_ret.dist / 1000; // convert in mm
 			return to_ret.dist / 1000;
 		}

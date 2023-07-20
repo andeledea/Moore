@@ -24,8 +24,7 @@ public:
 	void init(PosInstr* instrument, SimpleSerial& serial, char name);
 	void setMeasInstrument(PosInstr* instrument) { measPT = instrument; }
 	
-	void startTracking(float pos);
-	void stopTracking();
+	void track(float pos);
 
 	float getPosition(); //ritorna la pos attuale
 	void setPosition(float targetPos); //per movimento no misura
@@ -46,8 +45,6 @@ private:
 	void setVelocity(float dist, float trav);
 	void sendVelocityToMicro();
 	void sendCommandToMicro();
-	
-	void track(float pos);
 
 	char axisName = x_lab;
 	
@@ -56,10 +53,10 @@ private:
 	bool direction = dir_fore;
 	bool invertedMovement = false;
 
-	int acceleration = 250.0f;
-	unsigned int startV = 1;
-	unsigned int maxV = 63;
-	unsigned int stopV = 1;
+	int acceleration;
+	unsigned int startV;
+	unsigned int maxV;
+	unsigned int stopV;
 
 	unsigned int velocity = 0;
 	float position;
