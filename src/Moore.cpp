@@ -107,15 +107,23 @@ void Moore::measCHR()
 	CHR.connect();
 	CHR.setParams();
 	
-	bool dir = dir_fore;
+	std::cout << "CHR: " << CHR.readInstr() << std::endl;
+	
+	Yaxis.setMeasInstrument((PosInstr *) &CHR);
+	
+	bool dir = dir_back;
+	pos p;
 
-	Xaxis.startMeasure(20, dir);
-	//std::thread t(&Asse::track, Yaxis, 0.050f);
+	Xaxis.startMeasure(5, dir);
+	std::thread t(&Asse::track, Yaxis, 0.050f);
 	
 	while (true)
 	{
 		// ost << pos << '\t' << dis + totalDisplacement << std::endl;
 		// Sleep(100); // un punto ogni 100 ms
+		p = getCurrentPosition();
+		//std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
+		
 		if (GetKeyState('S') & 0x8000) // mi fermo se 's' o fine del campione
 		{
 			break;
@@ -123,5 +131,5 @@ void Moore::measCHR()
 	}
 	
 	Xaxis.stopMeasure(); // mi fermo
-	//t.join();
+	t.join();
 }

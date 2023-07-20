@@ -17,7 +17,8 @@ int main()
 	
 	//moore.measScales();
 	//moore.moveY();
-	move(moore);
+	//move(moore);
+	moore.measCHR();
 	
 	return 0;
 }

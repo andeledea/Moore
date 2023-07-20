@@ -155,9 +155,11 @@ void Asse::track(float pos)
 	float current, disp;
 	float bound = (measPT -> max - measPT -> min) * 10 / 100;
 	
-	while (measuring)
+	while (Asse::measuring)
 	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		current = measPT -> readInstr();
+		std::cout << current << std::endl;
 		disp = abs(current - pos);
 		if (current > (pos + bound)) setPosition(getPosition() - disp);
 		if (current < (pos - bound)) setPosition(getPosition() + disp);

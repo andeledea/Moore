@@ -36,6 +36,7 @@ public:
 	//move the axis at the set speed
 	void startMeasure(int v = 1, bool d = dir_fore); 
 	void stopMeasure(); //ferma l'asse per la misura
+	static bool measuring;
 
 	inline void operator= (float& B) { this -> setPosition(B); }
 	
@@ -48,7 +49,6 @@ private:
 
 	char axisName = x_lab;
 	
-	bool measuring = false;
 	bool lock = true;
 	bool direction = dir_fore;
 	bool invertedMovement = false;
@@ -64,6 +64,7 @@ private:
 	SimpleSerial ser;
 	PosInstr *instrPT;
 	PosInstr *measPT = nullptr;
-	std::thread trackThread;	
 };
+
+bool Asse::measuring = false;
 
