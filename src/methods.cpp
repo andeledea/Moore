@@ -3,7 +3,6 @@
 #include <direct.h>
 #include <conio.h>
 #include <cmath>
-
 #include "methods.h"
 
 #define CHRrange 0.1f //in millimetri

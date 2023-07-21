@@ -15,10 +15,19 @@ int main()
 	Moore moore;
 	moore.init();
 	
-	//moore.measScales();
-	//moore.moveY();
-	//move(moore);
-	moore.measCHR();
+	char c;
+	while(true)
+	{
+		std::cin >> c;
+		switch (c)
+		{
+			case 'm':
+				move(moore);
+				break;
+			case 's':
+				moore.measCHR();
+		}
+	}
 	
 	return 0;
 }
@@ -42,11 +51,4 @@ void move(Moore& m)
 	std::cout << "Where to go? z ";
 	std::cin >> zpos;
 	m.setCurrentPosition(xpos, ypos, zpos);
-	
-	char in;
-	std::cin >> in;
-	m.setCurrentPosition(0, 0, 0);
-	
-	p = m.getCurrentPosition();
-	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 }

@@ -1,69 +1,89 @@
 [{
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\DllFunc.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\DllFunc.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\DllFunc.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\Asse.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\IkOptical.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodile.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\main.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\main.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\main.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\IkOptical.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodileDLLInterface.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodileDLLInterface.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\CHRocodileDLLInterface.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\resource.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\resource.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\resource.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodileDLLInterface.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\Laser.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodileDLLInterface.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodileDLLInterface.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\main.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\resource.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\main.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\main.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\resource.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\resource.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.cpp.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\PosInstr.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\PosInstr.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\PosInstr.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\PosInstr.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\PosInstr.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\PosInstr.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\ni4882.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\ni4882.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\ni4882.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\methods.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\methods.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Laser.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.cpp",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.h",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.cpp.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Scale.h.o  -I. -I.  -g -Wall"
  }, {
-  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.h",
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.cpp",
   "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
-  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\SimpleSerial.h.o  -I. -I.  -g -Wall"
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Moore.cpp.o  -I. -I.  -g -Wall"
+ }, {
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.cpp",
+  "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.cpp.o  -I. -I.  -g -Wall"
+ }, {
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.h",
+  "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\CHRocodile.h.o  -I. -I.  -g -Wall"
+ }, {
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\ni4882.h",
+  "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\ni4882.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\ni4882.h.o  -I. -I.  -g -Wall"
+ }, {
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.cpp",
+  "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.cpp -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\Asse.cpp.o  -I. -I.  -g -Wall"
+ }, {
+  "file": "C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.h",
+  "directory": "C:\\Users\\r.bellotti\\Desktop\\Moore",
+  "command": "clang++ -c C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.h -o C:\\Users\\r.bellotti\\Desktop\\Moore\\src\\SimpleSerial.h.o  -I. -I.  -g -Wall"
  }]

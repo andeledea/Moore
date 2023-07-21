@@ -4,6 +4,8 @@
 #include <chrono>
 #include "Asse.h"
 
+bool Asse::measuring = false;
+
 Asse::Asse()
 {
 	lock = true;
@@ -153,23 +155,53 @@ void Asse::retension(float pos, int v)
 void Asse::track(float pos)
 {
 	float current, disp;
-	float bound = (measPT -> max - measPT -> min) * 10 / 100;
+	float k = maxV / (measPT -> max - measPT -> min); // constant for speed
+	//constant calculated to have max speed if disp == range
+	
+	lock = false;
+	bool prevDir = dir_up;
+	
+	direction = dir_up;
+	sendCommandToMicro();
 	
 	while (Asse::measuring)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		current = measPT -> readInstr();
-		std::cout << current << std::endl;
-		disp = abs(current - pos);
-		if (current > (pos + bound)) setPosition(getPosition() - disp);
-		if (current < (pos - bound)) setPosition(getPosition() + disp);
+		disp = current - pos;  // distance from target
+		
+		// calculate direction
+		if (disp > 0) direction = dir_down;
+		else direction = dir_up;
+		
+		if (direction != prevDir) // if change direction 
+		{
+			std::cout << "change!!" << std::endl;
+			velocity = 0;
+			sendVelocityToMicro();
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			sendCommandToMicro();
+		}
+		velocity = (unsigned int) (abs(disp) * k);
+		if (velocity != 0) sendVelocityToMicro();
+		
+		prevDir = direction;
+		
+		std::string dirs;
+		if (direction == dir_down) dirs = "-dw-"; 
+		else dirs = "-up-";
+		std::cout << disp << '\t' << velocity << dirs << std::endl;
 	}
+	velocity = 0;
+	sendVelocityToMicro();
+	lock = true;
+	sendCommandToMicro();
 }
 
 void Asse::startMeasure(int v, bool d)
 {
 	lock = false;
-	measuring = true;
+	Asse::measuring = true;
 	if (d) //decido la direzione del movimento
 		direction = dir_fore;
 	else
@@ -183,7 +215,7 @@ void Asse::startMeasure(int v, bool d)
 
 void Asse::stopMeasure()
 {
-	measuring = false;
+	Asse::measuring = false;
 	
 	velocity = 0;
 	sendVelocityToMicro();

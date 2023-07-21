@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <conio.h>
+#include <direct.h>
 #include "Moore.h"
 #include "Asse.h"
 
@@ -103,28 +104,38 @@ void Moore::measScales()
 
 void Moore::measCHR()
 {
+	std::string nome_file;
+	std::cout << "Insert measure name: ";
+	std::cin >> nome_file;
+
+	std::ofstream ost;
+
+	_mkdir(("C:/CHRmeasures/" + nome_file).c_str());
+
+	ost.open("C:/CHRmeasures/" + nome_file + "/data.CHRdat", std::ofstream::out);
+	
 	CHRocodile CHR;
 	CHR.connect();
 	CHR.setParams();
 	
-	std::cout << "CHR: " << CHR.readInstr() << std::endl;
-	
 	Yaxis.setMeasInstrument((PosInstr *) &CHR);
 	
-	bool dir = dir_back;
+	char c;
+	std::cout << "Dir f/b? ";
+	std::cin >> c; 
+	bool dir = (c == 'f')? dir_fore : dir_back;
 	pos p;
 
-	Xaxis.startMeasure(5, dir);
+	Xaxis.startMeasure(15, dir);
 	std::thread t(&Asse::track, Yaxis, 0.050f);
 	
 	while (true)
 	{
-		// ost << pos << '\t' << dis + totalDisplacement << std::endl;
-		// Sleep(100); // un punto ogni 100 ms
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		p = getCurrentPosition();
-		//std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
+		ost << p.x << "," << p.y << "," << p.z << "," << CHR.readInstr() << std::endl;
 		
-		if (GetKeyState('S') & 0x8000) // mi fermo se 's' o fine del campione
+		if (GetKeyState('S') & 0x8000) // mi fermo se 's'
 		{
 			break;
 		}

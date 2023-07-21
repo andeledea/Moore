@@ -66,5 +66,3 @@ private:
 	PosInstr *measPT = nullptr;
 };
 
-bool Asse::measuring = false;
-
