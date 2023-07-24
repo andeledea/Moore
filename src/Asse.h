@@ -22,12 +22,14 @@ public:
 	Asse(PosInstr *instrument, SimpleSerial &serial, char name);
 
 	void init(PosInstr* instrument, SimpleSerial& serial, char name);
-	void setMeasInstrument(PosInstr* instrument) { measPT = instrument; }
 	
+	void setMeasInstrument(PosInstr* instrument) { measPT = instrument; }
 	void track(float pos);
+	void findMeasCenter();
+	void setInstrPosition(float targetPos) { setPos(targetPos, measPT); }
 
 	float getPosition(); //ritorna la pos attuale
-	void setPosition(float targetPos); //per movimento no misura
+	void setPosition(float targetPos) { setPos(targetPos, instrPT); }
 	void setRamp(float acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
 
 	bool isLocked() { return lock; };
@@ -43,6 +45,7 @@ public:
 	~Asse();
 
 private:
+	void setPos(float targetPos, PosInstr * instr);
 	void setVelocity(float dist, float trav);
 	void sendVelocityToMicro();
 	void sendCommandToMicro();

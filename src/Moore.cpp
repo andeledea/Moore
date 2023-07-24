@@ -91,6 +91,20 @@ void Moore::moveY()
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 }
 
+void Moore::moveInstr()
+{
+	CHRocodile CHR;
+	CHR.connect();
+	CHR.setParams();
+	
+	Yaxis.setMeasInstrument((PosInstr *) &CHR);
+	
+	float ypos;
+	std::cout << "Where to go? y ";
+	std::cin >> ypos;
+	Yaxis.setInstrPosition(ypos);
+}
+
 void Moore::measScales()
 {
 	std::cout << std::fixed << std::setw(6) << std::setprecision(4) << std::setfill('0');
@@ -119,6 +133,7 @@ void Moore::measCHR()
 	CHR.setParams();
 	
 	Yaxis.setMeasInstrument((PosInstr *) &CHR);
+	Yaxis.findMeasCenter();
 	
 	char c;
 	std::cout << "Dir f/b? ";
@@ -126,7 +141,7 @@ void Moore::measCHR()
 	bool dir = (c == 'f')? dir_fore : dir_back;
 	pos p;
 
-	Xaxis.startMeasure(15, dir);
+	Xaxis.startMeasure(10, dir);
 	std::thread t(&Asse::track, Yaxis, 0.050f);
 	
 	while (true)

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <thread>
+#include <limits>
 #include <chrono>
 #include "Asse.h"
 
@@ -38,9 +39,9 @@ float Asse::getPosition()
 	return position;
 }
 
-void Asse::setPosition(float targetPosition)
+void Asse::setPos(float targetPosition, PosInstr * instr)
 {
-	float startP = instrPT->readInstr(); //posizione di partenza
+	float startP = instr->readInstr(); //posizione di partenza
 
 	if (invertedMovement == false)
 	{
@@ -68,7 +69,7 @@ void Asse::setPosition(float targetPosition)
 		setVelocity(distance, travel); //imposto la velocità istantanea
 		do
 		{
-			position = instrPT->readInstr();
+			position = instr->readInstr();
 		} while (position == 0.0f); // non accettare gli 0.0 perche sono errori di lettura
 		travel = abs(position - startP); //calcolo il percorso fatto
 		
@@ -81,6 +82,7 @@ void Asse::setPosition(float targetPosition)
 	lock = true;
 	sendCommandToMicro();
 }
+
 
 void Asse::setRamp(float acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement)
 {
@@ -176,7 +178,7 @@ void Asse::track(float pos)
 		
 		if (direction != prevDir) // if change direction 
 		{
-			std::cout << "change!!" << std::endl;
+			// std::cout << "change!!" << std::endl;
 			velocity = 0;
 			sendVelocityToMicro();
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -187,15 +189,36 @@ void Asse::track(float pos)
 		
 		prevDir = direction;
 		
-		std::string dirs;
+		/*std::string dirs;
 		if (direction == dir_down) dirs = "-dw-"; 
 		else dirs = "-up-";
-		std::cout << disp << '\t' << velocity << dirs << std::endl;
+		std::cout << disp << '\t' << velocity << dirs << std::endl;*/
 	}
 	velocity = 0;
 	sendVelocityToMicro();
 	lock = true;
 	sendCommandToMicro();
+}
+
+void Asse::findMeasCenter()
+{
+	float c = (measPT -> max + measPT -> min) / 2;
+	
+	startMeasure(startV, dir_down);
+	float p;
+	do {
+		try
+		{
+			p = measPT -> readInstr();
+		}
+		catch (...)
+		{
+			p = std::numeric_limits<float>::infinity();
+		}
+	} while(p > c);
+	stopMeasure();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	setInstrPosition(c);
 }
 
 void Asse::startMeasure(int v, bool d)

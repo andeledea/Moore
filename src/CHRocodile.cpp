@@ -44,8 +44,6 @@ void CHRocodile::setParams()
 
 float CHRocodile::readInstr()
 {
-	std::string str;
-
 	double* p = 0;
 	
 	// Read next sample (which consists of nCount signals as defined using

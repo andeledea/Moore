@@ -26,6 +26,10 @@ int main()
 				break;
 			case 's':
 				moore.measCHR();
+				break;
+			case 'i':
+				moore.moveInstr();
+				break;
 		}
 	}
 	

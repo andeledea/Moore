@@ -20,6 +20,8 @@ public:
 	
 	void moveX();
 	void moveY();
+	
+	void moveInstr();
 
 	float getX() { return currentPos.x; }
 	float getY() { return currentPos.y; }
