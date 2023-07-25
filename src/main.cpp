@@ -21,6 +21,9 @@ int main()
 		std::cin >> c;
 		switch (c)
 		{
+			case 'z':
+				moore.defineZero();
+				break;
 			case 'm':
 				move(moore);
 				break;
@@ -29,6 +32,10 @@ int main()
 				break;
 			case 'i':
 				moore.moveInstr();
+				break;
+			case 'w':
+				std::cout << "REL: " << moore.getRelPosition();
+				std::cout << "ABS: " << moore.getAbsPosition();
 				break;
 		}
 	}
@@ -40,19 +47,30 @@ void move(Moore& m)
 {
 	std::cout << std::fixed << std::setw(11) << std::setprecision(6) << std::setfill('0');
 	
-	//m.moveX();
-	//m.moveY();
+	std::cout << "REL: " << m.getRelPosition();
+	std::cout << "ABS: " << m.getAbsPosition();
 	
-	pos p = m.getCurrentPosition();
-	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
-	
+	char v;
+	std::cout << "a/r? ";
+	std::cin >> v;
 
-	float xpos, ypos, zpos;
+	pos target;
 	std::cout << "Where to go? x ";
-	std::cin >> xpos;
+	std::cin >> target.x;
 	std::cout << "Where to go? y ";
-	std::cin >> ypos;
+	std::cin >> target.y;
 	std::cout << "Where to go? z ";
-	std::cin >> zpos;
-	m.setCurrentPosition(xpos, ypos, zpos);
+	std::cin >> target.z;
+	
+	switch(v)
+	{
+		case 'r':
+			std::cout << "Setting relative position" << std::endl;
+			m.setRelPosition(target);
+			break;
+		case 'a':
+			std::cout << "Setting absolute position" << std::endl;
+			m.setAbsPosition(target);
+			break;
+	}
 }

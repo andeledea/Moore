@@ -5,6 +5,12 @@
 #include "Moore.h"
 #include "Asse.h"
 
+std::ostream& operator<<(std::ostream& os, const pos& p)
+{
+	os << p.x << " " << p.y << " " << p.z << std::endl;
+	return os;
+}
+
 void Moore::init()
 {
 	// CONFIFG THE SERIAL COM WITH UC
@@ -43,7 +49,7 @@ void Moore::init()
 	Zaxis.setRamp(10, 20, 50, 15, inv_mov);
 }
 
-pos Moore::getCurrentPosition()
+pos Moore::getAbsPosition()
 {
 	currentPos.x = Xaxis.getPosition();
 	currentPos.y = Yaxis.getPosition();
@@ -52,20 +58,38 @@ pos Moore::getCurrentPosition()
 	return currentPos;
 }
 
-void Moore::setCurrentPosition(float x, float y, float z)
+void Moore::setAbsPosition(pos target)
 {
-	std::thread xt(&Asse::setPosition, Xaxis, x);
-	std::thread yt(&Asse::setPosition, Yaxis, y);
-	//std::thread zt(&Asse::setPosition, Zaxis, z);
+	std::thread xt(&Asse::setPosition, Xaxis, target.x);
+	std::thread yt(&Asse::setPosition, Yaxis, target.y);
+	//std::thread zt(&Asse::setPosition, Zaxis, target.z);
 	
 	yt.join();
 	xt.join();
 	//zt.join();
 }
 
+void Moore::defineZero()
+{
+	zeroPos = getAbsPosition();
+}
+
+pos Moore::getRelPosition()
+{
+	pos current = getAbsPosition();
+	current -= zeroPos;
+	return  current;
+}
+
+void Moore::setRelPosition(pos target)
+{
+	target += zeroPos;
+	setAbsPosition(target);
+}
+
 void Moore::moveX()
 {
-	pos p = getCurrentPosition();
+	pos p = getAbsPosition();
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 
 	float xpos;
@@ -73,13 +97,13 @@ void Moore::moveX()
 	std::cin >> xpos;
 	Xaxis.setPosition(xpos);
 	
-	p = getCurrentPosition();
+	p = getAbsPosition();
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 }
 
 void Moore::moveY()
 {
-	pos p = getCurrentPosition();
+	pos p = getAbsPosition();
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 
 	float ypos;
@@ -87,11 +111,11 @@ void Moore::moveY()
 	std::cin >> ypos;
 	Yaxis.setPosition(ypos);
 	
-	p = getCurrentPosition();
+	p = getAbsPosition();
 	std::cout << "You are at: " << p.x << " " << p.y << " " << p.z << std::endl;
 }
 
-void Moore::moveInstr()
+void Moore::moveInstr()  // metodo da eliminare
 {
 	CHRocodile CHR;
 	CHR.connect();
@@ -147,7 +171,7 @@ void Moore::measCHR()
 	while (true)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-		p = getCurrentPosition();
+		p = getAbsPosition();
 		ost << p.x << "," << p.y << "," << p.z << "," << CHR.readInstr() << std::endl;
 		
 		if (GetKeyState('S') & 0x8000) // mi fermo se 's'
