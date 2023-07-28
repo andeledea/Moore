@@ -1,0 +1,37 @@
+#pragma once
+#include <thread>
+#include "Asse.h"
+#include "CHRocodile.h"
+#include "IkOptical.h"
+#include "Scale.h"
+#include "SimpleSerial.h"
+#include "pos.h"
+
+class Moore
+{
+public:
+	void defineZero();
+	
+	void updatePosition();
+	pos getAbsPosition() { return abs; };
+	pos getRelPosition() { return rel; };
+
+	void setAbsPosition(pos target);
+	void setRelPosition(pos target);
+	
+	void moveInstr();
+	void measCHR();
+
+	void init();
+
+private:
+	SimpleSerial ser;
+
+	Asse Xaxis, Yaxis, Zaxis;
+	
+	Laser las;
+	IkOptical ik;
+	Scale yScale, zScale;
+	
+	pos zeroPos, abs, rel;
+};
