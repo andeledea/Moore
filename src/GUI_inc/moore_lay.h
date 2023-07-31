@@ -23,6 +23,7 @@
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/frame.h>
+#include <wx/checkbox.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -63,6 +64,40 @@ class PosFrame : public wxFrame
 		PosFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("POSITION CONTROL") );
 
 		~PosFrame();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CHRMeasFrame
+///////////////////////////////////////////////////////////////////////////////
+class CHRMeasFrame : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* measname_lab;
+		wxTextCtrl* measname_in;
+		wxStaticText* speed_lab;
+		wxTextCtrl* speed_in;
+		wxStaticText* track_lab;
+		wxCheckBox* track_check;
+		wxStaticText* start_lab;
+		wxTextCtrl* start_in;
+		wxStaticText* stop_lab;
+		wxTextCtrl* stop_in;
+		wxTextCtrl* path_in;
+		wxButton* start_but;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnSpeed_Text( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnStartCHR_butClick( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		CHRMeasFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 436,227 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("CHR MEASURE CONTROL") );
+
+		~CHRMeasFrame();
 
 };
 
