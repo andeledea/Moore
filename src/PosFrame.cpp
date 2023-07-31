@@ -16,6 +16,12 @@ PosFrame( parent )
 
 void MoorePosFrame::UpdatePosition()
 {
+	/*auto _c = [](double f)
+	{
+		std::stringstream s;
+		s << std::fixed << std::setw(8) << std::setfill('0') << std::setprecision(3) << f;
+		return s.str();
+	};*/
 	while (true)
 	{
 		this->moore->updatePosition();
@@ -26,13 +32,13 @@ void MoorePosFrame::UpdatePosition()
 		
 		wxGetApp().CallAfter([this, abs, rel] ()
 		{
-			this->xabs_lab->SetLabelText(wxString::Format("%f", abs.x));
-			this->yabs_lab->SetLabelText(wxString::Format("%f", abs.y));
-			this->zabs_lab->SetLabelText(wxString::Format("%f", abs.z));
+			this->xabs_lab->SetLabelText(wxString::Format("%8.3f", abs.x));
+			this->yabs_lab->SetLabelText(wxString::Format("%8.3f", abs.y));
+			this->zabs_lab->SetLabelText(wxString::Format("%8.3f", abs.z));
 
-			this->xrel_lab->SetLabelText(wxString::Format("%f", rel.x));
-			this->yrel_lab->SetLabelText(wxString::Format("%f", rel.x));
-			this->zrel_lab->SetLabelText(wxString::Format("%f", rel.x));
+			this->xrel_lab->SetLabelText(wxString::Format("%8.3f", rel.x));
+			this->yrel_lab->SetLabelText(wxString::Format("%8.3f", rel.y));
+			this->zrel_lab->SetLabelText(wxString::Format("%8.3f", rel.z));
 			
 			this->Layout();
 		});

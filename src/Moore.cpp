@@ -37,7 +37,7 @@ void Moore::init()
 	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
 	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
 	
-	Xaxis.setRamp(100, 25, 63, 15);
+	Xaxis.setRamp(100, 20, 63, 15);
 	//Yaxis.setRamp(100, 25, 63, 15);
 	Yaxis.setRamp(10, 30, 50, 15, inv_mov); // temporary
 	Zaxis.setRamp(10, 20, 50, 15, inv_mov);
@@ -45,8 +45,8 @@ void Moore::init()
 
 void Moore::setAbsPosition(pos target)
 {
-	std::thread xt(&Asse::setPosition, Xaxis, target.x);
-	std::thread yt(&Asse::setPosition, Yaxis, target.y);
+	std::thread xt(&Asse::setPosition, &Xaxis, target.x);
+	std::thread yt(&Asse::setPosition, &Yaxis, target.y);
 	//std::thread zt(&Asse::setPosition, Zaxis, target.z);
 	
 	yt.join();

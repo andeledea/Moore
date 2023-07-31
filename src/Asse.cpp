@@ -35,8 +35,6 @@ void Asse::init(PosInstr* instrument, SimpleSerial& serial, char name)
 double Asse::getPosition()
 {
 	position = instrPT->readInstr();
-	
-	std::cout << position << std::endl;
 	return position;
 }
 
@@ -70,7 +68,7 @@ void Asse::setPos(double targetPosition, const char instr)
 	while (distance - travel > 0) // finchè non raggiungo il target
 	{
 		setVelocity(distance, travel); //imposto la velocità istantanea
-		if (instr == 'm') P = position = measPT->readInstr();
+		if (instr == 'm') P = measPT->readInstr();
 		P = position;
 		travel = abs(P - startP); //calcolo il percorso fatto
 		
