@@ -91,40 +91,45 @@ void Moore::moveInstr()  // metodo da eliminare
 	Yaxis.setInstrPosition(ypos);
 }
 
-void Moore::measCHR()
+void Moore::measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop)
 {
-	std::string nome_file;
-	std::cout << "Insert measure name: ";
-	std::cin >> nome_file;
-
 	std::ofstream ost;
 
-	_mkdir(("C:/CHRmeasures/" + nome_file).c_str());
+	_mkdir((path + nome_file).c_str());
 
-	ost.open("C:/CHRmeasures/" + nome_file + "/data.CHRdat", std::ofstream::out);
+	ost.open(path + nome_file + "/data.CHRdat", std::ofstream::out);
 	
 	CHRocodile CHR;
 	CHR.connect();
 	CHR.setParams();
 	
 	pos startP, stopP;
-	startP.x = 6.0;
-	stopP.x = -6.0;
+	startP.x = start;
+	stopP.x = stop;
 	
 	setRelPosition(startP);  // beginning of measure
 	
 	Yaxis.setMeasInstrument((PosInstr *) &CHR);
 	Yaxis.findMeasCenter();
-	
-	// c;
-	// std::cout << "Dir f/b? ";
-	// std::cin >> c; 
-	// bool dir = (c == 'f')? dir_fore : dir_back;
-	bool dir = dir_back;
-	pos p;
 
-	Xaxis.startMeasure(10, dir);
-	std::thread t(&Asse::track, Yaxis, 0.050f);
+	pos p;
+	bool dir = (start > stop);
+
+	Xaxis.startMeasure(speed, dir);
+
+	std::thread t;
+	if (track) t = std::thread(&Asse::track, Yaxis, 0.050f);
+
+	auto finish = [](bool d, double sp, double pt)
+	{
+		if (d == dir_back) {
+			if (pt < sp) return true;
+		}
+		else {
+			if (pt > sp) return true;
+		}
+		return false;
+	};
 	
 	while (true)
 	{
@@ -132,12 +137,12 @@ void Moore::measCHR()
 		p = getRelPosition();
 		ost << p.x << "," << p.y << "," << p.z << "," << CHR.readInstr() << std::endl;
 		
-		if (GetKeyState('S') & 0x8000 || p.x < stopP.x) // mi fermo se 's'
+		if (GetKeyState('S') & 0x8000 || finish(dir, stop, p.x)) // mi fermo se 's'
 		{
 			break;
 		}
 	}
 	
 	Xaxis.stopMeasure(); // mi fermo
-	t.join();
+	if (track) t.join();
 }

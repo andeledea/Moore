@@ -159,3 +159,133 @@ PosFrame::~PosFrame()
 	gotoZero_but->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PosFrame::OnGotoZero_butClick ), NULL, this );
 
 }
+
+CHRMeasFrame::CHRMeasFrame( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style, const wxString& name ) : wxFrame( parent, id, title, pos, size, style, name )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* chrBoxSizer;
+	chrBoxSizer = new wxBoxSizer( wxVERTICAL );
+
+	wxGridBagSizer* nameSizer;
+	nameSizer = new wxGridBagSizer( 0, 0 );
+	nameSizer->SetFlexibleDirection( wxBOTH );
+	nameSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	measname_lab = new wxStaticText( this, wxID_ANY, wxT("Measure Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	measname_lab->Wrap( -1 );
+	nameSizer->Add( measname_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	measname_in = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	#ifdef __WXGTK__
+	if ( !measname_in->HasFlag( wxTE_MULTILINE ) )
+	{
+	measname_in->SetMaxLength( 30 );
+	}
+	#else
+	measname_in->SetMaxLength( 30 );
+	#endif
+	nameSizer->Add( measname_in, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+
+	chrBoxSizer->Add( nameSizer, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+	wxGridBagSizer* ParamSizer;
+	ParamSizer = new wxGridBagSizer( 0, 0 );
+	ParamSizer->SetFlexibleDirection( wxBOTH );
+	ParamSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	wxFlexGridSizer* fgSizer1;
+	fgSizer1 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer1->SetFlexibleDirection( wxBOTH );
+	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	speed_lab = new wxStaticText( this, wxID_ANY, wxT("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
+	speed_lab->Wrap( -1 );
+	fgSizer1->Add( speed_lab, 0, wxALL, 5 );
+
+	speed_in = new wxTextCtrl( this, wxID_ANY, wxT("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	#ifdef __WXGTK__
+	if ( !speed_in->HasFlag( wxTE_MULTILINE ) )
+	{
+	speed_in->SetMaxLength( 2 );
+	}
+	#else
+	speed_in->SetMaxLength( 2 );
+	#endif
+	fgSizer1->Add( speed_in, 0, wxALL, 5 );
+
+	track_lab = new wxStaticText( this, wxID_ANY, wxT("Tracking"), wxDefaultPosition, wxDefaultSize, 0 );
+	track_lab->Wrap( -1 );
+	fgSizer1->Add( track_lab, 0, wxALL, 5 );
+
+	track_check = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	track_check->SetValue(true);
+	fgSizer1->Add( track_check, 0, wxALL, 5 );
+
+
+	ParamSizer->Add( fgSizer1, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), 0, 5 );
+
+	wxFlexGridSizer* fgSizer2;
+	fgSizer2 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer2->SetFlexibleDirection( wxBOTH );
+	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	start_lab = new wxStaticText( this, wxID_ANY, wxT("Start relative X position"), wxDefaultPosition, wxDefaultSize, 0 );
+	start_lab->Wrap( -1 );
+	fgSizer2->Add( start_lab, 0, wxALL, 5 );
+
+	start_in = new wxTextCtrl( this, wxID_ANY, wxT("+5"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer2->Add( start_in, 0, wxALL, 5 );
+
+	stop_lab = new wxStaticText( this, wxID_ANY, wxT("Stop relative X position"), wxDefaultPosition, wxDefaultSize, 0 );
+	stop_lab->Wrap( -1 );
+	fgSizer2->Add( stop_lab, 0, wxALL, 5 );
+
+	stop_in = new wxTextCtrl( this, wxID_ANY, wxT("-5"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer2->Add( stop_in, 0, wxALL, 5 );
+
+
+	ParamSizer->Add( fgSizer2, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), 0, 5 );
+
+
+	chrBoxSizer->Add( ParamSizer, 0, wxEXPAND, 5 );
+
+	wxBoxSizer* pathSizer;
+	pathSizer = new wxBoxSizer( wxVERTICAL );
+
+	path_in = new wxTextCtrl( this, wxID_ANY, wxT("C:/CHRmeasures/"), wxDefaultPosition, wxDefaultSize, 0 );
+	pathSizer->Add( path_in, 0, wxALL|wxEXPAND, 5 );
+
+
+	chrBoxSizer->Add( pathSizer, 0, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer4;
+	bSizer4 = new wxBoxSizer( wxVERTICAL );
+
+	start_but = new wxButton( this, wxID_ANY, wxT("Start CHR measure"), wxDefaultPosition, wxDefaultSize, 0 );
+	start_but->SetFont( wxFont( 14, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	bSizer4->Add( start_but, 1, wxALL|wxEXPAND, 5 );
+
+
+	chrBoxSizer->Add( bSizer4, 1, wxEXPAND, 5 );
+
+
+	this->SetSizer( chrBoxSizer );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	speed_in->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CHRMeasFrame::OnSpeed_Text ), NULL, this );
+	start_but->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CHRMeasFrame::OnStartCHR_butClick ), NULL, this );
+}
+
+CHRMeasFrame::~CHRMeasFrame()
+{
+	// Disconnect Events
+	speed_in->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CHRMeasFrame::OnSpeed_Text ), NULL, this );
+	start_but->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CHRMeasFrame::OnStartCHR_butClick ), NULL, this );
+
+}

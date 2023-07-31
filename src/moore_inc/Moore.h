@@ -20,7 +20,7 @@ public:
 	void setRelPosition(pos target);
 	
 	void moveInstr();
-	void measCHR();
+	void measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop);
 
 	void init();
 
