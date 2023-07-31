@@ -15,6 +15,7 @@ void Moore::init()
 	}
 	else
 	{
+		std::cout << "Asse NON connesso" << std::endl;
 		throw std::runtime_error("Unable to connect micro");
 	}
 	
@@ -23,7 +24,7 @@ void Moore::init()
 	ik.connect();
 	yScale = ik.getYscale();
 	zScale = ik.getZscale();
-	
+		
 	yScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z); // change M_SIG_PERIOD_Y
 	zScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z);
 	
@@ -55,15 +56,11 @@ void Moore::setAbsPosition(pos target)
 
 void Moore::updatePosition()
 {
-	while (true)
-	{
-		abs.x = Xaxis.getPosition();
-		abs.y = Yaxis.getPosition();
-		abs.z = Zaxis.getPosition();
+	abs.x = this->Xaxis.getPosition();
+	abs.y = this->Yaxis.getPosition();
+	abs.z = this->Zaxis.getPosition();
 
-		rel = abs - zeroPos;
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
+	rel = abs - zeroPos;
 }
 
 void Moore::defineZero()

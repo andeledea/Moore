@@ -1,5 +1,6 @@
 #pragma once
 #include <thread>
+#include <memory>
 #include "SimpleSerial.h"
 #include "Laser.h"
 

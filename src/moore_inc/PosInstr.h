@@ -9,7 +9,7 @@ public:
 
 	virtual void connect() {}
 	virtual void setParams() {}
-	virtual double readInstr() { return 0.0f; }
+	virtual double readInstr() { return 0.0; }
 
 	~PosInstr() {}
 

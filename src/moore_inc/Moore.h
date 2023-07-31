@@ -10,6 +10,7 @@
 class Moore
 {
 public:
+	Moore() {};
 	void defineZero();
 	
 	void updatePosition();

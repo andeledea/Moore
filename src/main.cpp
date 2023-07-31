@@ -1,16 +1,7 @@
-#include <wx/wx.h>
+#include "app.h"
 #include "Moore.h"
 #include "PosFrame.h"
 #include "CHRMeasFrame.h"
- 
-class MyApp : public wxApp
-{
-public:
-    bool OnInit() override;
-    int OnExit() override;
-
-    static bool online;
-};
 
 // implement the application
 wxIMPLEMENT_APP(MyApp);
@@ -19,8 +10,11 @@ bool MyApp::OnInit()
 {
     MyApp::online = true;
 
-    Moore moore;
-    // moore.init();
+    Moore* moore = new Moore();
+    moore->init();
+	
+	moore->updatePosition();
+	std::cout << moore->getAbsPosition();
 
     MoorePosFrame* posFrame = new MoorePosFrame(nullptr);
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);
@@ -28,8 +22,8 @@ bool MyApp::OnInit()
     posFrame->Show(true);
     CHRmeasFrame->Show(true);
 
-    // posFrame->setMoore(&moore);  // starts the read thread
-    // CHRmeasFrame->setMoore(&moore);
+    posFrame->setMoore(moore);  // starts the read thread
+    //CHRmeasFrame->setMoore(&moore);
 
     return true;
 }
