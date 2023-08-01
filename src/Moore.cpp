@@ -40,6 +40,12 @@ void Moore::init()
 	Xaxis.setRamp(100, 20, 63, 15);
 	Yaxis.setRamp(100, 25, 63, 15);
 	Zaxis.setRamp(100, 30, 63, 10, inv_mov);
+	
+	// INIT THE CHR
+	CHR.connect();
+	CHR.setParams();
+	
+	Zaxis.setMeasInstrument((PosInstr *) &CHR);
 }
 
 void Moore::setAbsPosition(pos target)
@@ -92,12 +98,9 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 	std::ofstream ost;
 
 	_mkdir((path + nome_file).c_str());
+	std::cout << "Saving at: " << path + nome_file << std::endl;
 
 	ost.open(path + nome_file + "/data.CHRdat", std::ofstream::out);
-	
-	CHRocodile CHR;
-	CHR.connect();
-	CHR.setParams();
 	
 	pos startP, stopP;
 	startP.x = start;
@@ -105,16 +108,15 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 	
 	setRelPosition(startP);  // beginning of measure
 	
-	Yaxis.setMeasInstrument((PosInstr *) &CHR);
-	Yaxis.findMeasCenter();
+	Zaxis.findMeasCenter();
 
 	pos p;
-	bool dir = (start > stop);
+	bool dir = (start < stop);
 
 	Xaxis.startMeasure(speed, dir);
 
 	std::thread t;
-	if (track) t = std::thread(&Asse::track, Yaxis, 0.050f);
+	if (track) t = std::thread(&Asse::track, &Zaxis, 0.050f);
 
 	auto finish = [](bool d, double sp, double pt)
 	{

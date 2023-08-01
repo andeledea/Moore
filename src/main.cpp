@@ -10,17 +10,19 @@ bool MyApp::OnInit()
 {
     MyApp::online = true;
 
-    Moore* moore = new Moore();
-    moore->init();
-
     MoorePosFrame* posFrame = new MoorePosFrame(nullptr);
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);
     
     posFrame->Show(true);
     CHRmeasFrame->Show(true);
 
+#ifndef GUI
+	Moore* moore = new Moore();
+    moore->init();
+	
     posFrame->setMoore(moore);  // starts the read thread
-    //CHRmeasFrame->setMoore(&moore);
+    CHRmeasFrame->setMoore(moore);
+#endif
 
     return true;
 }

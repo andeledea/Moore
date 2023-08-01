@@ -170,13 +170,14 @@ void Asse::track(float pos)
 		
 		if (direction != prevDir) // if change direction 
 		{
-			// std::cout << "change!!" << std::endl;
+			//std::cout << "change!!" << std::endl;
 			velocity = 0;
 			sendVelocityToMicro();
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			sendCommandToMicro();
 		}
 		velocity = (unsigned int) (abs(disp) * k);
+		//std::cout << velocity << std::endl;
 		if (velocity != 0) sendVelocityToMicro();
 		
 		prevDir = direction;
