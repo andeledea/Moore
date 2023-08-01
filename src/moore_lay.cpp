@@ -204,7 +204,7 @@ CHRMeasFrame::CHRMeasFrame( wxWindow* parent, wxWindowID id, const wxString& tit
 	speed_lab->Wrap( -1 );
 	fgSizer1->Add( speed_lab, 0, wxALL, 5 );
 
-	speed_in = new wxTextCtrl( this, wxID_ANY, wxT("10"), wxDefaultPosition, wxDefaultSize, 0 );
+	speed_in = new wxTextCtrl( this, wxID_ANY, wxT("5"), wxDefaultPosition, wxDefaultSize, 0 );
 	#ifdef __WXGTK__
 	if ( !speed_in->HasFlag( wxTE_MULTILINE ) )
 	{

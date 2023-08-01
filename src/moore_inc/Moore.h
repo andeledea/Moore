@@ -34,5 +34,7 @@ private:
 	IkOptical ik;
 	Scale yScale, zScale;
 	
+	CHRocodile CHR;
+	
 	pos zeroPos, abs, rel;
 };

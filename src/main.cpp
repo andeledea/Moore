@@ -9,7 +9,7 @@ wxIMPLEMENT_APP(MyApp);
 bool MyApp::OnInit()
 {
     MyApp::online = true;
-    
+
     MoorePosFrame* posFrame = new MoorePosFrame(nullptr);
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);
     
@@ -17,12 +17,12 @@ bool MyApp::OnInit()
     CHRmeasFrame->Show(true);
 
 #ifndef GUI
-    Moore* moore = new Moore();
+	Moore* moore = new Moore();
     moore->init();
-
+	
     posFrame->setMoore(moore);  // starts the read thread
     CHRmeasFrame->setMoore(moore);
-#endif // GUI
+#endif
 
     return true;
 }

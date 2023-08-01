@@ -54,8 +54,6 @@ void MoorePosFrame::setMoore(Moore* m)
 
 void MoorePosFrame::OnSetAbs_butClick( wxCommandEvent& event )
 {
-	std::cout << "Set abs" << std::endl;
-
 	pos togo, rel;
 	togo.x = atof(this->xpos_in->GetLineText(0));
 	togo.y = atof(this->ypos_in->GetLineText(0));
@@ -67,8 +65,6 @@ void MoorePosFrame::OnSetAbs_butClick( wxCommandEvent& event )
 
 void MoorePosFrame::OnSetRel_butClick( wxCommandEvent& event )
 {
-	std::cout << "Set rel" << std::endl;
-
 	pos abs, togo;
 	togo.x = atof(this->xpos_in->GetLineText(0));
 	togo.y = atof(this->ypos_in->GetLineText(0));
@@ -80,13 +76,11 @@ void MoorePosFrame::OnSetRel_butClick( wxCommandEvent& event )
 
 void MoorePosFrame::OnSetZero_butClick( wxCommandEvent& event )
 {
-	std::cout << "Set zero" << std::endl;
 	moore->defineZero();
 }
 
 void MoorePosFrame::OnGotoZero_butClick( wxCommandEvent& event )
 {
-	std::cout << "Goto zero" << std::endl;
 	pos zero;
 	std::thread mt(&Moore::setRelPosition, moore, zero);
 	mt.detach();
