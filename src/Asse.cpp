@@ -122,7 +122,7 @@ void Asse::sendVelocityToMicro()
 	
 	toSend = toSend & 0b00111111 | axisName; // attach axis bits
 	
-	// std::cout << (int) toSend << " " << position << std::endl;
+	// std::cout << velocity << " " << (unsigned int) toSend << " " << position << std::endl;
 	ser.WriteSerialPort(&toSend, 1);
 }
 

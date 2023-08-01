@@ -12,9 +12,6 @@ bool MyApp::OnInit()
 
     Moore* moore = new Moore();
     moore->init();
-	
-	moore->updatePosition();
-	std::cout << moore->getAbsPosition();
 
     MoorePosFrame* posFrame = new MoorePosFrame(nullptr);
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);

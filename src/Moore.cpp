@@ -25,7 +25,7 @@ void Moore::init()
 	yScale = ik.getYscale();
 	zScale = ik.getZscale();
 		
-	yScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z); // change M_SIG_PERIOD_Y
+	yScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Y);
 	zScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z);
 	
 	las.connect();
@@ -38,20 +38,19 @@ void Moore::init()
 	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
 	
 	Xaxis.setRamp(100, 20, 63, 15);
-	//Yaxis.setRamp(100, 25, 63, 15);
-	Yaxis.setRamp(10, 30, 50, 15, inv_mov); // temporary
-	Zaxis.setRamp(10, 20, 50, 15, inv_mov);
+	Yaxis.setRamp(100, 25, 63, 15);
+	Zaxis.setRamp(100, 30, 63, 10, inv_mov);
 }
 
 void Moore::setAbsPosition(pos target)
 {
 	std::thread xt(&Asse::setPosition, &Xaxis, target.x);
 	std::thread yt(&Asse::setPosition, &Yaxis, target.y);
-	//std::thread zt(&Asse::setPosition, Zaxis, target.z);
+	std::thread zt(&Asse::setPosition, &Zaxis, target.z);
 	
-	yt.join();
 	xt.join();
-	//zt.join();
+	yt.join();
+	zt.join();
 }
 
 void Moore::updatePosition()
