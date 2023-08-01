@@ -62,3 +62,8 @@ clean:
 	@echo CLEAN
 	del $(BIN_PATH)\$(TARGET_NAME)
 	del $(OBJ_PATH)\*.o
+
+.PHONY: execlean
+execlean:
+	@echo CLEAN
+	del $(BIN_PATH)\$(TARGET_NAME)

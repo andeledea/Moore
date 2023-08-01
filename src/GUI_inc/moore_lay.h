@@ -24,6 +24,7 @@
 #include <wx/sizer.h>
 #include <wx/frame.h>
 #include <wx/checkbox.h>
+#include <wx/filepicker.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -85,7 +86,7 @@ class CHRMeasFrame : public wxFrame
 		wxTextCtrl* start_in;
 		wxStaticText* stop_lab;
 		wxTextCtrl* stop_in;
-		wxTextCtrl* path_in;
+		wxDirPickerCtrl* path_in;
 		wxButton* start_but;
 
 		// Virtual event handlers, override them in your derived class

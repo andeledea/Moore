@@ -254,7 +254,7 @@ CHRMeasFrame::CHRMeasFrame( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* pathSizer;
 	pathSizer = new wxBoxSizer( wxVERTICAL );
 
-	path_in = new wxTextCtrl( this, wxID_ANY, wxT("C:/CHRmeasures/"), wxDefaultPosition, wxDefaultSize, 0 );
+	path_in = new wxDirPickerCtrl( this, wxID_ANY, wxT("C:\\CHRmeasures"), wxT("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_DEFAULT_STYLE );
 	pathSizer->Add( path_in, 0, wxALL|wxEXPAND, 5 );
 
 
