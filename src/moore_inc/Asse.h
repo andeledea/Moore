@@ -44,6 +44,13 @@ public:
 	
 	~Asse();
 
+	double acceleration;
+	unsigned int startV;
+	unsigned int maxV;
+	unsigned int stopV;
+
+	bool invertedMovement = false;
+
 private:
 	void setPos(double targetPos, const char instr); // if instr == 'm' regulate measuring instr
 	void setVelocity(double dist, double trav);
@@ -54,12 +61,6 @@ private:
 	
 	bool lock = true;
 	bool direction = dir_fore;
-	bool invertedMovement = false;
-
-	double acceleration;
-	unsigned int startV;
-	unsigned int maxV;
-	unsigned int stopV;
 
 	unsigned int velocity = 0;
 	double position;

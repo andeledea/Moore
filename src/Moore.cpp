@@ -6,8 +6,8 @@
 
 void Moore::init()
 {
+#ifndef GUI
 	// CONFIFG THE SERIAL COM WITH UC
-	
 	char port[] = "COM5";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
 	{
@@ -36,16 +36,18 @@ void Moore::init()
 	Xaxis.init((PosInstr*) &las, ser, x_lab);
 	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
 	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
-	
-	Xaxis.setRamp(100, 20, 63, 15);
-	Yaxis.setRamp(100, 25, 63, 15);
-	Zaxis.setRamp(100, 30, 63, 10, inv_mov);
-	
+
 	// INIT THE CHR
 	CHR.connect();
 	CHR.setParams();
+
+	Zaxis.setMeasInstrument((PosInstr*)&CHR);
+#endif
 	
-	Zaxis.setMeasInstrument((PosInstr *) &CHR);
+	// acc, start, max, stop 
+	Xaxis.setRamp(100, 20, 63, 15);
+	Yaxis.setRamp(100, 25, 63, 15);
+	Zaxis.setRamp(100, 30, 63, 10, inv_mov);
 }
 
 void Moore::setAbsPosition(pos target)

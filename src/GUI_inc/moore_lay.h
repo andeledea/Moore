@@ -22,7 +22,9 @@
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/sizer.h>
+#include <wx/toolbar.h>
 #include <wx/frame.h>
+#include <wx/slider.h>
 #include <wx/checkbox.h>
 #include <wx/filepicker.h>
 
@@ -52,12 +54,15 @@ class PosFrame : public wxFrame
 		wxButton* setRel_but;
 		wxButton* setZero_but;
 		wxButton* gotoZero_but;
+		wxToolBar* pos_toolbar;
+		wxToolBarToolBase* Pos_set_tool;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnSetAbs_butClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSetRel_butClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSetZero_butClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnGotoZero_butClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPosSettings_clicked( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -65,6 +70,58 @@ class PosFrame : public wxFrame
 		PosFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("POSITION CONTROL") );
 
 		~PosFrame();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class AxisFrame
+///////////////////////////////////////////////////////////////////////////////
+class AxisFrame : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* x_acc_lab;
+		wxSlider* x_acc_slider;
+		wxStaticText* x_max_lab;
+		wxSlider* x_max_slider;
+		wxStaticText* x_start_lab;
+		wxSlider* x_start_slider;
+		wxStaticText* x_stop_lab;
+		wxSlider* x_stop_slider;
+		wxStaticText* x_dir_lab;
+		wxCheckBox* x_mov_check;
+		wxStaticText* y_acc_lab;
+		wxSlider* y_acc_slider;
+		wxStaticText* y_max_lab;
+		wxSlider* y_max_slider;
+		wxStaticText* y_start_lab;
+		wxSlider* y_start_slider;
+		wxStaticText* y_stop_lab;
+		wxSlider* y_stop_slider;
+		wxStaticText* y_dir_lab;
+		wxCheckBox* y_mov_check;
+		wxStaticText* z_acc_lab;
+		wxSlider* z_acc_slider;
+		wxStaticText* z_max_lab2;
+		wxSlider* z_max_slider;
+		wxStaticText* z_start_lab;
+		wxSlider* z_start_slider;
+		wxStaticText* z_stop_lab;
+		wxSlider* z_stop_slider;
+		wxStaticText* z_dir_lab;
+		wxCheckBox* z_mov_check;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnAxisSetting_changed( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnAxisSetting_changed( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		AxisFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("AXIS SETTINGS"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 715,285 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~AxisFrame();
 
 };
 

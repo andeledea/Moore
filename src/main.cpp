@@ -16,13 +16,11 @@ bool MyApp::OnInit()
     posFrame->Show(true);
     CHRmeasFrame->Show(true);
 
-#ifndef GUI
 	Moore* moore = new Moore();
     moore->init();
 	
     posFrame->setMoore(moore);  // starts the read thread
     CHRmeasFrame->setMoore(moore);
-#endif
 
     return true;
 }
