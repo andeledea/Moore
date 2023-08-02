@@ -25,7 +25,6 @@ public:
 
 	void init();
 
-private:
 	SimpleSerial ser;
 
 	Asse Xaxis, Yaxis, Zaxis;
@@ -35,6 +34,7 @@ private:
 	Scale yScale, zScale;
 	
 	CHRocodile CHR;
-	
+
+private:
 	pos zeroPos, abs, rel;
 };

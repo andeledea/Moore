@@ -57,6 +57,12 @@ all: $(TARGET)
 .PHONY: debug
 debug: $(TARGET_DEBUG)
 
+.PHONY: layout
+layout:
+	@echo LAYOUT
+	move moore_lay.cpp $(SRC_PATH)/moore_lay.cpp
+	move moore_lay.h $(SRC_PATH)/GUI_inc/moore_lay.h
+
 .PHONY: clean
 clean:
 	@echo CLEAN

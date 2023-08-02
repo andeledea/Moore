@@ -6,6 +6,7 @@
 
 #include "app.h"
 #include "PosFrame.h"
+#include "AxisFrame.h"
 
 MoorePosFrame::MoorePosFrame( wxWindow* parent )
 :
@@ -48,8 +49,10 @@ void MoorePosFrame::UpdatePosition()
 void MoorePosFrame::setMoore(Moore* m)
 {
 	this->moore = m;
-	std::thread posThread {&MoorePosFrame::UpdatePosition, this};
+#ifndef GUI
+	std::thread posThread{ &MoorePosFrame::UpdatePosition, this };
 	posThread.detach();
+#endif // !GUI
 }
 
 void MoorePosFrame::OnSetAbs_butClick( wxCommandEvent& event )
@@ -84,4 +87,11 @@ void MoorePosFrame::OnGotoZero_butClick( wxCommandEvent& event )
 	pos zero;
 	std::thread mt(&Moore::setRelPosition, moore, zero);
 	mt.detach();
+}
+
+void MoorePosFrame::OnPosSettings_clicked(wxCommandEvent& event)
+{
+	MooreAxisFrame* axisFrame = new MooreAxisFrame(nullptr);
+	axisFrame->setMoore(moore);
+	axisFrame->Show();
 }
