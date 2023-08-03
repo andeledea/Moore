@@ -93,7 +93,7 @@ public:
 	* @param invertedMovement: if true the movement of the motor
 	*	is inverted to take into account the sign of the encoder
 	* */
-	void setRamp(double acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
+	void setRamp(unsigned int acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
 
 	/**
 	* Returns the status of the locj of the motor
@@ -134,7 +134,7 @@ public:
 	
 	~Asse();
 
-	double acceleration;
+	unsigned int acceleration;
 	unsigned int startV;
 	unsigned int maxV;
 	unsigned int stopV;

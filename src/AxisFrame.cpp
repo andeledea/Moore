@@ -73,7 +73,7 @@ void MooreAxisFrame::OnAxisSetting_changed()
 	moore->Zaxis.setRamp
 	(
 		z_acc_slider->GetValue(),
-		start, y_max_slider->GetValue(), stop,
+		start, z_max_slider->GetValue(), stop,
 		z_mov_check->GetValue()
 	);
 }

@@ -333,6 +333,15 @@ AxisFrame::AxisFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	x_stop_slider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_stop_slider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_mov_check->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );

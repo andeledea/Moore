@@ -82,7 +82,7 @@ void Asse::setPos(double targetPosition, const char instr)
 	sendCommandToMicro();
 }
 
-void Asse::setRamp(double acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement)
+void Asse::setRamp(unsigned int acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement)
 {
 	acceleration = acc;
 	startV = startv;
