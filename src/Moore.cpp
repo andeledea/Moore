@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <iostream>
 #include <iomanip>
 #include <conio.h>
@@ -19,24 +18,24 @@ void Moore::init()
 		std::cout << "Asse NON connesso" << std::endl;
 		throw std::runtime_error("Unable to connect micro");
 	}
-	
+
 	// CONNECT THE OPTICAL SCALES
-	
+
 	ik.connect();
 	yScale = ik.getYscale();
 	zScale = ik.getZscale();
-		
+
 	yScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Y);
 	zScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z);
-	
+
 	las.connect();
 	las.setParams();
-	
+
 	// INIT THE 3 AXIS
-	
-	Xaxis.init((PosInstr*) &las, ser, x_lab);
-	Yaxis.init((PosInstr*) &yScale, ser, y_lab);
-	Zaxis.init((PosInstr*) &zScale, ser, z_lab);
+
+	Xaxis.init((PosInstr*)&las, ser, x_lab);
+	Yaxis.init((PosInstr*)&yScale, ser, y_lab);
+	Zaxis.init((PosInstr*)&zScale, ser, z_lab);
 
 	// INIT THE CHR
 	CHR.connect();
@@ -44,7 +43,7 @@ void Moore::init()
 
 	Zaxis.setMeasInstrument((PosInstr*)&CHR);
 #endif
-	
+
 	// acc, start, max, stop 
 	Xaxis.setRamp(100, 20, 63, 15);
 	Yaxis.setRamp(100, 25, 63, 15);
@@ -56,24 +55,12 @@ void Moore::setAbsPosition(pos target)
 	std::thread xt(&Asse::setPosition, &Xaxis, target.x);
 	std::thread yt(&Asse::setPosition, &Yaxis, target.y);
 	std::thread zt(&Asse::setPosition, &Zaxis, target.z);
-	
-=======
-#include "Moore.h"
-#include "Asse.h"
 
-void Moore::setCurrentPosition(float x, float y, float z)
-{
-	xt = std::thread(Xaxis.setPosition, x);
-	yt = std::thread(Yaxis.setPosition, y);
-	zt = std::thread(Zaxis.setPosition, z);
-
->>>>>>> ab36b7f (Added moore class for movement)
 	xt.join();
 	yt.join();
 	zt.join();
 }
 
-<<<<<<< HEAD
 void Moore::updatePosition()
 {
 	abs.x = this->Xaxis.getPosition();
@@ -107,13 +94,13 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 	std::cout << "Saving at: " << path + nome_file << std::endl;
 
 	ost.open(path + nome_file + "/data.CHRdat", std::ofstream::out);
-	
+
 	pos startP, stopP;
 	startP.x = start;
 	stopP.x = stop;
-	
+
 	setRelPosition(startP);  // beginning of measure
-	
+
 	Zaxis.findMeasCenter();
 
 	pos p;
@@ -134,47 +121,19 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 		}
 		return false;
 	};
-	
+
 	while (true)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		p = getRelPosition();
 		ost << p.x << "," << p.y << "," << p.z << "," << CHR.readInstr() << std::endl;
-		
+
 		if (GetKeyState('S') & 0x8000 || finish(dir, stop, p.x)) // mi fermo se 's'
 		{
 			break;
 		}
 	}
-	
+
 	Xaxis.stopMeasure(); // mi fermo
 	if (track) t.join();
 }
-=======
-void Moore::setAxes(Asse x, Asse y, Asse z)
-{
-	Xaxis = x;
-	Yaxis = y;
-	Zaxis = z;
-}
-
-void Moore::startProcess()
-{
-	 t = std::thread(&Moore::process, this);
-}
-
-void Moore::stopProcess()
-{
-	t.detach();
-}
-
-void Moore::process()
-{
-	while (true)
-	{
-		currentPos.x = Xaxis.getPosition();
-		currentPos.y = Yaxis.getPosition();
-		currentPos.z = Zaxis.getPosition();
-	}
-}
->>>>>>> ab36b7f (Added moore class for movement)
