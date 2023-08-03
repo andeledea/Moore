@@ -31,7 +31,7 @@ public:
 
 	double getPosition(); //ritorna la pos attuale
 	void setPosition(double targetPos) { setPos(targetPos, 'i'); }
-	void setRamp(double acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
+	void setRamp(unsigned int acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement = false);
 
 	bool isLocked() { return lock; };
 	void retension(float pos, int v);
@@ -44,7 +44,7 @@ public:
 	
 	~Asse();
 
-	double acceleration;
+	unsigned int acceleration;
 	unsigned int startV;
 	unsigned int maxV;
 	unsigned int stopV;
