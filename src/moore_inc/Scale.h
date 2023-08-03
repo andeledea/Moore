@@ -38,10 +38,10 @@ public:
 	* Sets the ecoder type and the signal type of
 	* the optical scale
 	* 
-	* @param encoderType: ENC_INCREMENTAL (@def val), ENC_ENDAT
-	* @param signalType: SIG_11UA (@def val), SIG_VPP
+	* @param encoderType: ENC_INCREMENTAL (def val), ENC_ENDAT
+	* @param signalType: SIG_11UA (def val), SIG_VPP
 	* @param signalPeriod: the scale factor of the reading
-		M_SIG_PERIOD_Y (@def val), M_SIG_PERIOD_Z
+	*	M_SIG_PERIOD_Y (def val), M_SIG_PERIOD_Z
 	* */
 	void setParams(ULONG encoderType = ENC_INCREMENTAL, 
 				   ULONG signalType = SIG_11UA,
