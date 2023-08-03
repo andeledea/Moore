@@ -10,18 +10,52 @@
 #define SIG_11UA 0
 #define SIG_VPP 1
 
+
+/**
+* Interface for the IK220 optical scale reader
+* PCI board
+* */
 class IkOptical : PosInstr
 {
 public:
 	using PosInstr::PosInstr;
 
+	/**
+	* Conncts the IK220 and finds all the conncted
+	* optical scales
+	* */
 	void connect();
+
+	/**
+	* Sets the ecoder type to ENC_INCREMENTAL
+	* and the signal type to SIG_11UA
+	* for each optical scale
+	* */
 	void setParams();
 
+	/**
+	* Reads all the conncted scales and displays the 
+	* values on the terminal
+	* */
 	double readInstr();
 	
-	Scale getYscale() {return yScale;};
-	Scale getZscale() {return zScale;};
+	/**
+	* Returns the yScale object of the machine
+	* that can be integrated in an axis object as
+	* an encoder
+	* 
+	* @return yScale: the y optical Scale object
+	* */
+	Scale getYscale() { return yScale; };
+
+	/**
+	* Returns the zScale object of the machine
+	* that can be integrated in an axis object as
+	* an encoder
+	*
+	* @return zScale: the z optical Scale object
+	* */
+	Scale getZscale() { return zScale; };
 
 	~IkOptical();
 	

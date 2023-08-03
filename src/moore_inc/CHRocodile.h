@@ -18,16 +18,31 @@ struct CHRparams
 	double inty;
 };
 
+/**
+* Interface for the CHR confocal chromatic
+* sersor from precitec
+* */
 class CHRocodile : PosInstr
 {
 public:
 	using PosInstr::PosInstr;
 
+	/**
+	* Connects the ethernet CHR interface
+	* */
 	void connect();
+
+	/**
+	* Connects the ethernet CHR interface
+	* */
 	void setParams();
 
+	/**
+	* Reads the CHR confocal distance value
+	*
+	* @return value: the position of the probe (mm)
+	* */
 	double readInstr();
-	// int cnt_check = check_period;
 
 	~CHRocodile();
 

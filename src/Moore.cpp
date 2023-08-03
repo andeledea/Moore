@@ -81,18 +81,9 @@ void Moore::setRelPosition(pos target)
 	setAbsPosition(target);
 }
 
-void Moore::moveInstr()  // metodo da eliminare
+void Moore::moveInstr(double target)
 {
-	CHRocodile CHR;
-	CHR.connect();
-	CHR.setParams();
-	
-	Yaxis.setMeasInstrument((PosInstr *) &CHR);
-	
-	float ypos;
-	std::cout << "Where to go? y ";
-	std::cin >> ypos;
-	Yaxis.setInstrPosition(ypos);
+	// TODO
 }
 
 void Moore::measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop)

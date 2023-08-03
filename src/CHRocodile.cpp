@@ -24,6 +24,7 @@ void CHRocodile::connect()
 
 void CHRocodile::setParams()
 {
+	// TODO: make all variables as arguments
 	int MeasMode = 0;
 	int ScanRate = 2000;
 	int DataAverage = 1;

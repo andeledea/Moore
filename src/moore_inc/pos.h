@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+* 3D position container
+* 
+* provides simple math operations on 3D vectors and defines a position
+* in the machine space
+* */
 class pos // defines a reference system (only translation no rotation)
 {
 public:

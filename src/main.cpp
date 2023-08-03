@@ -22,7 +22,7 @@ bool MyApp::OnInit()
     posFrame->setMoore(moore);  // starts the read thread
     CHRmeasFrame->setMoore(moore);
 
-    return true;
+    return true; 
 }
 
 int MyApp::OnExit()
