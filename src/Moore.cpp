@@ -42,6 +42,10 @@ void Moore::init()
 	CHR.setParams();
 
 	Zaxis.setMeasInstrument((PosInstr*)&CHR);
+
+	// INIT THE CARY
+	cary.connect();
+	cary.setParams();
 #endif
 
 	// acc, start, max, stop 
@@ -136,4 +140,9 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 
 	Xaxis.stopMeasure(); // mi fermo
 	if (track) t.join();
+}
+
+Moore::~Moore()
+{
+	ser.CloseSerialPort();
 }

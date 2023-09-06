@@ -6,6 +6,7 @@
 #include "Scale.h"
 #include "SimpleSerial.h"
 #include "pos.h"
+#include "cary.h"
 
 /**
 * Class control for the Moore machine
@@ -31,7 +32,7 @@ public:
 	/**
 	* Reads the position from the encoders and
 	* set the abs and relative variables to match
-	* th physical position of the machine
+	* the physical position of the machine
 	* */
 	void updatePosition();
 
@@ -58,7 +59,7 @@ public:
 	* @param target: the target 3D coords
 	* */
 	void setAbsPosition(pos target);
-
+	
 	/**
 	* Moves the machine to reach the target
 	* position in Rel coordinates
@@ -66,7 +67,7 @@ public:
 	* @param target: the target 3D coords
 	* */
 	void setRelPosition(pos target);
-	
+
 	/**
 	* Moves the machine to reach the target
 	* position (considering the axis measuring
@@ -75,7 +76,7 @@ public:
 	* @param target: the target 1D coord
 	* */
 	void moveInstr(double target);
-
+	
 	/**
 	* Starts the measure with the confocal
 	* objective with the given parameters
@@ -89,6 +90,8 @@ public:
 	* */
 	void measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop);
 
+	~Moore();
+
 	SimpleSerial ser;
 
 	Asse Xaxis, Yaxis, Zaxis;
@@ -98,6 +101,7 @@ public:
 	Scale yScale, zScale;
 	
 	CHRocodile CHR;
+	Cary cary;
 
 private:
 	pos zeroPos, abs, rel;

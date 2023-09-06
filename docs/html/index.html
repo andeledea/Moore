@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Moore: Main Page</title>
+<title>Moore: MOORE</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,10 +69,91 @@ $(function() {
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Moore Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">MOORE </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="mainpage"></a>Programma per controllo assi e misure con la macchina MOORE INRIM.</p>
+<h1><a class="anchor" id="autotoc_md0"></a>
+Compilazione del sorgente</h1>
+<div class="fragment"><div class="line">- Make          -&gt; compilazione completa del codice</div>
+<div class="line">- Make CXXFLAGS=&quot;-DGUI&quot; -&gt; compilazione della sola GUI per testing</div>
+<div class="line">- Make clean        -&gt; rimozione dell&#39;eseguibile e dei file oggetto</div>
+<div class="line">- Make layout       -&gt; modifica del layout GUI</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1"></a>
+Compilazione GUI library da sorgente</h1>
+<p>Scaricare la libreria grafica wxWidgets e compilarla da sorgente <a href="https://docs.wxwidgets.org">wxWidgets Downloads</a></p>
+<div class="fragment"><div class="line">make -f makefile.gcc BUILD=release SHARED=1 UNICODE=1 clean</div>
+<div class="line">make -f makefile.gcc BUILD=release SHARED=1 UNICODE=1</div>
+</div><!-- fragment --><p>Copiare include folder and lib folder nella cartella <a class="el" href="class_moore.html">Moore</a> prima di compilare. La cartella lib deve avere la seguente struttura: </p><div class="fragment"><div class="line">├───lib</div>
+<div class="line">│   └───gcc_dll</div>
+<div class="line">│       └───mswu</div>
+<div class="line">│           └───wx</div>
+<div class="line">│               └───msw</div>
+</div><!-- fragment --><p> gcc_dll deve contenere tutte le librerie grafiche e non che servono per il funzionamento del programma, le librerie grafiche si ottengono dalla compilazione di wxWidgets. </p><div class="fragment"><div class="line">28/07/2023  17:15           748,032 CHRocodileDLL.dll</div>
+<div class="line">31/07/2023  17:19            59,568 gpibconf.dll</div>
+<div class="line">28/07/2023  17:15           175,464 IK220Dll.Dll</div>
+<div class="line">28/07/2023  17:15           239,392 IK220Dll64.dll</div>
+<div class="line">31/07/2023  17:19           380,072 ni4882.dll</div>
+<div class="line">31/07/2023  17:19            23,704 ni488config.dll</div>
+<div class="line"> </div>
+<div class="line">31/07/2023  17:19         7,082,351 wxbase32u_gcc_custom.dll</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">31/07/2023  17:19         4,713,371 wxmsw32u_xrc_gcc_custom.dll</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+GUI graphical tool</h1>
+<p>Per lo sviluppo grafico usare il programma <b>wxFormBuilder</b> scaricabile da: <a href="https://github.com/wxFormBuilder/wxFormBuilder/releases">wxFormBuilder Downloads</a> Il file moore.fbp è il progetto grafico, una volta generato il codice usare </p><div class="fragment"><div class="line">make layout</div>
+</div><!-- fragment --><p> per distribuire automaticamente i file nelle apposite cartelle.</p>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Serial library</h1>
+<p>La libreria è già inclusa nel codice sorgente in quanto si tratta di soli 2 file <a href="https://github.com/dmicha16/simple_serial_port/tree/master">simpleSerial Downloads</a></p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+uC Firmware</h1>
+<p>Il firmware del uC (NUCLEO BOARD) deve essere caricato sulla scheda tramite ST-LINK o STM32CubeIDE</p>
+<p><a href="https://www.st.com/en/development-tools/stm32cubeide.html#get-software">STM32cube Downloads</a></p>
+<p>E' possibile anche usare STM32MX per la generazione del codice di cofigurazione delle periferiche del microcontrollore e un diverso ide per la personalizzazione.</p>
+<p><a href="https://www.st.com/en/development-tools/stm32cubemx.html#get-software">STM32MX Downloads</a></p>
+<p><a href="https://www.st.com/en/development-tools/stm32cubeprog.html#get-software">STM32Uploader Downloads</a></p>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Documentazione</h1>
+<p>La documentazione è scritta nella forma: </p><div class="fragment"><div class="line">/**</div>
+<div class="line">* Brief explanation of the function/method/class</div>
+<div class="line">*</div>
+<div class="line">* @param a: explanation of the param</div>
+<div class="line">* @param b:</div>
+<div class="line">* </div>
+<div class="line">* @return ret: explanation of the return value</div>
+<div class="line">* </div>
+<div class="line">* @throw Exception: explanation of the failure</div>
+<div class="line">* */</div>
+</div><!-- fragment --><p> Il programma <em>DOXIGEN</em> permette la generazione automatica della documentazione lateX e html</p>
+<p><a href="https://www.doxygen.nl/index.html">Doxigen downloads</a></p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Project folder structure</h1>
+<p>Come la cartella dovrebbe presentarsi al momento della compilazione </p><div class="fragment"><div class="line">Moore</div>
+<div class="line">├───bin</div>
+<div class="line">├───docs</div>
+<div class="line">│   └───html</div>
+<div class="line">│       └───search</div>
+<div class="line">├───icons</div>
+<div class="line">├───include</div>
+<div class="line">│   ├───msvc</div>
+<div class="line">│   │   └───wx</div>
+<div class="line">│   └───wx</div>
+<div class="line">├───lib</div>
+<div class="line">│   └───gcc_dll</div>
+<div class="line">│       └───mswu</div>
+<div class="line">│           └───wx</div>
+<div class="line">│               └───msw</div>
+<div class="line">├───obj</div>
+<div class="line">└───src</div>
+<div class="line">    ├───GUI_inc</div>
+<div class="line">    └───moore_inc</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+@andeledea (Andrea Giura), GitHub.com</h2>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

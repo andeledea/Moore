@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Moore: Moore/src/moore_inc/SimpleSerial.h Source File</title>
+<title>Moore: src/moore_inc/SimpleSerial.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,7 +70,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_265a4dd47c53745cfc4d10da55e5d506.html">Moore</a></li><li class="navelem"><a class="el" href="dir_fc78aa88c823c26088e7d5cf42aa5d3f.html">src</a></li><li class="navelem"><a class="el" href="dir_409fe5a8f337b27d5c85bda10c4309c8.html">moore_inc</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_32bb78010274de6099cd0a6134003e70.html">moore_inc</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -106,19 +106,31 @@ $(function() {
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_class" href="class_simple_serial.html">SimpleSerial</a>();</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_class" href="class_simple_serial.html">SimpleSerial</a>(<span class="keywordtype">char</span>* com_port, DWORD COM_BAUD_RATE);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    std::string ReadSerialPort(<span class="keywordtype">int</span> reply_wait_time, std::string syntax_type);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">bool</span> WriteSerialPort(<span class="keywordtype">char</span>* data_sent);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">bool</span> WriteSerialPort(<span class="keywordtype">char</span>* data_sent, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">bool</span> OpenSerialPort(<span class="keywordtype">char</span> * com_port, DWORD COM_BAUD_RATE);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">bool</span> CloseSerialPort();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_class" href="class_simple_serial.html">~SimpleSerial</a>();</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">bool</span> connected_;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">//std::mutex sendMutex;</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>};</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    std::string <a class="code hl_function" href="class_simple_serial.html#ac7f6319a700741ac2ca65ba8cba06f57">ReadSerialPort</a>(<span class="keywordtype">int</span> reply_wait_time);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::string <a class="code hl_function" href="class_simple_serial.html#ac7f6319a700741ac2ca65ba8cba06f57">ReadSerialPort</a>(<span class="keywordtype">int</span> reply_wait_time, std::string syntax_type);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simple_serial.html#ae4803b3add2ef3c3f3e07caf1965a4b3">WriteSerialPort</a>(<span class="keywordtype">char</span>* data_sent);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simple_serial.html#ae4803b3add2ef3c3f3e07caf1965a4b3">WriteSerialPort</a>(<span class="keywordtype">char</span>* data_sent, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simple_serial.html#acf709f07cdf513116c4719b0c48c088e">OpenSerialPort</a>(<span class="keywordtype">char</span>* com_port, DWORD COM_BAUD_RATE);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simple_serial.html#acf709f07cdf513116c4719b0c48c088e">OpenSerialPort</a>(<span class="keywordtype">char</span> * com_port, DCB PORT_PARAMS);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simple_serial.html#ab8860870ea4ad310e6b94b165ef296ed">CloseSerialPort</a>();</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <a class="code hl_class" href="class_simple_serial.html">~SimpleSerial</a>();</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">bool</span> connected_;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="comment">//std::mutex sendMutex;</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>};</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
 <div class="ttc" id="aclass_simple_serial_html"><div class="ttname"><a href="class_simple_serial.html">SimpleSerial</a></div><div class="ttdef"><b>Definition</b> SimpleSerial.h:14</div></div>
+<div class="ttc" id="aclass_simple_serial_html_ab8860870ea4ad310e6b94b165ef296ed"><div class="ttname"><a href="class_simple_serial.html#ab8860870ea4ad310e6b94b165ef296ed">SimpleSerial::CloseSerialPort</a></div><div class="ttdeci">bool CloseSerialPort()</div><div class="ttdef"><b>Definition</b> SimpleSerial.cpp:233</div></div>
+<div class="ttc" id="aclass_simple_serial_html_ac7f6319a700741ac2ca65ba8cba06f57"><div class="ttname"><a href="class_simple_serial.html#ac7f6319a700741ac2ca65ba8cba06f57">SimpleSerial::ReadSerialPort</a></div><div class="ttdeci">std::string ReadSerialPort(int reply_wait_time)</div><div class="ttdef"><b>Definition</b> SimpleSerial.cpp:65</div></div>
+<div class="ttc" id="aclass_simple_serial_html_acf709f07cdf513116c4719b0c48c088e"><div class="ttname"><a href="class_simple_serial.html#acf709f07cdf513116c4719b0c48c088e">SimpleSerial::OpenSerialPort</a></div><div class="ttdeci">bool OpenSerialPort(char *com_port, DWORD COM_BAUD_RATE)</div><div class="ttdef"><b>Definition</b> SimpleSerial.cpp:150</div></div>
+<div class="ttc" id="aclass_simple_serial_html_ae4803b3add2ef3c3f3e07caf1965a4b3"><div class="ttname"><a href="class_simple_serial.html#ae4803b3add2ef3c3f3e07caf1965a4b3">SimpleSerial::WriteSerialPort</a></div><div class="ttdeci">bool WriteSerialPort(char *data_sent)</div><div class="ttdef"><b>Definition</b> SimpleSerial.cpp:119</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

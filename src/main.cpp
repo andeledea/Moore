@@ -18,7 +18,7 @@ bool MyApp::OnInit()
 
 	Moore* moore = new Moore();
     moore->init();
-	
+
     posFrame->setMoore(moore);  // starts the read thread
     CHRmeasFrame->setMoore(moore);
 
@@ -32,4 +32,3 @@ int MyApp::OnExit()
 }
 
 bool MyApp::online = false;
- 

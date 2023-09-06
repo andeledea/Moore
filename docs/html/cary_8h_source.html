@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Moore: src/moore_inc/Laser.h Source File</title>
+<title>Moore: src/moore_inc/cary.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -74,33 +74,36 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">Laser.h</div></div>
+  <div class="headertitle"><div class="title">cary.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;ni4882.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;SimpleSerial.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;PosInstr.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_laser.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="class_laser.html">Laser</a> : <a class="code hl_class" href="class_pos_instr.html">PosInstr</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_cary.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="class_cary.html">Cary</a> : <a class="code hl_class" href="class_pos_instr.html">PosInstr</a></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">using </span>PosInstr::PosInstr;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_laser.html#a9d0ffe8ea033764983763414664971b1">connect</a>();</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_laser.html#a11d0cb04f542539eecb2e0bdf2645181">setParams</a>();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_laser.html#a995042d7c816df1fe0c060c0f269cddd">readInstr</a>();</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="class_laser.html">~Laser</a>();</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_cary.html#a554af0b36f8b437d41d4422eef8732dc">connect</a>();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_cary.html#a26f243ffbd25a8729a949fe02b5bf684">setParams</a>();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_cary.html#af4e570ca450acb3a5fa42bea935cda3b">readInstr</a>();</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="ttc" id="aclass_laser_html"><div class="ttname"><a href="class_laser.html">Laser</a></div><div class="ttdef"><b>Definition</b> Laser.h:10</div></div>
-<div class="ttc" id="aclass_laser_html_a11d0cb04f542539eecb2e0bdf2645181"><div class="ttname"><a href="class_laser.html#a11d0cb04f542539eecb2e0bdf2645181">Laser::setParams</a></div><div class="ttdeci">void setParams()</div><div class="ttdef"><b>Definition</b> Laser.cpp:21</div></div>
-<div class="ttc" id="aclass_laser_html_a995042d7c816df1fe0c060c0f269cddd"><div class="ttname"><a href="class_laser.html#a995042d7c816df1fe0c060c0f269cddd">Laser::readInstr</a></div><div class="ttdeci">double readInstr()</div><div class="ttdef"><b>Definition</b> Laser.cpp:10</div></div>
-<div class="ttc" id="aclass_laser_html_a9d0ffe8ea033764983763414664971b1"><div class="ttname"><a href="class_laser.html#a9d0ffe8ea033764983763414664971b1">Laser::connect</a></div><div class="ttdeci">void connect()</div><div class="ttdef"><b>Definition</b> Laser.cpp:5</div></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="class_cary.html">~Cary</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_class" href="class_simple_serial.html">SimpleSerial</a> ser;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>};</div>
+<div class="ttc" id="aclass_cary_html"><div class="ttname"><a href="class_cary.html">Cary</a></div><div class="ttdef"><b>Definition</b> cary.h:10</div></div>
+<div class="ttc" id="aclass_cary_html_a26f243ffbd25a8729a949fe02b5bf684"><div class="ttname"><a href="class_cary.html#a26f243ffbd25a8729a949fe02b5bf684">Cary::setParams</a></div><div class="ttdeci">void setParams()</div><div class="ttdef"><b>Definition</b> cary.cpp:29</div></div>
+<div class="ttc" id="aclass_cary_html_a554af0b36f8b437d41d4422eef8732dc"><div class="ttname"><a href="class_cary.html#a554af0b36f8b437d41d4422eef8732dc">Cary::connect</a></div><div class="ttdeci">void connect()</div><div class="ttdef"><b>Definition</b> cary.cpp:4</div></div>
+<div class="ttc" id="aclass_cary_html_af4e570ca450acb3a5fa42bea935cda3b"><div class="ttname"><a href="class_cary.html#af4e570ca450acb3a5fa42bea935cda3b">Cary::readInstr</a></div><div class="ttdeci">double readInstr()</div><div class="ttdef"><b>Definition</b> cary.cpp:43</div></div>
 <div class="ttc" id="aclass_pos_instr_html"><div class="ttname"><a href="class_pos_instr.html">PosInstr</a></div><div class="ttdef"><b>Definition</b> PosInstr.h:8</div></div>
+<div class="ttc" id="aclass_simple_serial_html"><div class="ttname"><a href="class_simple_serial.html">SimpleSerial</a></div><div class="ttdef"><b>Definition</b> SimpleSerial.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
