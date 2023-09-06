@@ -14,7 +14,7 @@ void Cary::connect()
 	dcbSerialParams.fDtrControl = DTR_CONTROL_ENABLE;
 	dcbSerialParams.fRtsControl = RTS_CONTROL_DISABLE;
 
-	char port[] = "COM4";
+	char port[] = "COM2";
 	if (ser.OpenSerialPort(port, dcbSerialParams)) // apro la com seriale
 	{
 		std::cout << "Cary connesso" << std::endl;
@@ -30,11 +30,11 @@ void Cary::setParams()
 {
 	// reference commands at: 
 	// https://www.whp.cz/files/User%20manual,%20TESA%20TT80-90%20EN%20DE%20FR.pdf#page=94
-	char toSend[] = "FNC?\r"; // Request for displayed value.
-	ser.WriteSerialPort(toSend);
-
-	std::string rec = ser.ReadSerialPort(3);
-	std::cout << "Cary fn: " << rec << std::endl;
+	std::string rec;
+	
+	ser.WriteSerialPort("ID?\r");
+	rec = ser.ReadSerialPort(1);
+	std::cout << "Cary ID: " << rec << std::endl;
 
 	this->max = 0.1;
 	this->min = -0.1;
@@ -51,8 +51,8 @@ double Cary::readInstr()
 	char toSend[] = "?\r"; // Request for displayed value.
 	ser.WriteSerialPort(toSend);
 	
-	std::string rec = ser.ReadSerialPort(3);
-	std::cout << "From cary: " << rec << std::endl;
+	std::string rec = ser.ReadSerialPort(1);
+	std::cout << "Cary read: " << rec << std::endl;
 	return 0.0;
 }
 

@@ -55,7 +55,7 @@ public:
 	*
 	* @return ok_send: Bool that indicates the status of the transmission
 	* */
-	bool WriteSerialPort(char* data_sent);
+	bool WriteSerialPort(char const * data_sent);
 
 	/**
 	* Writes a string to the serial port specifying the length
@@ -65,7 +65,7 @@ public:
 	*
 	* @return ok_send: Bool that indicates the status of the transmission
 	* */
-	bool WriteSerialPort(char* data_sent, unsigned int n);
+	bool WriteSerialPort(char const * data_sent, unsigned int n);
 
 	/**
 	* Opens a serial communication

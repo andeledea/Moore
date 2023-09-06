@@ -116,7 +116,7 @@ std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax
 	return complete_inc_msg;
 }
 
-bool SimpleSerial::WriteSerialPort(char* data_sent)
+bool SimpleSerial::WriteSerialPort(char const * data_sent)
 {
 	//std::lock_guard<std::mutex> lock(sendMutex);
 	
@@ -132,7 +132,7 @@ bool SimpleSerial::WriteSerialPort(char* data_sent)
 		return true;
 }
 
-bool SimpleSerial::WriteSerialPort(char* data_sent, unsigned int n)
+bool SimpleSerial::WriteSerialPort(char const * data_sent, unsigned int n)
 {
 	//const std::lock_guard<std::mutex> lock(sendMutex);
 	DWORD bytes_sent;
