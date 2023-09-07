@@ -17,11 +17,11 @@ void Cary::connect()
 	char port[] = "COM2";
 	if (ser.OpenSerialPort(port, dcbSerialParams)) // apro la com seriale
 	{
-		std::cout << "Cary connesso" << std::endl;
+		std::cout << "Cary connected" << std::endl;
 	}
 	else
 	{
-		std::cout << "Cary NON connesso" << std::endl;
+		std::cout << "Cary NOT connected" << std::endl;
 		throw std::runtime_error("Unable to connect CARY");
 	}
 }
@@ -53,7 +53,7 @@ double Cary::readInstr()
 	
 	std::string rec = ser.ReadSerialPort(1);
 	std::cout << "Cary read: " << rec << std::endl;
-	return 0.0;
+	return std::stod(rec); // TODO check
 }
 
 Cary::~Cary()

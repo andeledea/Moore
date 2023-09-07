@@ -159,3 +159,27 @@ class CHRMeasFrame : public wxFrame
 
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class AmbFrame
+///////////////////////////////////////////////////////////////////////////////
+class AmbFrame : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* temp_lab;
+		wxStaticText* tval_lab;
+		wxButton* tval_but;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnTval_butClick( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		AmbFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 317,68 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("Ambiental Parameters") );
+
+		~AmbFrame();
+
+};
+

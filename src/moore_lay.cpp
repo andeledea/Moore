@@ -305,6 +305,15 @@ AxisFrame::AxisFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	x_acc_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
@@ -333,15 +342,6 @@ AxisFrame::AxisFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	x_stop_slider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_stop_slider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_mov_check->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
-	x_acc_slider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	y_acc_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
@@ -421,6 +421,15 @@ AxisFrame::AxisFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 AxisFrame::~AxisFrame()
 {
 	// Disconnect Events
+	x_acc_slider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
+	x_acc_slider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
 	x_max_slider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AxisFrame::OnAxisSetting_changed ), NULL, this );
@@ -653,5 +662,52 @@ CHRMeasFrame::~CHRMeasFrame()
 	// Disconnect Events
 	speed_in->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CHRMeasFrame::OnSpeed_Text ), NULL, this );
 	start_but->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CHRMeasFrame::OnStartCHR_butClick ), NULL, this );
+
+}
+
+AmbFrame::AmbFrame( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style, const wxString& name ) : wxFrame( parent, id, title, pos, size, style, name )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* amb_sizer;
+	amb_sizer = new wxBoxSizer( wxVERTICAL );
+
+	wxGridBagSizer* tempSizer;
+	tempSizer = new wxGridBagSizer( 0, 0 );
+	tempSizer->SetFlexibleDirection( wxBOTH );
+	tempSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	temp_lab = new wxStaticText( this, wxID_ANY, wxT("T"), wxDefaultPosition, wxDefaultSize, 0 );
+	temp_lab->Wrap( -1 );
+	temp_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempSizer->Add( temp_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	tval_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	tval_lab->Wrap( -1 );
+	tval_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempSizer->Add( tval_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	tval_but = new wxButton( this, wxID_ANY, wxT("READ"), wxDefaultPosition, wxDefaultSize, 0 );
+	tempSizer->Add( tval_but, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	amb_sizer->Add( tempSizer, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	this->SetSizer( amb_sizer );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	tval_but->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AmbFrame::OnTval_butClick ), NULL, this );
+}
+
+AmbFrame::~AmbFrame()
+{
+	// Disconnect Events
+	tval_but->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AmbFrame::OnTval_butClick ), NULL, this );
 
 }

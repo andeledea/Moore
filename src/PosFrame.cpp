@@ -17,12 +17,6 @@ PosFrame( parent )
 
 void MoorePosFrame::UpdatePosition()
 {
-	/*auto _c = [](double f)
-	{
-		std::stringstream s;
-		s << std::fixed << std::setw(8) << std::setfill('0') << std::setprecision(3) << f;
-		return s.str();
-	};*/
 	while (true)
 	{
 		this->moore->updatePosition();

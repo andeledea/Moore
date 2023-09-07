@@ -7,7 +7,7 @@
 void Moore::init()
 {
 #ifndef GUI
-	// CONFIFG THE SERIAL COM WITH UC
+	// CONFIG THE SERIAL COM WITH UC
 	char port[] = "COM5";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
 	{
@@ -20,7 +20,6 @@ void Moore::init()
 	}
 
 	// CONNECT THE OPTICAL SCALES
-
 	ik.connect();
 	yScale = ik.getYscale();
 	zScale = ik.getZscale();
@@ -32,7 +31,6 @@ void Moore::init()
 	las.setParams();
 
 	// INIT THE 3 AXIS
-
 	Xaxis.init((PosInstr*)&las, ser, x_lab);
 	Yaxis.init((PosInstr*)&yScale, ser, y_lab);
 	Zaxis.init((PosInstr*)&zScale, ser, z_lab);
@@ -46,6 +44,8 @@ void Moore::init()
 	// INIT THE CARY
 	cary.connect();
 	cary.setParams();
+
+	Xaxis.setMeasInstrument((PosInstr*)&cary);
 #endif
 
 	// acc, start, max, stop 
