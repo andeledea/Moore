@@ -35,6 +35,10 @@ public:
 
     /**
     * Receive data from the connected host
+    * 
+    * @param size: buffer size for reception
     */
-    std::string receive(int size);
+    std::string receive(int size = 512);
+
+    ~tcp_client();
 };

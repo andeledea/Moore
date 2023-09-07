@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SimpleSerial.h"
+#include "client.h"
 #include "AmbInstr.h"
 
 /**
@@ -31,8 +31,7 @@ public:
 	~Fluke();
 
 private:
-	// TODO: try implemnting the conection ethernet
-	SimpleSerial ser;
+	tcp_client client;
 };
 
 //file:///G:/.shortcut-targets-by-id/1RVmiALwZlHBjg4XAo509zcXMgPXSQBEG/Stazioni%20di%20misura/Moore/nuovo%20progetto/Strumenti/Fluke%201586a/1586a___pgeng0000.pdf

@@ -88,7 +88,7 @@ bool tcp_client::send_data(std::string data)
 }
 
 
-std::string tcp_client::receive(int size = 512)
+std::string tcp_client::receive(int size)
 {
     char buffer[size];
     std::string reply;
@@ -102,3 +102,9 @@ std::string tcp_client::receive(int size = 512)
     reply = buffer;
     return reply;
 }
+
+tcp_client::~tcp_client()
+{
+    closesocket(sock);
+}
+

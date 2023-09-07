@@ -3,8 +3,10 @@
 
 void Fluke::connect()
 {
-	char port[] = "COM4";
-	if (ser.OpenSerialPort(port, CBR_14400)) // apro la com seriale
+	std::string addr = "192.168.001.100";
+	int port = 3980;
+
+	if (client.conn(addr, port)) // apro la com seriale
 	{
 		std::cout << "Fluke connected" << std::endl;
 	}
@@ -18,9 +20,9 @@ void Fluke::connect()
 void Fluke::setParams()
 {
 	// Setting for a single scan of all temps
-	ser.WriteSerialPort("*RST");
-	ser.WriteSerialPort("TEMP:THER:TYPE K, (@101, 106:108)");
-	ser.WriteSerialPort("ROUT:SCAN (@201:204)");
+	client.send_data("*RST\n");
+	client.send_data("TEMP:THER:TYPE K, (@101, 106:108)\n");
+	client.send_data("ROUT:SCAN (@201:204)\n");
 	// ser.WriteSerialPort("TRIG:COUN 0");  // used for continous scanning
 }
 
@@ -29,21 +31,23 @@ double Fluke::readInstr()
 	auto sendRec = [this](char const* cmd)
 	{
 		std::string rec;
-		this->ser.WriteSerialPort(cmd);
-		rec = ser.ReadSerialPort(1);
+		this->client.send_data(cmd);
+		rec = client.receive();
+		std::cout << "Fluke received: " << rec << std::endl;
 		return rec;
 	};
 
-	ser.WriteSerialPort("INIT");
-	while (sendRec("STAT:OPER?") != "") {};
+	client.send_data("INIT");
+	while (sendRec("STAT:OPER?") != "") {
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	};
 	
 	std::string vals = sendRec("FETCH?");
-	std::cout << "FLUKE: " << vals << std::endl;
 
 	return 0.0;
 }
 
 Fluke::~Fluke()
 {
-	ser.CloseSerialPort();
+
 }
