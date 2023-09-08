@@ -1,3 +1,6 @@
+#include <thread>
+#include <chrono>
+
 #include "app.h"
 #include "layAmbFrame.h"
 
@@ -19,14 +22,18 @@ void Moore_layAmbFrame::setAmb(Paramb* a)
 
 void Moore_layAmbFrame::UpdateAmb()
 {
-	ambVals v = this->amb->scanParams();
-
-	wxGetApp().CallAfter([this, v]()
+	ambVals v;
+	while (true)
 	{
-		this->tval_lab->SetLabelText(wxString::Format("%7.3f", v.t));
-	});
+		v = this->amb->scanParams();
 
-	std::this_thread::sleep_for(std::chrono::seconds(60));
+		wxGetApp().CallAfter([this, v]()
+		{
+			this->tval_lab->SetLabelText(wxString::Format("%7.3f", v.t));
+		});
+
+		std::this_thread::sleep_for(std::chrono::seconds(20));
+	}
 }
 
 void Moore_layAmbFrame::OnTval_butClick( wxCommandEvent& event )

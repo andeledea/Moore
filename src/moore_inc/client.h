@@ -23,21 +23,21 @@ public:
     * 
     * @param address: the IP address of the server
     * @param port: the port of the server
-    */
+    **/
     bool conn(std::string address, int port);
 
     /**
     * Send data to the connected host
     * 
     * @param data: the string to be sent over the TCP/IP
-    *     */
+    **/
     bool send_data(std::string data);
 
     /**
     * Receive data from the connected host
     * 
     * @param size: buffer size for reception
-    */
+    **/
     std::string receive(int size = 512);
 
     ~tcp_client();

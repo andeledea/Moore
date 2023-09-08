@@ -16,10 +16,6 @@ bool MyApp::OnInit()
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);
     Moore_layAmbFrame* AmbFrame = new Moore_layAmbFrame(nullptr);
 
-    posFrame->Show(true);
-    CHRmeasFrame->Show(true);
-    AmbFrame->Show(true);
-
 	Moore* moore = new Moore(); 
     moore->init();
 
@@ -29,7 +25,11 @@ bool MyApp::OnInit()
     posFrame->setMoore(moore);  // starts the read thread
     CHRmeasFrame->setMoore(moore);
     AmbFrame->setAmb(amb);  // starts the read thread
-
+	
+	posFrame->Show(true);
+    CHRmeasFrame->Show(true);
+    AmbFrame->Show(true);
+	
     return true;
 }
 

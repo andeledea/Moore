@@ -1,10 +1,12 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include "fluke.h"
 
 void Fluke::connect()
 {
-	std::string addr = "192.168.001.100";
-	int port = 3980;
+	std::string addr = "192.168.170.100";
+	int port = 3490;
 
 	if (client.conn(addr, port)) // apro la com seriale
 	{
@@ -19,32 +21,41 @@ void Fluke::connect()
 
 void Fluke::setParams()
 {
+	auto send = [this](char const* cmd)
+	{
+		this->client.send_data(cmd);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	};
+	
 	// Setting for a single scan of all temps
-	client.send_data("*RST\n");
-	client.send_data("TEMP:THER:TYPE K, (@101, 106:108)\n");
-	client.send_data("ROUT:SCAN (@201:204)\n");
+	send("*RST\n");
+	send("CONF:TEMP FRTD, ABC, (@201:204)\n");
+	send("ROUT:SCAN (@201:204)\n");
 	// ser.WriteSerialPort("TRIG:COUN 0");  // used for continous scanning
 }
 
 double Fluke::readInstr()
 {
+	std::cout << "Reading Fluke" << std::endl;
 	auto sendRec = [this](char const* cmd)
 	{
 		std::string rec;
 		this->client.send_data(cmd);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		rec = client.receive();
 		std::cout << "Fluke received: " << rec << std::endl;
 		return rec;
 	};
-
-	client.send_data("INIT");
-	while (sendRec("STAT:OPER?") != "") {
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-	};
 	
-	std::string vals = sendRec("FETCH?");
-
-	return 0.0;
+	client.send_data("INIT\n");
+	sendRec("STAT:OPER?\n");  // flush the queue
+	
+	int r = 0;
+	while (r != 272) { r = std::stoi(sendRec("STAT:OPER?\n")); };
+	
+	std::string vals = sendRec("FETC?\n");
+	
+	return std::stod(vals);
 }
 
 Fluke::~Fluke()

@@ -66,7 +66,7 @@ bool tcp_client::conn(std::string address, int port)
     if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0)
     {
         perror("connect failed. Error");
-        return 1;
+        return false;
     }
 
     std::cout << "Connected\n";
@@ -82,7 +82,6 @@ bool tcp_client::send_data(std::string data)
         perror("Send failed : ");
         return false;
     }
-    std::cout << "Data send\n";
 
     return true;
 }
@@ -92,14 +91,15 @@ std::string tcp_client::receive(int size)
 {
     char buffer[size];
     std::string reply;
-
-    //Receive a reply from the server
-    if (recv(sock, buffer, sizeof(buffer), 0) < 0)
-    {
-        puts("recv failed");
-    }
-
+	
+	//Receive a reply from the server
+	if (recv(sock, buffer, sizeof(buffer), 0) < 0)
+	{
+		puts("Receive failed");
+	}
+	
     reply = buffer;
+	reply = reply.substr(0, reply.find('\n'));
     return reply;
 }
 
