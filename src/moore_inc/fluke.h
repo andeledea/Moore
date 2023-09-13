@@ -26,9 +26,11 @@ public:
 	*
 	* @return value: the temperature (°C)
 	* */
-	double readInstr();
+	std::vector<double> readAllInstr();
 
 	~Fluke();
+
+	static const int N_ACTIVE_CH = 4;
 
 private:
 	tcp_client client;

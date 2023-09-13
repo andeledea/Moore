@@ -3,7 +3,7 @@
 #include "paramb.h"
 #include "PosFrame.h"
 #include "CHRMeasFrame.h"
-#include "layAmbFrame.h"
+#include "AmbFrame.h"
 
 // implement the application
 wxIMPLEMENT_APP(MyApp);
@@ -14,7 +14,7 @@ bool MyApp::OnInit()
 
     MoorePosFrame* posFrame = new MoorePosFrame(nullptr);
     MooreCHRMeasFrame* CHRmeasFrame = new MooreCHRMeasFrame(nullptr);
-    Moore_layAmbFrame* AmbFrame = new Moore_layAmbFrame(nullptr);
+    MooreLayAmbFrame* AmbFrame = new MooreLayAmbFrame(nullptr);
 
 	Moore* moore = new Moore(); 
     moore->init();
