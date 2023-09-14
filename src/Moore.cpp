@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <conio.h>
 #include <direct.h>
+#include <string>
 #include "Moore.h"
 
 void Moore::init()
@@ -44,6 +45,8 @@ void Moore::init()
 	// INIT THE CARY
 	cary.connect();
 	cary.setParams();
+	
+	cary.readInstr();
 
 	Xaxis.setMeasInstrument((PosInstr*)&cary);
 #endif
@@ -93,11 +96,13 @@ void Moore::moveInstr(double target)
 void Moore::measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop)
 {
 	std::ofstream ost;
+	
+	std::string outfile;
+	outfile	= path + '/' + nome_file;
+	_mkdir(outfile.c_str());
+	std::cout << "Saving at: " << outfile << std::endl;
 
-	_mkdir((path + nome_file).c_str());
-	std::cout << "Saving at: " << path + nome_file << std::endl;
-
-	ost.open(path + nome_file + "/data.CHRdat", std::ofstream::out);
+	ost.open(outfile + "/data.CHRdat", std::ofstream::out);
 
 	pos startP, stopP;
 	startP.x = start;
@@ -106,14 +111,15 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 	setRelPosition(startP);  // beginning of measure
 
 	Zaxis.findMeasCenter();
+	Zaxis.setInstrPosition(0.080f);
 
 	pos p;
 	bool dir = (start < stop);
 
+	// TODO check the track bool functionality
+	std::thread t = std::thread(&Asse::track, &Zaxis, 0.050f);
+	
 	Xaxis.startMeasure(speed, dir);
-
-	std::thread t;
-	if (track) t = std::thread(&Asse::track, &Zaxis, 0.050f);
 
 	auto finish = [](bool d, double sp, double pt)
 	{

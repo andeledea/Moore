@@ -22,8 +22,8 @@ void MooreCHRMeasFrame::OnStartCHR_butClick( wxCommandEvent& event )
 	(
 		&Moore::measCHR, moore,
 
-		std::string(this->path_in->GetLabelText()),
 		std::string(this->measname_in->GetLineText(0)),
+		std::string(this->path_in->GetPath()),
 		atoi(this->speed_in->GetLineText(0)),
 		this->track_check->GetValue(),
 		atof(this->start_in->GetLineText(0)),

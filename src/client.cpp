@@ -90,16 +90,18 @@ bool tcp_client::send_data(std::string data)
 std::string tcp_client::receive(int size)
 {
     char buffer[size];
-    std::string reply;
 	
 	//Receive a reply from the server
-	if (recv(sock, buffer, sizeof(buffer), 0) < 0)
+	int nch = recv(sock, buffer, sizeof(buffer), 0);
+	if (nch < 0)
 	{
 		puts("Receive failed");
 	}
 	
-    reply = buffer;
-	reply = reply.substr(0, reply.find('\n'));
+	buffer[nch] = '\0';
+    std::string reply = buffer;
+	
+	//reply = reply.substr(0, reply.find('\n'));
     return reply;
 }
 
