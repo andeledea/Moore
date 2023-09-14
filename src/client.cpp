@@ -92,16 +92,16 @@ std::string tcp_client::receive(int size)
     char buffer[size];
 	
 	//Receive a reply from the server
-	int nch = recv(sock, buffer, sizeof(buffer), 0);
+    std::string reply;
+
+    int nch = recv(sock, buffer, sizeof(buffer), 0);
 	if (nch < 0)
 	{
 		puts("Receive failed");
 	}
 	
-	buffer[nch] = '\0';
-    std::string reply = buffer;
-	
-	//reply = reply.substr(0, reply.find('\n'));
+    buffer[nch] = '\0';
+    reply = buffer;
     return reply;
 }
 

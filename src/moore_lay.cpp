@@ -672,42 +672,145 @@ AmbFrame::AmbFrame( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	wxBoxSizer* amb_sizer;
 	amb_sizer = new wxBoxSizer( wxVERTICAL );
 
-	wxGridBagSizer* tempSizer;
-	tempSizer = new wxGridBagSizer( 0, 0 );
-	tempSizer->SetFlexibleDirection( wxBOTH );
-	tempSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	wxGridSizer* tempSizer;
+	tempSizer = new wxGridSizer( 0, 4, 0, 0 );
 
-	temp_lab = new wxStaticText( this, wxID_ANY, wxT("T"), wxDefaultPosition, wxDefaultSize, 0 );
-	temp_lab->Wrap( -1 );
-	temp_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+	wxGridBagSizer* tempASizer;
+	tempASizer = new wxGridBagSizer( 0, 0 );
+	tempASizer->SetFlexibleDirection( wxBOTH );
+	tempASizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	tempSizer->Add( temp_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+	tempA_lab = new wxStaticText( this, wxID_ANY, wxT("T_A"), wxDefaultPosition, wxDefaultSize, 0 );
+	tempA_lab->Wrap( -1 );
+	tempA_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
 
-	tval_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
-	tval_lab->Wrap( -1 );
-	tval_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+	tempASizer->Add( tempA_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
 
-	tempSizer->Add( tval_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	tvalA_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	tvalA_lab->Wrap( -1 );
+	tvalA_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
 
-	tval_but = new wxButton( this, wxID_ANY, wxT("READ"), wxDefaultPosition, wxDefaultSize, 0 );
-	tempSizer->Add( tval_but, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	tempASizer->Add( tvalA_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 
-	amb_sizer->Add( tempSizer, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+	tempSizer->Add( tempASizer, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+	wxGridBagSizer* tempBSizer;
+	tempBSizer = new wxGridBagSizer( 0, 0 );
+	tempBSizer->SetFlexibleDirection( wxBOTH );
+	tempBSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	tempB_lab = new wxStaticText( this, wxID_ANY, wxT("T_B"), wxDefaultPosition, wxDefaultSize, 0 );
+	tempB_lab->Wrap( -1 );
+	tempB_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempBSizer->Add( tempB_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	tvalB_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	tvalB_lab->Wrap( -1 );
+	tvalB_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempBSizer->Add( tvalB_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	tempSizer->Add( tempBSizer, 1, wxEXPAND, 5 );
+
+	wxGridBagSizer* tempCSizer;
+	tempCSizer = new wxGridBagSizer( 0, 0 );
+	tempCSizer->SetFlexibleDirection( wxBOTH );
+	tempCSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	tempC_lab = new wxStaticText( this, wxID_ANY, wxT("T_C"), wxDefaultPosition, wxDefaultSize, 0 );
+	tempC_lab->Wrap( -1 );
+	tempC_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempCSizer->Add( tempC_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	tvalC_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	tvalC_lab->Wrap( -1 );
+	tvalC_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempCSizer->Add( tvalC_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	tempSizer->Add( tempCSizer, 1, wxEXPAND, 5 );
+
+	wxGridBagSizer* tempDSizer;
+	tempDSizer = new wxGridBagSizer( 0, 0 );
+	tempDSizer->SetFlexibleDirection( wxBOTH );
+	tempDSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	tempD_lab = new wxStaticText( this, wxID_ANY, wxT("T_D"), wxDefaultPosition, wxDefaultSize, 0 );
+	tempD_lab->Wrap( -1 );
+	tempD_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempDSizer->Add( tempD_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	tvalD_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	tvalD_lab->Wrap( -1 );
+	tvalD_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	tempDSizer->Add( tvalD_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	tempSizer->Add( tempDSizer, 1, wxEXPAND, 5 );
+
+
+	amb_sizer->Add( tempSizer, 1, wxEXPAND, 5 );
+
+	wxGridSizer* puSizer;
+	puSizer = new wxGridSizer( 0, 2, 0, 0 );
+
+	wxGridBagSizer* pSizer;
+	pSizer = new wxGridBagSizer( 0, 0 );
+	pSizer->SetFlexibleDirection( wxBOTH );
+	pSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	press_lab = new wxStaticText( this, wxID_ANY, wxT("P"), wxDefaultPosition, wxDefaultSize, 0 );
+	press_lab->Wrap( -1 );
+	press_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	pSizer->Add( press_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	pval_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	pval_lab->Wrap( -1 );
+	pval_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	pSizer->Add( pval_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	puSizer->Add( pSizer, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
+
+	wxGridBagSizer* uSizer;
+	uSizer = new wxGridBagSizer( 0, 0 );
+	uSizer->SetFlexibleDirection( wxBOTH );
+	uSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	umidity_lab = new wxStaticText( this, wxID_ANY, wxT("U"), wxDefaultPosition, wxDefaultSize, 0 );
+	umidity_lab->Wrap( -1 );
+	umidity_lab->SetFont( wxFont( 20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	uSizer->Add( umidity_lab, wxGBPosition( 0, 0 ), wxGBSpan( 1, 1 ), wxALL, 5 );
+
+	uval_lab = new wxStaticText( this, wxID_ANY, wxT("00.000"), wxDefaultPosition, wxDefaultSize, 0 );
+	uval_lab->Wrap( -1 );
+	uval_lab->SetFont( wxFont( 18, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial") ) );
+
+	uSizer->Add( uval_lab, wxGBPosition( 0, 1 ), wxGBSpan( 1, 1 ), wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	puSizer->Add( uSizer, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	amb_sizer->Add( puSizer, 1, wxEXPAND, 5 );
 
 
 	this->SetSizer( amb_sizer );
 	this->Layout();
 
 	this->Centre( wxBOTH );
-
-	// Connect Events
-	tval_but->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AmbFrame::OnTval_butClick ), NULL, this );
 }
 
 AmbFrame::~AmbFrame()
 {
-	// Disconnect Events
-	tval_but->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AmbFrame::OnTval_butClick ), NULL, this );
-
 }

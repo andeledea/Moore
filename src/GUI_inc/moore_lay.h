@@ -167,17 +167,22 @@ class AmbFrame : public wxFrame
 	private:
 
 	protected:
-		wxStaticText* temp_lab;
-		wxStaticText* tval_lab;
-		wxButton* tval_but;
-
-		// Virtual event handlers, override them in your derived class
-		virtual void OnTval_butClick( wxCommandEvent& event ) { event.Skip(); }
-
+		wxStaticText* tempA_lab;
+		wxStaticText* tvalA_lab;
+		wxStaticText* tempB_lab;
+		wxStaticText* tvalB_lab;
+		wxStaticText* tempC_lab;
+		wxStaticText* tvalC_lab;
+		wxStaticText* tempD_lab;
+		wxStaticText* tvalD_lab;
+		wxStaticText* press_lab;
+		wxStaticText* pval_lab;
+		wxStaticText* umidity_lab;
+		wxStaticText* uval_lab;
 
 	public:
 
-		AmbFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 317,68 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("Ambiental Parameters") );
+		AmbFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 755,149 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL, const wxString& name = wxT("Ambiental Parameters") );
 
 		~AmbFrame();
 

@@ -1,9 +1,11 @@
 #pragma once
+#include <vector>
 #include "fluke.h"
+#include "voltmeter.h"
 
 struct ambVals
 {
-	double t = 0;
+	std::vector<double> t;  // the Fluke has multiple probes
 	double p = 0;
 	double u = 0;
 };
@@ -33,6 +35,7 @@ public:
 
 private:
 	Fluke tempInstr;
+	Voltmeter upInstr;
 
 	ambVals currentParams;
 };

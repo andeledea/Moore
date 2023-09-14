@@ -1,6 +1,8 @@
 #include <iostream>
+#include <vector>
 #include <thread>
 #include <chrono>
+#include <sstream>
 #include "fluke.h"
 
 void Fluke::connect()
@@ -34,7 +36,7 @@ void Fluke::setParams()
 	// ser.WriteSerialPort("TRIG:COUN 0");  // used for continous scanning
 }
 
-double Fluke::readInstr()
+std::vector<double> Fluke::readAllInstr()
 {
 	std::cout << "Reading Fluke" << std::endl;
 	auto sendRec = [this](char const* cmd)
@@ -54,8 +56,17 @@ double Fluke::readInstr()
 	while (r != 272) { r = std::stoi(sendRec("STAT:OPER?\n")); };
 	
 	std::string vals = sendRec("FETC?\n");
+	std::string segment;
+	std::vector<double> vals_d (Fluke::N_ACTIVE_CH, 0.0);  // out vec with all zeros
 	
-	return std::stod(vals);
+	std::stringstream vals_stream (vals);
+	for (int i = 0; i < Fluke::N_ACTIVE_CH; i++)  // parse the whole response
+	{
+		std::getline(vals_stream, segment, ',');
+		vals_d[i] = std::stod(segment);
+	}
+	
+	return vals_d;
 }
 
 Fluke::~Fluke()
