@@ -8,8 +8,8 @@ void Paramb::init()
 	tempInstr.setParams();
 
 	// INIT THE VOLTMETER
-	// upInstr.connect();
-	// upInstr.setParams();
+	upInstr.connect();
+	upInstr.setParams();
 #endif
 }
 
@@ -18,8 +18,8 @@ ambVals Paramb::scanParams()
 	ambVals vals;
 
 	vals.t = tempInstr.readAllInstr();
-	// vals.p = upInstr.readPressure();
-	// vals.u = upInstr.readHumidity();
+	vals.p = upInstr.readPressure();
+	vals.u = upInstr.readHumidity();
 
 	return vals;
 }

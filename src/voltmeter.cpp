@@ -3,33 +3,37 @@
 void Voltmeter::connect()
 {
 	handle = ibdev(0, 22, 0, 11, 1, 0x140A);
-	std::cout << "Voltmeter connected" << std::endl;
+	std::cout << "Voltmeter connected @ " << handle << std::endl;
 }
 
 void Voltmeter::setParams()
 {
+	ask("BEEP ONCE", 	false);
+	ask("ID?", 			true);
+	
+	ask("NRDGS 10", 	false);  // do 10 readings whenever triggered
+	ask("DCV AUTO",		false);  // 10 V range DC
+	ask("MATH STAT",	false);  // enable statistics
 }
 
 double Voltmeter::readPressure()
 {
-	std::string req = "DCV"; //chiedo la distanza
-	ibwrt(handle, req.c_str(), req.length());
+	ask("TRIG SGL", 	false);  // Trigger the multimeter
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	double val = ask("RMATH MEAN", 	true);   // Ask the mean value
 
-	char ret[50];
-	ibrd(handle, ret, 20); //leggo la distanza
-	ret[Ibcnt()] = 0;
-	return std::stod(ret);
+	val = val * PRESSURE_A + PRESSURE_B;
+	return val;
 }
 
-double Voltmeter::readHumidity()
+double Voltmeter::readHumidity()  // TODO : change channel
 {
-	std::string req = "DCV"; //chiedo la distanza
-	ibwrt(handle, req.c_str(), req.length());
+	ask("TRIG SGL", 	false);  // Trigger the multimeter
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	double val = ask("RMATH MEAN", 	true);   // Ask the mean value
 
-	char ret[50];
-	ibrd(handle, ret, 20); //leggo la distanza
-	ret[Ibcnt()] = 0;
-	return std::stod(ret);
+	val = val * HUMIDITY_A + HUMIDITY_B;
+	return val;
 }
 
 Voltmeter::~Voltmeter()

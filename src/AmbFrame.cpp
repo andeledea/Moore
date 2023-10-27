@@ -33,8 +33,11 @@ void MooreLayAmbFrame::UpdateAmb()
 			this->tvalB_lab->SetLabelText(wxString::Format("%7.3f", v.t[1]));
 			this->tvalC_lab->SetLabelText(wxString::Format("%7.3f", v.t[2]));
 			this->tvalD_lab->SetLabelText(wxString::Format("%7.3f", v.t[3]));
+
+			this->pval_lab->SetLabelText(wxString::Format("%7.3f", v.p));
+			this->uval_lab->SetLabelText(wxString::Format("%7.3f", v.u));
 		});
 
-		std::this_thread::sleep_for(std::chrono::seconds(20));
+		std::this_thread::sleep_for(std::chrono::seconds(60));
 	}
 }

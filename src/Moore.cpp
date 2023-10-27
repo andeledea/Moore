@@ -43,12 +43,14 @@ void Moore::init()
 	Zaxis.setMeasInstrument((PosInstr*)&CHR);
 
 	// INIT THE CARY
+	/*
 	cary.connect();
 	cary.setParams();
 	
 	cary.readInstr();
 
 	Xaxis.setMeasInstrument((PosInstr*)&cary);
+	*/
 #endif
 
 	// acc, start, max, stop 
@@ -110,7 +112,7 @@ void Moore::measCHR(std::string nome_file, std::string path, int speed, bool tra
 
 	setRelPosition(startP);  // beginning of measure
 
-	Zaxis.findMeasCenter();
+	// Zaxis.findMeasCenter();
 	Zaxis.setInstrPosition(0.080f);
 
 	pos p;
