@@ -31,9 +31,11 @@ void Fluke::setParams()
 	
 	// Setting for a single scan of all temps
 	send("*RST\n");
-	send("CONF:TEMP FRTD, ABC, (@201:204)\n");
+	send("*RCL 04\n");
+	send("DATA:LOG:DEST MEM\n");
+	send("DATA:LOG:AUTO OFF\n");
+	send("TRIG:COUN 1\n");
 	send("ROUT:SCAN (@201:204)\n");
-	// ser.WriteSerialPort("TRIG:COUN 0");  // used for continous scanning
 }
 
 std::vector<double> Fluke::readAllInstr()
@@ -71,5 +73,5 @@ std::vector<double> Fluke::readAllInstr()
 
 Fluke::~Fluke()
 {
-
+	
 }

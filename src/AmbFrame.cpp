@@ -8,7 +8,7 @@ MooreLayAmbFrame::MooreLayAmbFrame( wxWindow* parent )
 :
 AmbFrame( parent )
 {
-
+	
 }
 
 void MooreLayAmbFrame::setAmb(Paramb* a)

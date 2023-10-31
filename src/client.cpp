@@ -107,6 +107,12 @@ std::string tcp_client::receive(int size)
 
 tcp_client::~tcp_client()
 {
-    closesocket(sock);
+    // shutdown the send half of the connection since no more data will be sent
+    int iResult = shutdown(sock, SD_SEND);
+    if (iResult == SOCKET_ERROR) {
+        printf("shutdown failed: %d\n", WSAGetLastError());
+        closesocket(sock);
+        WSACleanup();
+    }
 }
 

@@ -7,11 +7,11 @@
 #include "ni4882.h"
 #include "AmbInstr.h"
 
-#define PRESSURE_A 6002.66
-#define PRESSURE_B 79755.63
+#define PRESSURE_A 6.00266  // kPa / V
+#define PRESSURE_B 79.75563 // kPa
 
-#define HUMIDITY_A 100.04
-#define HUMIDITY_B -50.48
+#define HUMIDITY_A 100.04   // °C/V
+#define HUMIDITY_B -50.48   // °C
 
 /**
 * Class for ambiental parameters with old moore setup
@@ -60,7 +60,7 @@ private:
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			char ret[50];
-			ibrd(this->handle, ret, 20); //leggo id
+			ibrd(this->handle, ret, 20);
 			ret[Ibcnt()] = '\0';
 			std::cout << send << " : " << ret << std::endl;
 

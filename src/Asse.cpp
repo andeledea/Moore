@@ -12,7 +12,7 @@ Asse::Asse()
 	lock = true;
 }
 
-Asse::Asse(PosInstr *instrument, SimpleSerial &serial, char name)
+Asse::Asse(PosInstr* instrument, SimpleSerial& serial, char name)
 {
 	lock = true;
 	

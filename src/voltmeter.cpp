@@ -13,14 +13,17 @@ void Voltmeter::setParams()
 	
 	ask("NRDGS 10", 	false);  // do 10 readings whenever triggered
 	ask("DCV AUTO",		false);  // 10 V range DC
-	ask("MATH STAT",	false);  // enable statistics
+	// ask("DISP MSG,'INRIM'", false);
 }
 
 double Voltmeter::readPressure()
 {
-	ask("TRIG SGL", 	false);  // Trigger the multimeter
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	double val = ask("RMATH MEAN", 	true);   // Ask the mean value
+	ask("MATH STAT", false);  // enable statistics
+	ask("TERM REAR", false);
+	ask("CHAN 5", false);
+	ask("TRIG SGL", false);  // Trigger the multimeter
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	double val = ask("RMATH MEAN", true);   // Ask the mean value
 
 	val = val * PRESSURE_A + PRESSURE_B;
 	return val;
@@ -28,11 +31,15 @@ double Voltmeter::readPressure()
 
 double Voltmeter::readHumidity()  // TODO : change channel
 {
-	ask("TRIG SGL", 	false);  // Trigger the multimeter
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	double val = ask("RMATH MEAN", 	true);   // Ask the mean value
+	ask("MATH STAT", false);  // enable statistics
+	ask("TERM REAR", false);
+	ask("CHAN 0", false);
+	ask("TRIG SGL", false);  // Trigger the multimeter
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	double val = ask("RMATH MEAN", true);   // Ask the mean value
 
 	val = val * HUMIDITY_A + HUMIDITY_B;
+
 	return val;
 }
 
