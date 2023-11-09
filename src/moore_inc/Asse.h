@@ -24,7 +24,7 @@ class Asse
 {
 public:
 	Asse();
-	Asse(PosInstr *instrument, SimpleSerial &serial, char name);
+	Asse(PosInstr* instrument, SimpleSerial& serial, char name);
 
 	/**
 	* Initialises the axis object
