@@ -1,5 +1,8 @@
 #pragma once
 #include <thread>
+
+#include "Laser.h"
+#include "keysight.h"
 #include "Asse.h"
 #include "CHRocodile.h"
 #include "IkOptical.h"
@@ -97,6 +100,7 @@ public:
 	Asse Xaxis, Yaxis, Zaxis;
 	
 	Laser las;
+	KeySight key;
 	IkOptical ik;
 	Scale yScale, zScale;
 	

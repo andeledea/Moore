@@ -31,6 +31,9 @@ void Moore::init()
 	las.connect();
 	las.setParams();
 
+	key.connect();
+	key.setParams();
+
 	// INIT THE 3 AXIS
 	Xaxis.init((PosInstr*)&las, ser, x_lab);
 	Yaxis.init((PosInstr*)&yScale, ser, y_lab);

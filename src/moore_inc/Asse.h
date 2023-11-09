@@ -2,7 +2,7 @@
 #include <thread>
 #include <memory>
 #include "SimpleSerial.h"
-#include "Laser.h"
+#include "PosInstr.h"
 
 #define dir_back false
 #define dir_fore true
