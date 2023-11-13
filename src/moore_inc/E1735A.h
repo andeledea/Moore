@@ -5,8 +5,9 @@
 #ifndef _E1735A_H_
 #define _E1735A_H_
 
-
+#include <iostream>
 #include <windows.h>
+#include <tchar.h>
 
 #define EC_NOERROR 0
 #define EC_UNKNOWNERROR 1
@@ -116,7 +117,8 @@ int Initialize_E1735A_DLL()
 {
   if (Handle_E1735A_DLL == NULL)
   {
-    Handle_E1735A_DLL = LoadLibraryA("E1735A.dll");
+    Handle_E1735A_DLL = LoadLibrary(_T("E1735A.dll"));
+    std::cout << "E1735A import error: " << GetLastError() << "\n";
     if (Handle_E1735A_DLL != NULL)
     {
       FuncAddr_E1735A_ReadDeviceCount = GetProcAddress(Handle_E1735A_DLL, "E1735A_ReadDeviceCount");

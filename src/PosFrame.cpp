@@ -43,10 +43,10 @@ void MoorePosFrame::UpdatePosition()
 void MoorePosFrame::setMoore(Moore* m)
 {
 	this->moore = m;
-#ifndef GUI
+#ifndef TRY
 	std::thread posThread{ &MoorePosFrame::UpdatePosition, this };
 	posThread.detach();
-#endif // !GUI
+#endif 
 }
 
 void MoorePosFrame::OnSetAbs_butClick( wxCommandEvent& event )

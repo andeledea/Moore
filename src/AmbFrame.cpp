@@ -14,7 +14,7 @@ AmbFrame( parent )
 void MooreLayAmbFrame::setAmb(Paramb* a)
 {
 	amb = a;
-#ifndef GUI
+#ifndef TRY
 	std::thread ambThread{ &MooreLayAmbFrame::UpdateAmb, this };
 	ambThread.detach();
 #endif // !GUI

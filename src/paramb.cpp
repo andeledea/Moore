@@ -2,7 +2,7 @@
 
 void Paramb::init()
 {
-#ifndef GUI
+#ifndef TRY
 	// INIT THE TEMP INSTRUMENT
 	tempInstr.connect();
 	tempInstr.setParams();

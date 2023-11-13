@@ -7,7 +7,10 @@
 
 void Moore::init()
 {
-#ifndef GUI
+#ifdef TRY
+	key.connect();
+	key.setParams();
+#else
 	// CONFIG THE SERIAL COM WITH UC
 	char port[] = "COM5";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
@@ -46,14 +49,12 @@ void Moore::init()
 	Zaxis.setMeasInstrument((PosInstr*)&CHR);
 
 	// INIT THE CARY
-	/*
 	cary.connect();
 	cary.setParams();
 	
 	cary.readInstr();
 
-	Xaxis.setMeasInstrument((PosInstr*)&cary);
-	*/
+	Xaxis.setMeasInstrument((PosInstr*)&cary);	
 #endif
 
 	// acc, start, max, stop 

@@ -18,15 +18,15 @@ bool MyApp::OnInit()
 
 	Paramb* amb = new Paramb();
     amb->init();
-	//Moore* moore = new Moore(); 
-    //moore->init();
+	Moore* moore = new Moore(); 
+    moore->init();
 
-    //posFrame->setMoore(moore);  // starts the read thread
-    //CHRmeasFrame->setMoore(moore);
+    posFrame->setMoore(moore);  // starts the read thread
+    CHRmeasFrame->setMoore(moore);
     AmbFrame->setAmb(amb);  // starts the read thread
 	
-	//posFrame->Show(true);
-    //CHRmeasFrame->Show(true);
+	posFrame->Show(true);
+    CHRmeasFrame->Show(true);
     AmbFrame->Show(true);
 	
     return true;

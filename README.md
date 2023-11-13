@@ -4,7 +4,7 @@ Programma per controllo assi e misure con la macchina MOORE INRIM.
 ## Compilazione del sorgente
 ```
 - Make			-> compilazione completa del codice
-- Make CXXFLAGS="-DGUI" -> compilazione della sola GUI per testing
+- Make CXXFLAGS="-DTRY" -> compilazione della sola GUI per testing
 - Make clean		-> rimozione dell'eseguibile e dei file oggetto
 - Make layout		-> modifica del layout GUI
 ```
