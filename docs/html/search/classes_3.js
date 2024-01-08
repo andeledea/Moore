@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ikoptical_0',['IkOptical',['../class_ik_optical.html',1,'']]]
+  ['heidparams_0',['HEIDparams',['../struct_h_e_i_dparams.html',1,'']]]
 ];

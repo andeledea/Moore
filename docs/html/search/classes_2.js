@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heidparams_0',['HEIDparams',['../struct_h_e_i_dparams.html',1,'']]]
+  ['fluke_0',['Fluke',['../class_fluke.html',1,'']]]
 ];

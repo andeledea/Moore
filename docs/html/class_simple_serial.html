@@ -87,10 +87,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac7f6319a700741ac2ca65ba8cba06f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5b2c2fe70b2ffa5b15fde6068513f48"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#ab5b2c2fe70b2ffa5b15fde6068513f48">ReadSerialPort</a> (int reply_wait_time, std::string syntax_type)</td></tr>
 <tr class="separator:ab5b2c2fe70b2ffa5b15fde6068513f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4803b3add2ef3c3f3e07caf1965a4b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#ae4803b3add2ef3c3f3e07caf1965a4b3">WriteSerialPort</a> (char *data_sent)</td></tr>
-<tr class="separator:ae4803b3add2ef3c3f3e07caf1965a4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a363e0ca1f7e285f93bcca0d4f44886cd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#a363e0ca1f7e285f93bcca0d4f44886cd">WriteSerialPort</a> (char *data_sent, unsigned int n)</td></tr>
-<tr class="separator:a363e0ca1f7e285f93bcca0d4f44886cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a253fbeb939dd68bb38230aac1664baf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#a253fbeb939dd68bb38230aac1664baf7">WriteSerialPort</a> (char const *data_sent)</td></tr>
+<tr class="separator:a253fbeb939dd68bb38230aac1664baf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae316d143eefbad45dc954163044d54a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#ae316d143eefbad45dc954163044d54a5">WriteSerialPort</a> (char const *data_sent, unsigned int n)</td></tr>
+<tr class="separator:ae316d143eefbad45dc954163044d54a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf709f07cdf513116c4719b0c48c088e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#acf709f07cdf513116c4719b0c48c088e">OpenSerialPort</a> (char *com_port, DWORD COM_BAUD_RATE)</td></tr>
 <tr class="separator:acf709f07cdf513116c4719b0c48c088e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64bcc98f0ef587eb6a81e14714dd93fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simple_serial.html#a64bcc98f0ef587eb6a81e14714dd93fa">OpenSerialPort</a> (char *com_port, DCB PORT_PARAMS)</td></tr>
@@ -260,8 +260,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>connected_</b></td></
 
 </div>
 </div>
-<a id="ae4803b3add2ef3c3f3e07caf1965a4b3" name="ae4803b3add2ef3c3f3e07caf1965a4b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4803b3add2ef3c3f3e07caf1965a4b3">&#9670;&#160;</a></span>WriteSerialPort() <span class="overload">[1/2]</span></h2>
+<a id="a253fbeb939dd68bb38230aac1664baf7" name="a253fbeb939dd68bb38230aac1664baf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a253fbeb939dd68bb38230aac1664baf7">&#9670;&#160;</a></span>WriteSerialPort() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +269,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>connected_</b></td></
         <tr>
           <td class="memname">bool SimpleSerial::WriteSerialPort </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">char const *&#160;</td>
           <td class="paramname"><em>data_sent</em></td><td>)</td>
           <td></td>
         </tr>
@@ -286,8 +286,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>connected_</b></td></
 
 </div>
 </div>
-<a id="a363e0ca1f7e285f93bcca0d4f44886cd" name="a363e0ca1f7e285f93bcca0d4f44886cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a363e0ca1f7e285f93bcca0d4f44886cd">&#9670;&#160;</a></span>WriteSerialPort() <span class="overload">[2/2]</span></h2>
+<a id="ae316d143eefbad45dc954163044d54a5" name="ae316d143eefbad45dc954163044d54a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae316d143eefbad45dc954163044d54a5">&#9670;&#160;</a></span>WriteSerialPort() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +295,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>connected_</b></td></
         <tr>
           <td class="memname">bool SimpleSerial::WriteSerialPort </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">char const *&#160;</td>
           <td class="paramname"><em>data_sent</em>, </td>
         </tr>
         <tr>
