@@ -6,7 +6,7 @@
 #include "AmbFrame.h"
 
 // implement the application
-wxIMPLEMENT_APP(MyApp); 
+wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
