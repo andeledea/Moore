@@ -11,6 +11,7 @@ SRC_PATH := src
 DBG_PATH := debug
 INC_PATH := -Iinclude -Isrc/GUI_inc -Isrc/moore_inc
 LIB_PATH := lib/gcc_dll
+TES_PATH := tests
 
 # compile macros
 TARGET_NAME := moore
@@ -95,3 +96,13 @@ help:
 	@echo "  make layout    - Move layout files to the source directory."
 	@echo "  make dirs   - Create necessary directories and copy files (before first compilation)."
 	@echo "  make help      - Display this help message."
+
+# Test section
+.PHONY: keysight
+keysight:
+# non-phony targets
+$(TARGET): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJ) -L$(LIB_PATH) $(LIBS)
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c*
+	$(CXX) $(INC_PATH) $(CCOBJFLAGS) -o $@ $<
