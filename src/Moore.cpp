@@ -10,6 +10,12 @@ void Moore::init()
 #ifdef TRY
 	key.connect();
 	key.setParams();
+
+	while(true)
+	{
+		key.readInstr();
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
 #else
 	// CONFIG THE SERIAL COM WITH UC
 	char port[] = "COM5";

@@ -3,4 +3,5 @@
 /.vs/
 /.vscode/
 /lib/
-/bin/moore.exe
+/bin/
+/debug/

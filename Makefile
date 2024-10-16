@@ -40,16 +40,26 @@ $(TARGET): $(OBJ)
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c*
 	$(CXX) $(INC_PATH) $(CCOBJFLAGS) -o $@ $<
 
-$(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CXX) $(CCOBJFLAGS) $(DBGFLAGS) -o $@ $<
 
 $(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CXX) $(CXXFLAGS) $(DBGFLAGS) $(OBJ_DEBUG) -o $@
+	$(CXX) $(CXXFLAGS) $(DBGFLAGS) -o $@ $(OBJ_DEBUG) -L$(LIB_PATH) $(LIBS)
+
+$(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
+	$(CXX) $(INC_PATH) $(CCOBJFLAGS) $(DBGFLAGS) -o $@ $<
 
 # phony rules
-.PHONY: makedir
-makedir:
-	@mkdir -p $(BIN_PATH) $(OBJ_PATH) $(DBG_PATH)
+.PHONY: dirs
+dirs:
+	@mkdir $(BIN_PATH) $(OBJ_PATH) $(DBG_PATH)
+	@echo "Copying icons to $(BIN_PATH) and $(DBG_PATH)"
+	@xcopy icons $(BIN_PATH)\icons /E /I /Y
+	@xcopy icons $(DBG_PATH)\icons /E /I /Y
+
+	@echo "Copying syntax_config to $(BIN_PATH) and $(DBG_PATH)"
+	@copy syntax_config.txt $(BIN_PATH) /Y
+	@copy syntax_config.txt $(DBG_PATH) /Y
+
+	@echo "Dirs setup completed."
 
 .PHONY: all
 all: $(TARGET)
@@ -73,3 +83,15 @@ clean:
 execlean:
 	@echo CLEAN
 	del $(BIN_PATH)\$(TARGET_NAME)
+
+# Help target
+.PHONY: help
+help:
+	@echo "Makefile Help:"
+	@echo "  make all       - Build the main target."
+	@echo "  make debug     - Build the debug target."
+	@echo "  make clean     - Remove compiled binaries and object files."
+	@echo "  make execlean  - Remove the executable only."
+	@echo "  make layout    - Move layout files to the source directory."
+	@echo "  make dirs   - Create necessary directories and copy files (before first compilation)."
+	@echo "  make help      - Display this help message."
