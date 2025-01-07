@@ -4,17 +4,17 @@
 #include "SimpleSerial.h"
 #include "PosInstr.h"
 
-#define dir_back false
-#define dir_fore true
+#define dir_back true
+#define dir_fore false
 
 #define dir_up false
 #define dir_down true
 
 #define inv_mov true
 
-#define x_lab 0b00000000
-#define y_lab 0b01000000
-#define z_lab 0b10000000
+#define x_lab 'x'
+#define y_lab 'y'
+#define z_lab 'z'
 
 
 /**
@@ -51,14 +51,14 @@ public:
 	* 
 	* @param pos: The position that must be kept by the external instrument
 	* */
-	void track(float pos);
+	// void track(float pos);
 
 	/**
 	* If an external instrument is set this method
 	* allows to find the axis position that centers
 	* the instrument reading
 	* */
-	void findMeasCenter();
+	// void findMeasCenter();
 
 	/**
 	* Set the position of the axis relative to
@@ -108,7 +108,7 @@ public:
 	* @param pos: the position to be reached
 	* @param v: the speed of the retension
 	* */
-	void retension(float pos, int v);
+	// void retension(float pos, int v);
 
 	/**
 	* Moves the axis at constant speed in the given direction
@@ -117,13 +117,13 @@ public:
 	* @param d: the direction of the movement
 	*	Predefined direction macros: dir_fore, dir_back, dir_up, dir_down
 	* */
-	void startMeasure(int v = 1, bool d = dir_fore);
+	// void startMeasure(int v = 1, bool d = dir_fore);
 
 	/**
 	* Stops the constant movement and
 	* locks the motor
 	* */
-	void stopMeasure();
+	// void stopMeasure();
 
 	static bool measuring;
 
@@ -162,12 +162,6 @@ private:
 	* that sets the frequency of the control signal
 	* */
 	void sendVelocityToMicro();
-
-	/**
-	* Send the commands to the microcontroller
-	* to lock/unlock the motor, set the direction
-	* */
-	void sendCommandToMicro();
 
 	char axisName = x_lab;
 	

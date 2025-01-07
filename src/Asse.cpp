@@ -3,6 +3,7 @@
 #include <thread>
 #include <limits>
 #include <chrono>
+#include <cmath>
 #include "Asse.h"
 
 bool Asse::measuring = false;
@@ -34,10 +35,10 @@ void Asse::init(PosInstr* instrument, SimpleSerial& serial, char name)
 
 double Asse::getPosition()
 {
-	do 
+	do
 	{ 
 		position = instrPT->readInstr();
-	} while (position == 0);
+	} while (std::isnan(position));
 	return position;
 }
 
@@ -47,23 +48,14 @@ void Asse::setPos(double targetPosition, const char instr)
 	double startP = position; //posizione di partenza
 	if (instr == 'm') startP = measPT->readInstr();
 
-	if (invertedMovement == false)
-	{
-		if (startP < targetPosition) //decido la direzione del movimento
-			direction = dir_fore;
-		else
-			direction = dir_back;
-	}
+	if (startP < targetPosition) //decido la direzione del movimento
+		direction = dir_fore;
 	else
-	{
-		if (startP < targetPosition) //decido la direzione del movimento
-			direction = dir_back;
-		else
-			direction = dir_fore;
-	}
+		direction = dir_back;
+
+	if (invertedMovement) direction = !direction;	
 	
 	lock = false;
-	sendCommandToMicro();
 
 	double distance = abs(targetPosition - startP); //calcolo la dist totale
 	double travel = 0;
@@ -79,10 +71,8 @@ void Asse::setPos(double targetPosition, const char instr)
 	};
 	
 	velocity = 0;
-	sendVelocityToMicro();
-
 	lock = true;
-	sendCommandToMicro();
+	sendVelocityToMicro();
 }
 
 void Asse::setRamp(unsigned int acc, unsigned int startv, unsigned int maxv, unsigned int stopv, bool invertMovement)
@@ -121,121 +111,113 @@ void Asse::setVelocity(double dist, double trav)
 
 void Asse::sendVelocityToMicro()
 {
-	char toSend = (char) velocity;
-	
-	toSend = toSend & 0b00111111 | axisName; // attach axis bits
-	
-	// std::cout << velocity << " " << (unsigned int) toSend << " " << position << std::endl;
-	ser.WriteSerialPort(&toSend, 1);
+	// f"{activeaxis}{'e' if enable else 'd'}{'b' if direction else 'f'}{speed}\r"
+	std::string toSend = "";
+	toSend += axisName;
+	toSend += (lock) ? 'd' : 'e';
+	toSend += (direction) ? 'f' : 'b';
+	toSend += std::to_string(velocity);
+	toSend += '\r';
+
+	std::cout << toSend << '\r';
+
+	ser.WriteSerialPort(toSend.c_str());
 }
 
-void Asse::sendCommandToMicro()
-{
-	char toSend = 0b00000001;
-	
-	toSend |= axisName; // attach axis bits
-	
-	if (lock) toSend |= 0b00000010;  // attach lock bit
-	if (!direction) toSend |= 0b00000100;  // attach dir bit
-	
-	// std::cout << (int) toSend << std::endl;
-	ser.WriteSerialPort(&toSend, 1);
-}
+// void Asse::retension(float pos, int v)
+// {
+// 	this->startMeasure(v, dir_up);
+// 	while(instrPT -> readInstr() < pos) {}
+// 	this->stopMeasure();
+// }
 
-void Asse::retension(float pos, int v)
-{
-	this->startMeasure(v, dir_up);
-	while(instrPT -> readInstr() < pos) {}
-	this->stopMeasure();
-}
-
-void Asse::track(float pos)
-{
-	float current, disp;
-	float k = maxV / (measPT -> max - measPT -> min); // constant for speed
-	//constant calculated to have max speed if disp == range
+// void Asse::track(float pos)
+// {
+// 	float current, disp;
+// 	float k = maxV / (measPT -> max - measPT -> min); // constant for speed
+// 	//constant calculated to have max speed if disp == range
 	
-	lock = false;
-	bool prevDir = dir_up;
+// 	lock = false;
+// 	bool prevDir = dir_up;
 	
-	direction = dir_up;
-	sendCommandToMicro();
+// 	direction = dir_up;
+// 	sendCommandToMicro();
 	
-	while (Asse::measuring)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		current = measPT -> readInstr();
-		disp = current - pos;  // distance from target
+// 	while (Asse::measuring)
+// 	{
+// 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+// 		current = measPT -> readInstr();
+// 		disp = current - pos;  // distance from target
 		
-		// calculate direction
-		if (disp > 0) direction = dir_down;
-		else direction = dir_up;
+// 		// calculate direction
+// 		if (disp > 0) direction = dir_down;
+// 		else direction = dir_up;
 		
-		if (direction != prevDir) // if change direction 
-		{
-			//std::cout << "change!!" << std::endl;
-			velocity = 0;
-			sendVelocityToMicro();
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-			sendCommandToMicro();
-		}
-		velocity = (unsigned int) (abs(disp) * k);
-		//std::cout << velocity << std::endl;
-		if (velocity != 0) sendVelocityToMicro();
+// 		if (direction != prevDir) // if change direction 
+// 		{
+// 			//std::cout << "change!!" << std::endl;
+// 			velocity = 0;
+// 			sendVelocityToMicro();
+// 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+// 			sendCommandToMicro();
+// 		}
+// 		velocity = (unsigned int) (abs(disp) * k);
+// 		//std::cout << velocity << std::endl;
+// 		if (velocity != 0) sendVelocityToMicro();
 		
-		prevDir = direction;
-	}
-	velocity = 0;
-	sendVelocityToMicro();
-	lock = true;
-	sendCommandToMicro();
-}
+// 		prevDir = direction;
+// 	}
+// 	velocity = 0;
+// 	sendVelocityToMicro();
+// 	lock = true;
+// 	sendCommandToMicro();
+// }
 
-void Asse::findMeasCenter()
-{
-	float c = (measPT -> max + measPT -> min) / 2;
+// void Asse::findMeasCenter()
+// {
+// 	float c = (measPT -> max + measPT -> min) / 2;
 	
-	startMeasure(startV, dir_down);
-	float p;
-	do {
-		try
-		{
-			p = measPT -> readInstr();
-		}
-		catch (...)
-		{
-			p = std::numeric_limits<float>::infinity();
-		}
-	} while(p > c);
-	stopMeasure();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	setInstrPosition(c);
-}
+// 	startMeasure(startV, dir_down);
+// 	float p;
+// 	do {
+// 		try
+// 		{
+// 			p = measPT -> readInstr();
+// 		}
+// 		catch (...)
+// 		{
+// 			p = std::numeric_limits<float>::infinity();
+// 		}
+// 	} while(p > c);
+// 	stopMeasure();
+// 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+// 	setInstrPosition(c);
+// }
 
-void Asse::startMeasure(int v, bool d)
-{
-	lock = false;
-	Asse::measuring = true;
-	if (d) //decido la direzione del movimento
-		direction = dir_fore;
-	else
-		direction = dir_back;
+// void Asse::startMeasure(int v, bool d)
+// {
+// 	lock = false;
+// 	Asse::measuring = true;
+// 	if (d) //decido la direzione del movimento
+// 		direction = dir_fore;
+// 	else
+// 		direction = dir_back;
 	
-	sendCommandToMicro();
+// 	sendCommandToMicro();
 
-	velocity = v;
-	sendVelocityToMicro();
-}
+// 	velocity = v;
+// 	sendVelocityToMicro();
+// }
 
-void Asse::stopMeasure()
-{
-	Asse::measuring = false;
+// void Asse::stopMeasure()
+// {
+// 	Asse::measuring = false;
 	
-	velocity = 0;
-	sendVelocityToMicro();
-	lock = true;
-	sendCommandToMicro();
-}
+// 	velocity = 0;
+// 	sendVelocityToMicro();
+// 	lock = true;
+// 	sendCommandToMicro();
+// }
 
 Asse::~Asse()
 {

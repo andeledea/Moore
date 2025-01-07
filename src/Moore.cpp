@@ -7,16 +7,6 @@
 
 void Moore::init()
 {
-#ifdef TRY
-	key.connect();
-	key.setParams();
-
-	while(true)
-	{
-		key.readInstr();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}
-#else
 	// CONFIG THE SERIAL COM WITH UC
 	char port[] = "COM5";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
@@ -40,9 +30,6 @@ void Moore::init()
 	las.connect();
 	las.setParams();
 
-	key.connect();
-	key.setParams();
-
 	// INIT THE 3 AXIS
 	Xaxis.init((PosInstr*)&las, ser, x_lab);
 	Yaxis.init((PosInstr*)&yScale, ser, y_lab);
@@ -56,12 +43,10 @@ void Moore::init()
 
 	// INIT THE CARY
 	cary.connect();
-	cary.setParams();
 	
 	cary.readInstr();
 
-	Xaxis.setMeasInstrument((PosInstr*)&cary);	
-#endif
+	Xaxis.setMeasInstrument((PosInstr*)&cary);
 
 	// acc, start, max, stop 
 	Xaxis.setRamp(100, 20, 63, 15);
@@ -103,61 +88,6 @@ void Moore::setRelPosition(pos target)
 void Moore::moveInstr(double target)
 {
 	// TODO
-}
-
-void Moore::measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop)
-{
-	std::ofstream ost;
-	
-	std::string outfile;
-	outfile	= path + '/' + nome_file;
-	_mkdir(outfile.c_str());
-	std::cout << "Saving at: " << outfile << std::endl;
-
-	ost.open(outfile + "/data.CHRdat", std::ofstream::out);
-
-	pos startP, stopP;
-	startP.x = start;
-	stopP.x = stop;
-
-	setRelPosition(startP);  // beginning of measure
-
-	// Zaxis.findMeasCenter();
-	Zaxis.setInstrPosition(0.080f);
-
-	pos p;
-	bool dir = (start < stop);
-
-	// TODO check the track bool functionality
-	std::thread t = std::thread(&Asse::track, &Zaxis, 0.050f);
-	
-	Xaxis.startMeasure(speed, dir);
-
-	auto finish = [](bool d, double sp, double pt)
-	{
-		if (d == dir_back) {
-			if (pt < sp) return true;
-		}
-		else {
-			if (pt > sp) return true;
-		}
-		return false;
-	};
-
-	while (true)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-		p = getRelPosition();
-		ost << p.x << "," << p.y << "," << p.z << "," << CHR.readInstr() << std::endl;
-
-		if (GetKeyState('S') & 0x8000 || finish(dir, stop, p.x)) // mi fermo se 's'
-		{
-			break;
-		}
-	}
-
-	Xaxis.stopMeasure(); // mi fermo
-	if (track) t.join();
 }
 
 Moore::~Moore()

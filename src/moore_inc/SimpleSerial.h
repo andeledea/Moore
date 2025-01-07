@@ -1,14 +1,15 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <string.h>
+#include <exception>
+#include <cstring>
 #include <chrono>
-#include <mutex>
 #include <thread>
-#include <time.h>
+#include <ctime>
+#include <functional>
 
 class SimpleSerial
 {
@@ -35,6 +36,23 @@ public:
 	* @return Received_message: The std::string received
 	* */
 	std::string ReadSerialPort(int reply_wait_time);
+
+	/**
+	* Reads the serial port until '\r' is received
+	* and keeps trying until the conversion is succesful
+	*
+	* @param reply_wait_time: The timeout value
+	*
+	* @return Received_message: The std::string received
+	* */
+	template<typename T>
+	T ReadSerialPortWithConversion(int reply_wait_time, std::function<T(const std::string&)> func) {
+		try {
+			return func(this->ReadSerialPort(reply_wait_time));
+		} catch (std::invalid_argument e) {
+			return this->ReadSerialPortWithConversion(reply_wait_time, func);
+		}
+	}
 
 	/**
 	* Reads the serial port using a specified syntax.
@@ -93,9 +111,8 @@ public:
 	* */
 	bool CloseSerialPort();
 
+	bool PurgePort();
+
 	~SimpleSerial();
 	bool connected_;
-	
-	//std::mutex sendMutex;
 };
-

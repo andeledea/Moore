@@ -1,17 +1,17 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include<conio.h>
-#include "IkOptical.h"
+#include <conio.h>
+#include "cary.h"
 
 int main(void)
 {
-    IkOptical ik;
+    Cary cary;
 
-    ik.connect();
-    ik.setParams();
+    cary.connect();
+    // cary.setRange(RNG_50);
 
-    std::cout << "Starting ik220 test, press q for 1 second to close." << std::endl;
+    std::cout << "Starting cary test, press q for 1 second to close." << std::endl;
     while (true)
     {
         // Check if a key has been pressed
@@ -21,7 +21,7 @@ int main(void)
                 break; // Exit the loop
             }
         }
-        ik.readInstr();
+        std::cout << "Cary reading: " << cary.readInstr() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
     return 0;
@@ -29,6 +29,6 @@ int main(void)
 
 /**
 cd tests
-g++ ik220_test.cpp ..\src\IkOptical.cpp ..\src\Scale.cpp -I../src/moore_inc -L../lib/gcc_dll -lIK220Dll64 -o bin\ik220_test
-.\bin\ik220_test.exe
+g++ cary_test.cpp ..\src\cary.cpp ..\src\SimpleSerial.cpp -I../src/moore_inc -o bin\cary_test
+.\bin\cary_test.exe
 */

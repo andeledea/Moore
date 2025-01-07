@@ -68,11 +68,11 @@ std::string SimpleSerial::ReadSerialPort(int reply_wait_time)
 	char inc_msg[1];
 	std::string complete_inc_msg;
 
-	unsigned long start_time = time(nullptr);
+	time_t start_time = time(nullptr);
 
 	ClearCommError(io_handler_, &errors_, &status_);
 
-	while ((time(nullptr) - start_time) < reply_wait_time) {
+	while (difftime(time(nullptr), start_time) < reply_wait_time) {
 		if (ReadFile(io_handler_, inc_msg, 1, &bytes_read, NULL)) {
 			if (inc_msg[0] != '\r') complete_inc_msg.append(inc_msg, 1);
 			else return complete_inc_msg;
@@ -97,6 +97,7 @@ std::string SimpleSerial::ReadSerialPort(int reply_wait_time, std::string syntax
 	unsigned long start_time = time(nullptr);
 
 	ClearCommError(io_handler_, &errors_, &status_);
+	PurgeComm(io_handler_, PURGE_RXCLEAR);
 
 	while ((time(nullptr) - start_time) < reply_wait_time) {
 		if (ReadFile(io_handler_, inc_msg, 1, &bytes_read, NULL)) {
@@ -241,6 +242,11 @@ bool SimpleSerial::CloseSerialPort()
 		return false;
 }
 
+bool SimpleSerial::PurgePort()
+{
+    return PurgeComm(io_handler_, PURGE_RXCLEAR | PURGE_TXCLEAR);
+}
+
 SimpleSerial::~SimpleSerial()
 {
 	if (connected_) {
@@ -248,3 +254,4 @@ SimpleSerial::~SimpleSerial()
 		//CloseHandle(io_handler_);
 	}
 }
+

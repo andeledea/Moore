@@ -80,19 +80,6 @@ public:
 	* */
 	void moveInstr(double target);
 	
-	/**
-	* Starts the measure with the confocal
-	* objective with the given parameters
-	* 
-	* @param filename: the folder name that will contain the output
-	* @param path: the location where the folder is created
-	* @param speed: the speed of the measurement
-	* @param track: if true the measuring axis will track the sample
-	* @param start: the start relative position
-	* @param stop: the stop relative position
-	* */
-	void measCHR(std::string nome_file, std::string path, int speed, bool track, long start, long stop);
-
 	~Moore();
 
 	SimpleSerial ser;
@@ -100,7 +87,7 @@ public:
 	Asse Xaxis, Yaxis, Zaxis;
 	
 	Laser las;
-	KeySight key;
+	Keysight key;
 	IkOptical ik;
 	Scale yScale, zScale;
 	
