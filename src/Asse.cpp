@@ -119,8 +119,6 @@ void Asse::sendVelocityToMicro()
 	toSend += std::to_string(velocity);
 	toSend += '\r';
 
-	std::cout << toSend << '\r';
-
 	ser.WriteSerialPort(toSend.c_str());
 }
 

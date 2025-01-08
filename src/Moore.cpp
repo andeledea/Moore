@@ -8,7 +8,7 @@
 void Moore::init()
 {
 	// CONFIG THE SERIAL COM WITH UC
-	char port[] = "COM5";
+	char port[] = "COM7";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
 	{
 		std::cout << "Asse connesso" << std::endl;
@@ -27,31 +27,20 @@ void Moore::init()
 	yScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Y);
 	zScale.setParams(ENC_INCREMENTAL, SIG_11UA, M_SIG_PERIOD_Z);
 
-	las.connect();
-	las.setParams();
+	key.connect();
 
 	// INIT THE 3 AXIS
-	Xaxis.init((PosInstr*)&las, ser, x_lab);
+	Xaxis.init((PosInstr*)&key, ser, x_lab);
 	Yaxis.init((PosInstr*)&yScale, ser, y_lab);
 	Zaxis.init((PosInstr*)&zScale, ser, z_lab);
 
-	// INIT THE CHR
-	CHR.connect();
-	CHR.setParams();
-
-	Zaxis.setMeasInstrument((PosInstr*)&CHR);
-
 	// INIT THE CARY
 	cary.connect();
-	
-	cary.readInstr();
-
-	Xaxis.setMeasInstrument((PosInstr*)&cary);
 
 	// acc, start, max, stop 
-	Xaxis.setRamp(100, 20, 63, 15);
-	Yaxis.setRamp(100, 25, 63, 15);
-	Zaxis.setRamp(100, 30, 63, 10, inv_mov);
+	Xaxis.setRamp(70000, 4000, 65535, 20);
+	Yaxis.setRamp(70000, 4000, 65535, 20, inv_mov);
+	Zaxis.setRamp(70000, 40000, 65535, 20000);
 }
 
 void Moore::setAbsPosition(pos target)

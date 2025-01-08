@@ -4,7 +4,6 @@
 #include "Laser.h"
 #include "keysight.h"
 #include "Asse.h"
-#include "CHRocodile.h"
 #include "IkOptical.h"
 #include "Scale.h"
 #include "SimpleSerial.h"
@@ -90,8 +89,6 @@ public:
 	Keysight key;
 	IkOptical ik;
 	Scale yScale, zScale;
-	
-	CHRocodile CHR;
 	Cary cary;
 
 private:
