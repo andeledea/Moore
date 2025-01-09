@@ -182,17 +182,16 @@ void Nilox::renderUndistorted()
     cv::destroyAllWindows();
 }
 
-float Nilox::detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, bool estimatePose)
+float Nilox::detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, float markerSize, bool estimatePose)
 {
     bool showRejected = false;
     int waitTime = 10;
-    float markerLength = 52.8f; // mm
 
     cv::Mat objPoints(4, 1, CV_32FC3);
-    objPoints.ptr<cv::Vec3f>(0)[0] = cv::Vec3f(-markerLength / 2.f, markerLength / 2.f, 0);
-    objPoints.ptr<cv::Vec3f>(0)[1] = cv::Vec3f(markerLength / 2.f, markerLength / 2.f, 0);
-    objPoints.ptr<cv::Vec3f>(0)[2] = cv::Vec3f(markerLength / 2.f, -markerLength / 2.f, 0);
-    objPoints.ptr<cv::Vec3f>(0)[3] = cv::Vec3f(-markerLength / 2.f, -markerLength / 2.f, 0);
+    objPoints.ptr<cv::Vec3f>(0)[0] = cv::Vec3f(-markerSize / 2.f, markerSize / 2.f, 0);
+    objPoints.ptr<cv::Vec3f>(0)[1] = cv::Vec3f(markerSize / 2.f, markerSize / 2.f, 0);
+    objPoints.ptr<cv::Vec3f>(0)[2] = cv::Vec3f(markerSize / 2.f, -markerSize / 2.f, 0);
+    objPoints.ptr<cv::Vec3f>(0)[3] = cv::Vec3f(-markerSize / 2.f, -markerSize / 2.f, 0);
 
     cv::Mat centPoint(1, 1, CV_32FC3);
     centPoint.ptr<cv::Point2f>(0)[0] = cv::Point2f(0, 0);
@@ -234,7 +233,7 @@ float Nilox::detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, 
             if (estimatePose)
             {
                 for (unsigned int i = 0; i < ids.size(); i++) {
-                    cv::drawFrameAxes(imageCopy, this->cameraMatrix, this->distCoeffs, rvecs[i], tvecs[i], markerLength * 1.5f, 2);
+                    cv::drawFrameAxes(imageCopy, this->cameraMatrix, this->distCoeffs, rvecs[i], tvecs[i], markerSize * 1.5f, 2);
                 }
             }
         }
@@ -257,17 +256,17 @@ float Nilox::detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, 
                     sum += cv::norm(corner[3] - corner[0]);
                 }
                 float l = sum / n;
-                float scale = markerLength / l;
+                float scale = markerSize / l;
 
 
                 for (auto center: centers) {
                     markerPos.emplace_back(center - cv::Point2f(image.size()) / 2);
                 }
-                std::cout << "[INFO] Scale: " << scale << " L: " << l << "N: " << n << std::endl;
-                std::cout << "[INFO] Centers: " << std::endl;
-                for (int i = 0; i < ids.size(); i++)
-                    std::cout << "ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
-                std::cout << std::endl;
+                // std::cout << "[INFO] Scale: " << scale << " L: " << l << "N: " << n << std::endl;
+                // std::cout << "[INFO] Centers: " << std::endl;
+                // for (int i = 0; i < ids.size(); i++)
+                //     std::cout << "ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
+                // std::cout << std::endl;
                 return scale;
             }
         }
@@ -279,7 +278,7 @@ cv::Point2f Nilox::getDisplacementFromOriginOfID(int id, int origId)
 {
     std::vector<cv::Point2f> markerPos;
     std::vector<int> ids;
-    float scale = this->detect(markerPos, ids, false);
+    float scale = this->detect(markerPos, ids);
 
     bool originfound = false;
     bool idfound = false;

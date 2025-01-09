@@ -41,7 +41,7 @@ public:
      * 
      * @return float, the scaling factor calculated with the markerSize
      */
-    float detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, bool estimatePose);
+    float detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, float markerSize=40.0f, bool estimatePose=true);
 
     /**
      * Given two IDs (one defined as origin) calculates the distance and the 
