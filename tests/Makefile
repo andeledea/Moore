@@ -1,3 +1,24 @@
+CXX := gcc
+
+INC_PATH_LIN := -I/usr/local/include/opencv4/
+INC_PATH_WIN := -IC:/Users/X/libs/opencv/build/include
+
+LIB_PATH_LIN := -L/usr/local/lib64/
+LIB_PATH_WIN := -LC:/Users/X/libs/opencv/mybuild/bin
+
+MOORE_LIBS := -lni4882 -lIK220Dll64 -lE1735A -lE1735ACore
+
+OPENCV_LIBS_WIN := -lopencv_calib3d4100 -lopencv_core4100 -lopencv_dnn4100 -lopencv_features2d4100 -lopencv_flann4100 -lopencv_gapi4100 -lopencv_highgui4100 -lopencv_imgcodecs4100 -lopencv_imgproc4100 -lopencv_ml4100 -lopencv_objdetect4100 -lopencv_photo4100 -lopencv_stitching4100 -lopencv_video4100 -lopencv_videoio4100
+
+OPENCV_LIBS_LIN := -lopencv_calib3d -lopencv_core -lopencv_dnn -lopencv_features2d -lopencv_flann -lopencv_gapi -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_stitching -lopencv_video -lopencv_videoio
+
+ADD_LIBS := -lm
+
+INC_PATH := $(INC_PATH_LIN)
+LIB_PATH := $(LIB_PATH_LIN)
+OPENCV_LIBS := $(OPENCV_LIBS_LIN)
+
+
 default: help
 help:
 	@echo "Makefile Help:"
@@ -12,23 +33,23 @@ help:
 
 .PHONY: axis
 axis: 
-	g++ axis_test.cpp ..\src\IkOptical.cpp ..\src\Scale.cpp ..\src\SimpleSerial.cpp ..\src\Asse.cpp ..\src\keysight.cpp -I../src/moore_inc -L../lib/gcc_dll -lIK220Dll64 -o bin\axis_test
+	$(CXX) axis_test.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/SimpleSerial.cpp ../src/Asse.cpp ../src/keysight.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/axis_test
 
 .PHONY: moore
 moore:
-	g++ moore_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll -lni4882 -lIK220Dll64 -lE1735A -lE1735ACore -o bin\moore_test
+	$(CXX) moore_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/moore_test
 
 .PHONY: cary
 cary:
-	g++ cary_test.cpp ..\src\cary.cpp ..\src\SimpleSerial.cpp -I../src/moore_inc -o bin\cary_test
+	$(CXX) cary_test.cpp ../src/cary.cpp ../src/SimpleSerial.cpp -I../src/moore_inc $(ADD_LIBS) -o bin/cary_test
 
 .PHONY: ik220
 ik220:
-	g++ ik220_test.cpp ..\src\IkOptical.cpp ..\src\Scale.cpp -I../src/moore_inc -L../lib/gcc_dll -lIK220Dll64 -o bin\ik220_test
+	$(CXX) ik220_test.cpp ../src/IkOptical.cpp ../src/Scale.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/ik220_test
 
 .PHONY: keysight
 keysight:
-	g++ keysight_test.cpp ..\src\keysight.cpp -I../src/moore_inc -L../lib/gcc_dll -lE1735A -lE1735ACore -o bin\keysight_test
+	$(CXX) keysight_test.cpp ../src/keysight.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/keysight_test
 
 .PHONY: STM
 STM: 
@@ -36,8 +57,12 @@ STM:
 
 .PHONY: nilox
 nilox:
-	g++ nilox_test.cpp ..\src\nilox.cpp -I../src/moore_inc -IC:\Users\X\libs\opencv\build\include -LC:\Users\X\libs\opencv\mybuild\bin -lstdc++ -lopencv_calib3d4100 -lopencv_core4100 -lopencv_dnn4100 -lopencv_features2d4100 -lopencv_flann4100 -lopencv_gapi4100 -lopencv_highgui4100 -lopencv_imgcodecs4100 -lopencv_imgproc4100 -lopencv_ml4100 -lopencv_objdetect4100 -lopencv_photo4100 -lopencv_stitching4100 -lopencv_video4100 -lopencv_videoio4100 -o bin\nilox_test
+	$(CXX) nilox_test.cpp ../src/Nilox.cpp $(INC_PATH) -I../src/moore_inc $(LIB_PATH) -lstdc++ $(OPENCV_LIBS) $(ADD_LIBS) -o bin/nilox_test
 
 .PHONY: marker_origin
 marker_origin:
-	g++ marker_origin_test.cpp ../src/Moore.cpp ../src/nilox.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll -lni4882 -lIK220Dll64 -lE1735A -lE1735ACore  -IC:\Users\X\libs\opencv\build\include -LC:\Users\X\libs\opencv\mybuild\bin -lstdc++ -lopencv_calib3d4100 -lopencv_core4100 -lopencv_dnn4100 -lopencv_features2d4100 -lopencv_flann4100 -lopencv_gapi4100 -lopencv_highgui4100 -lopencv_imgcodecs4100 -lopencv_imgproc4100 -lopencv_ml4100 -lopencv_objdetect4100 -lopencv_photo4100 -lopencv_stitching4100 -lopencv_video4100 -lopencv_videoio4100 -o bin\marker_origin_test
+	$(CXX) marker_origin_test.cpp ../src/Moore.cpp ../src/Nilox.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(OPENCV_LIBS) $(ADD_LIBS) -o bin/marker_origin_test
+
+.PHONY: mkdir
+mkdir:
+	@mkdir bin

@@ -6,15 +6,18 @@ int main(void)
 
     nil.init();
 
-    std::vector<pos> markerPos;
-    std::vector<int> ids;
-    int n = nil.detect(markerPos, ids);
+    // nil.render();
+    // nil.renderUndistorted();
 
-    for (int i = 0; i < n; i++) std::cout << "ID: " << ids[i] << '\t' << markerPos[i].x << "\t" << markerPos[i].y << std::endl;
+    // std::vector<pos> markerPos;
+    // std::vector<int> ids;
+    // int n = nil.detect(markerPos, ids, true);
+
+    // for (int i = 0; i < n; i++) std::cout << "ID: " << ids[i] << '\t' << markerPos[i].x << "\t" << markerPos[i].y << std::endl;
 
     while (true) {
-        pos p = nil.getDisplacementOfIDzeroInFOV();
-        std::cout << "Origin displacement: " << p.x << '\t' << p.y << std::endl;
+        cv::Point2f p = nil.getDisplacementFromOriginOfID(2, 1);
+        std::cout << "V -> " << p << "\tD -> " << cv::norm(p) << std::endl;
     }
     return 0;
 }
