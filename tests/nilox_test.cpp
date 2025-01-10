@@ -6,24 +6,24 @@ int main(void)
 
     nil.init();
 
-    // nil.render();
-    // nil.renderUndistorted();
+    nil.render();
+    nil.renderUndistorted();
 
-    // while (true)
-    // {
-    //     std::vector<cv::Point2f> markerPos;
-    //     std::vector<int> ids;
-    //     float scale = nil.detect(markerPos, ids);
+    while (true)
+    {
+        std::vector<cv::Point2f> markerPos;
+        std::vector<int> ids;
+        float scale = nil.detect(markerPos, ids);
 
-    //     for (int i = 0; i < ids.size(); i++)
-    //         std::cout << "ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
-    //     std::cout << std::endl;
-    // }
-
-    while (true) {
-        cv::Point2f p = nil.getDisplacementFromOriginOfID(2);
-        std::cout << "V -> " << p << "\tD -> " << cv::norm(p) << std::endl;
+        for (int i = 0; i < ids.size(); i++)
+            std::cout << "ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
+        std::cout << std::endl;
     }
+
+    // while (true) {
+    //     cv::Point2f p = nil.getDisplacementFromOriginOfID(2);
+    //     std::cout << "V -> " << p << "\tD -> " << cv::norm(p) << std::endl;
+    // }
     return 0;
 }
 

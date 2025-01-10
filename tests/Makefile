@@ -12,11 +12,11 @@ OPENCV_LIBS_WIN := -lopencv_calib3d4100 -lopencv_core4100 -lopencv_dnn4100 -lope
 
 OPENCV_LIBS_LIN := -lopencv_calib3d -lopencv_core -lopencv_dnn -lopencv_features2d -lopencv_flann -lopencv_gapi -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_stitching -lopencv_video -lopencv_videoio
 
-ADD_LIBS := -lm
+ADD_LIBS := -lm -lstdc++
 
-INC_PATH := $(INC_PATH_LIN)
-LIB_PATH := $(LIB_PATH_LIN)
-OPENCV_LIBS := $(OPENCV_LIBS_LIN)
+INC_PATH := $(INC_PATH_WIN)
+LIB_PATH := $(LIB_PATH_WIN)
+OPENCV_LIBS := $(OPENCV_LIBS_WIN)
 
 
 default: help
@@ -57,7 +57,7 @@ STM:
 
 .PHONY: nilox
 nilox:
-	$(CXX) nilox_test.cpp ../src/Nilox.cpp $(INC_PATH) -I../src/moore_inc $(LIB_PATH) -lstdc++ $(OPENCV_LIBS) $(ADD_LIBS) -o bin/nilox_test
+	$(CXX) nilox_test.cpp ../src/Nilox.cpp $(INC_PATH) -I../src/moore_inc $(LIB_PATH) $(OPENCV_LIBS) $(ADD_LIBS) -o bin/nilox_test
 
 .PHONY: marker_origin
 marker_origin:

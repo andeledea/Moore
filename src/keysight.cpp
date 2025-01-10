@@ -18,7 +18,7 @@ void Keysight::connect()
 
 double Keysight::readInstr()
 {
-    double sample = E1735A_ReadSample();
+    double sample = E1735A_ReadSample() / 2;
     return sample;
 }
 

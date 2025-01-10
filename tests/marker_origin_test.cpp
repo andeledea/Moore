@@ -1,6 +1,18 @@
 #include "Moore.h"
 #include "Nilox.h"
 
+pos niloxPointToMoore(cv::Point2f p) {
+    std::cout << "converting: " << p << std::endl;
+    pos retp = (pos) {
+        .x = p.x,
+        .y = -p.y,
+        .z = 0
+    };
+
+    std::cout << "pospos: " << retp << std::endl;
+    return retp;
+}
+
 int main(void)
 {
     Nilox nil;
@@ -22,16 +34,17 @@ int main(void)
     std::thread readT(readAllInstr, &m);
     readT.detach();
 
-    std::vector<pos> markerPos;
+    std::vector<cv::Point2f> markerPos;
     std::vector<int> ids;
-    
-    pos p = nil.getDisplacementOfIDzeroInFOV();
-    p.x = -p.x;
-    p.y = -p.y;
-    std::cout << "Origin displacement: " << p.x << '\t' << p.y << std::endl;
+    float scale = nil.detect(markerPos, ids);
+    std::cout << "Found " << ids.size() << " markers" << std::endl;
 
-    m.setRelPosition(p);
-
+    for (int i = 0; i < ids.size(); i++) {
+        std::cout << "Moving to ID: " << ids[i] << " -> " << markerPos[i] * scale << std::endl;
+        m.setRelPosition(niloxPointToMoore(-markerPos[i] * scale));
+        cv::waitKey(2000);
+    }
+    std::cout << std::endl;
     return 0;
 }
 
