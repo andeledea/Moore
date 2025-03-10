@@ -1,0 +1,8 @@
+../Core/Src/main.c:100:6:setAxis	8
+../Core/Src/main.c:94:6:HAL_UART_RxCpltCallback	1
+../Core/Src/main.c:152:6:initAxis	1
+../Core/Src/main.c:185:6:HAL_TIM_OC_DelayElapsedCallback	4
+../Core/Src/main.c:196:10:map	1
+../Core/Src/main.c:259:6:SystemClock_Config	3
+../Core/Src/main.c:210:5:main	11
+../Core/Src/main.c:483:6:Error_Handler	1

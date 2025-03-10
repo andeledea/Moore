@@ -1,0 +1,11 @@
+../Core/Src/main_v2.c:102:6:HAL_UART_RxCpltCallback	2
+../Core/Src/main_v2.c:117:6:setAxis	9
+../Core/Src/main_v2.c:142:6:initAxis	1
+../Core/Src/main_v2.c:175:6:HAL_TIM_OC_DelayElapsedCallback	4
+../Core/Src/main_v2.c:186:10:map	1
+../Core/Src/main_v2.c:201:5:main	1
+../Core/Src/main_v2.c:250:6:SystemClock_Config	3
+../Core/Src/main_v2.c:297:13:MX_LPUART1_UART_Init	5
+../Core/Src/main_v2.c:344:13:MX_TIM1_Init	7
+../Core/Src/main_v2.c:424:13:MX_GPIO_Init	1
+../Core/Src/main_v2.c:474:6:Error_Handler	1
