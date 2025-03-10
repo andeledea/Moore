@@ -3,20 +3,28 @@ import serial
 import time
 from itertools import chain
 
-ser = serial.Serial('COM5', 57600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE)
+ser = serial.Serial('COM5', 460800, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE)
 
-activeaxis = 'x'
 direction = True
-enable = False
+windings = True
+angle_fine = False
 speed = 0
-
-MINspeed = 0
-MAXspeed = 65535
 
 # MATH
 def map(x, v_min, v_max, t_min, t_max):
     T = t_max/((x - v_min) * (t_max/t_min - 1) / (v_max - v_min) + 1)
     return T
+
+def calcALL(n):
+    """
+    Calculates from n f, v_r, v_m
+    """
+    clk = 84e6
+    f = clk / (1 * 2 * map(n, 0, 65535, 1400, 3200000))
+    n_step_giro = 250000 if angle_fine else 1000
+    v_r = f / n_step_giro
+    v_m = v_r / 10
+    return f, v_r, v_m
 
 # CALLBACKS
 def on_direction_click():
@@ -24,22 +32,25 @@ def on_direction_click():
     direction = not direction
     send_speed()
 
-def on_enable_click():
-    global enable
-    enable = not enable
+def on_windings_click():
+    global windings
+    windings = not windings
+    send_speed()
+
+def on_angle_fine_click():
+    global angle_fine
+    angle_fine = not angle_fine
     send_speed()
 
 def on_ramp_click():
-    global speed, enable
-    step = int(number_entry.get())
-    enable = True
-    for i in chain(range(MINspeed, MAXspeed, step), range(MAXspeed, MINspeed-1, -step)):
+    global speed
+    step = int(number_entry.get())  
+    for i in chain(range(0, 65536, step), range(65535, -1, -step)):
         speed = i
         send_speed()
         time.sleep(0.00005)
         root.update()
     speed = 0
-    enable = False
     send_speed()
 
 def on_zero_click():
@@ -59,25 +70,28 @@ def set_speed(value):
     send_speed()
 
 def update_ui(send_string):
+    f, v_r, v_m = calcALL(speed)
 
-    label.config(text=f"n: {speed}, sending: {send_string}")
+    label.config(text=f"n: {speed}, f: {f / 1000:.2f} kHz, v_rot: {v_r:.2f} RPS, v_lin: {v_m:.2f} mm/s, sending: {send_string}")
     button1.config(text = 'fore' if direction else 'back')
-    button2.config(text = 'enabled' if enable else 'disabled')
-
+    button2.config(text = 'w_on' if windings else 'w_off')
+    button3.config(text = 'fine_angle' if angle_fine else 'default_angle')
     if speed > 0: 
         button1.config(state='disabled')
         button2.config(state='disabled')
+        button3.config(state='disabled')
         button4.config(state='disabled')
     else: 
         button1.config(state='normal')
         button2.config(state='normal')
+        button3.config(state='normal')
         button4.config(state='normal')
 
     speed_var.set(speed)
 
 def send_speed():
-    global speed, activeaxis, direction, enable
-    send_string = f"{activeaxis}{'e' if enable else 'd'}{'b' if direction else 'f'}{speed}\r"
+    global speed, direction, windings, angle_fine
+    send_string = f"{'f' if direction else 'b'}{'w' if windings else 'm'}{'s' if angle_fine else 'r'}{speed}\r"
     
     ser.write(send_string.encode('ascii'))
     update_ui(send_string)
@@ -87,14 +101,9 @@ def on_closing():
     ser.close()
     root.destroy()  # Close the window
 
-def set_axis_selection():
-    global activeaxis
-    activeaxis = axisselector.get()
-    send_speed()
-
 # TK
 root = tk.Tk()
-root.title("STM32")
+root.title("STM32 VEXTA")
 root.geometry("900x400")
 
 import tkinter.font as tkFont
@@ -107,7 +116,7 @@ label.pack(pady=20)
 speed_var = tk.IntVar()
 slider = tk.Scale(root,
                   variable=speed_var,
-                  from_=MINspeed, to=MAXspeed, 
+                  from_=0, to=65535, 
                   orient=tk.HORIZONTAL, command=set_speed)
 slider.pack(fill=tk.X, padx=20, pady=20)
 
@@ -117,8 +126,11 @@ button_frame.pack(fill=tk.X, padx=10, pady=10)
 button1 = tk.Button(button_frame, command=on_direction_click, text = 'fore' if direction else 'back')
 button1.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-button2 = tk.Button(button_frame, command=on_enable_click, text = 'enabled' if enable else 'disabled')
+button2 = tk.Button(button_frame, command=on_windings_click, text = 'w_on' if windings else 'w_off')
 button2.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+button3 = tk.Button(button_frame, command=on_angle_fine_click, text = 'fine_angle' if angle_fine else 'default_angle')
+button3.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
 button4 = tk.Button(button_frame, command=on_ramp_click, text = 'ramp')
 button4.pack(side=tk.LEFT, fill=tk.X, expand=True)
@@ -133,18 +145,6 @@ number_entry.insert(0, "50")
 number_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
 button5 = tk.Button(input_frame, command=on_zero_click, text = 'zero')
 button5.pack(side=tk.LEFT, fill=tk.X, expand=True)
-
-# Create a variable to hold the selected value
-axisselector = tk.StringVar(value="x")  # Default value
-
-# Create radio buttons
-radio_x = tk.Radiobutton(root, text="X", variable=axisselector, value="x", command=set_axis_selection)
-radio_y = tk.Radiobutton(root, text="Y", variable=axisselector, value="y", command=set_axis_selection)
-radio_z = tk.Radiobutton(root, text="Z", variable=axisselector, value="z", command=set_axis_selection)
-
-radio_x.pack(side=tk.LEFT, fill=tk.X, expand=True)
-radio_y.pack(side=tk.LEFT, fill=tk.X, expand=True)
-radio_z.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
