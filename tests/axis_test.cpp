@@ -21,7 +21,7 @@ int main(void)
         laser.connect();
         xaxis.init((PosInstr *)&laser, ser, x_lab);
         // acc, start, max, stop
-        xaxis.setRamp(70000, 4000, 65535, 20);
+        xaxis.setRamp(70000, 1000, 65535, 20);
 
         auto readlaser = [](Asse *axis)
         {

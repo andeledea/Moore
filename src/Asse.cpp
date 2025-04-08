@@ -35,10 +35,14 @@ void Asse::init(PosInstr* instrument, SimpleSerial& serial, char name)
 
 double Asse::getPosition()
 {
+	double tempP;
 	do
 	{ 
-		position = instrPT->readInstr();
-	} while (std::isnan(position));
+		tempP = instrPT->readInstr();
+		// std::cout << "[INFO] pos: " << position << '\r';
+		// if (std::isnan(position)) std::cerr << "[ERROR] pos is NAN" << std::endl;
+	} while (std::isnan(tempP));
+	position = tempP;
 	return position;
 }
 

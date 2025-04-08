@@ -3,7 +3,7 @@ import serial
 import time
 from itertools import chain
 
-ser = serial.Serial('COM5', 57600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE)
+ser = serial.Serial('COM7', 57600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE)
 
 activeaxis = 'x'
 direction = True
