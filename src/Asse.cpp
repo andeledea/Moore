@@ -128,9 +128,9 @@ void Asse::sendVelocityToMicro()
 
 // void Asse::retension(float pos, int v)
 // {
-// 	this->startMeasure(v, dir_up);
+// 	this->startMove(v, dir_up);
 // 	while(instrPT -> readInstr() < pos) {}
-// 	this->stopMeasure();
+// 	this->stopMove();
 // }
 
 // void Asse::track(float pos)
@@ -179,7 +179,7 @@ void Asse::sendVelocityToMicro()
 // {
 // 	float c = (measPT -> max + measPT -> min) / 2;
 	
-// 	startMeasure(startV, dir_down);
+// 	startMove(startV, dir_down);
 // 	float p;
 // 	do {
 // 		try
@@ -191,35 +191,32 @@ void Asse::sendVelocityToMicro()
 // 			p = std::numeric_limits<float>::infinity();
 // 		}
 // 	} while(p > c);
-// 	stopMeasure();
+// 	stopMove();
 // 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 // 	setInstrPosition(c);
 // }
 
-// void Asse::startMeasure(int v, bool d)
-// {
-// 	lock = false;
-// 	Asse::measuring = true;
-// 	if (d) //decido la direzione del movimento
-// 		direction = dir_fore;
-// 	else
-// 		direction = dir_back;
-	
-// 	sendCommandToMicro();
+void Asse::startMove(int v, bool d)
+{
+	lock = false;
+	Asse::measuring = true;
+	if (d) //decido la direzione del movimento
+		direction = dir_fore;
+	else
+		direction = dir_back;
 
-// 	velocity = v;
-// 	sendVelocityToMicro();
-// }
+	velocity = v;
+	sendVelocityToMicro();
+}
 
-// void Asse::stopMeasure()
-// {
-// 	Asse::measuring = false;
+void Asse::stopMove()
+{
+	Asse::measuring = false;
 	
-// 	velocity = 0;
-// 	sendVelocityToMicro();
-// 	lock = true;
-// 	sendCommandToMicro();
-// }
+	velocity = 0;
+	sendVelocityToMicro();
+	lock = true;
+}
 
 Asse::~Asse()
 {

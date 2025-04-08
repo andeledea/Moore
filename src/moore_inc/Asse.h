@@ -117,13 +117,13 @@ public:
 	* @param d: the direction of the movement
 	*	Predefined direction macros: dir_fore, dir_back, dir_up, dir_down
 	* */
-	// void startMeasure(int v = 1, bool d = dir_fore);
+	void startMove(int v = 500, bool d = dir_fore);
 
 	/**
 	* Stops the constant movement and
 	* locks the motor
 	* */
-	// void stopMeasure();
+	void stopMove();
 
 	static bool measuring;
 

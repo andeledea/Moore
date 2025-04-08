@@ -53,7 +53,7 @@ void measure(Asse& asseX, Asse&asseY, Laser& las, CHRocodile& CHR)
 		float pos = 0;
 		float dis = 75;
 
-		asseX.startMeasure(50, dir); // inzio a misurare
+		asseX.startMove(50, dir); // inzio a misurare
 		while (dis < 85 && dis > 15)
 		{
 			pos = las.readInstr();
@@ -68,7 +68,7 @@ void measure(Asse& asseX, Asse&asseY, Laser& las, CHRocodile& CHR)
 				break;
 			}
 		} // finchè sono in range misuro
-		asseX.stopMeasure(); // mi fermo
+		asseX.stopMove(); // mi fermo
 		if (dis > 85)
 		{
 			asseY.setPosition(25); // mi muovo in basso
@@ -108,12 +108,12 @@ void calibrate(Asse& asse, CHRocodile& CHR)
 
 	for (int i = 0; i < nPoints; i++)
 	{
-		asse.startMeasure(10, dir_fore);
+		asse.startMove(10, dir_fore);
 		while (travel < (i + 1) * CHRrange / nPoints)
 		{
 			travel = abs(asse.getPosition() - initPos);
 		}
-		asse.stopMeasure();
+		asse.stopMove();
 		Sleep(2000);
 
 		pos = asse.getPosition();
@@ -128,12 +128,12 @@ void findCHRz(Asse& asse, CHRocodile& CHR, bool lr)
 {
 	float dis = 0;
 
-	asse.startMeasure(10, lr);
+	asse.startMove(10, lr);
 	do
 	{
 		dis = CHR.readInstr();
 	} while (dis > 0 || std::isnan(dis));
-	asse.stopMeasure();
+	asse.stopMove();
 
 	//ho raggiunto lo 0 del CHR
 	std::cout << "You are at CHR = " << CHR.readInstr() << ", program will continue in 2s" << std::endl;
