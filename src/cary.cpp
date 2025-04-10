@@ -20,7 +20,7 @@ void Cary::connect()
     char port[] = "COM1";
     if (ser.OpenSerialPort(port, dcbSerialParams)) // apro la com seriale
     {
-        std::cout << "TESA connected" << std::endl;
+        std::cout << "[INFO] TESA connected" << std::endl;
 
         // Do a simple request to start the com
         // this is probably beacuse the port has some init errors
@@ -30,7 +30,7 @@ void Cary::connect()
     }
     else
     {
-        std::cout << "TESA NOT connected" << std::endl;
+        std::cout << "[ERROR] TESA NOT connected" << std::endl;
         throw std::runtime_error("Unable to connect TESA");
     }
 }

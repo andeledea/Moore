@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cassert>
 #include "measurement.h"
 
 void Measurement::setMooreSample(Moore * m, Sample * s)
@@ -9,9 +10,7 @@ void Measurement::setMooreSample(Moore * m, Sample * s)
 
 void Measurement::approach(bool direction, double target, int speed)
 {
-    assert(this->z_safe_level != NULL && "[ASSERTION_FAIL] z safe level must be set before approaching");
-    // go up to avoid collisions
-    this->moore->Zaxis.setPosition(z_safe_level);
+    this->reachSafeLevel();
 
     // move horizontally in x and y on top of the target
     pos target_sample = this->sample->getSideCoordinate(direction);
@@ -21,7 +20,7 @@ void Measurement::approach(bool direction, double target, int speed)
     this->moore->setAbsPosition(target_sample);
 
     // move down back to the sample height
-    pos target = this->sample->getSideCoordinate(direction);
+    target_sample = this->sample->getSideCoordinate(direction);
     this->moore->Zaxis.setPosition(target_sample.z);
 
     // do the final approach
@@ -32,8 +31,27 @@ void Measurement::approach(bool direction, double target, int speed)
 
 void Measurement::setSafeLevel()
 {
-    std::cout << "[INFO] Move the Z axis clear from any collision. Press ENTER" << std::endl;
+    std::cout << "[ACTION] Move the Z axis clear from any collision. Press ENTER";
     std::cin.ignore();
     this->z_safe_level = this->moore->getAbsPosition().z;
     std::cout << "[INFO] Z safe level set to: " << this->z_safe_level << std::endl;
+}
+
+void Measurement::reachSafeLevel()
+{
+    assert(this->z_safe_level != NULL && "[ASSERTION_FAIL] z safe level must be set before approaching");
+    // go up to avoid collisions
+    this->moore->Zaxis.setPosition(z_safe_level);
+}
+
+///////////////// SPHERE MEAS ///////////////////////
+
+void SphereMeasurement::setSamplePosition()
+{
+    std::cout << "[ACTION] Position the machine in contact with the sphere. Press ENTER";
+    std::cin.ignore();
+    pos contact_position = this->moore->getAbsPositionWithInstr();
+    
+    this->sample->setContactPosition(contact_position);
+    std::cout << "[INFO] Sphere contact set to: " << contact_position << std::endl;
 }

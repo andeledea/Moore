@@ -29,6 +29,8 @@ public:
 	* */
 	virtual double readInstr() { return 0.0; }
 
+	virtual double preciseRead(int n_samples_to_read) { return 0.0; }
+
 	~PosInstr() {}
 
 	double value;

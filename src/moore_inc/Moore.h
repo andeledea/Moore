@@ -45,6 +45,8 @@ public:
 	* */
 	pos getAbsPosition() { return abs; };
 
+	pos getAbsPositionWithInstr();
+
 	/**
 	* Returns the relative position
 	* if zero has not been defined returns
@@ -78,6 +80,8 @@ public:
 	* @param target: the target 1D coord
 	* */
 	void moveInstr(double target);
+
+	void keyboardMove();
 	
 	~Moore();
 

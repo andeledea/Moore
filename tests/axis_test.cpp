@@ -11,7 +11,7 @@
 
 int main(void)
 {
-    std::cout << "axis test" << std::endl;
+    std::cout << "[INFO] axis test" << std::endl;
     SimpleSerial ser("COM7", CBR_57600);
 
     {
@@ -34,15 +34,15 @@ int main(void)
         std::thread readT(readlaser, &xaxis);
         readT.detach();
 
-        std::cout << "Going forward 5 mm from " << xaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going forward 5 mm from " << xaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         xaxis.setPosition(xaxis.getPosition() + 5);
-        std::cout << "Arrived @ " << xaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << xaxis.getPosition() << std::endl;
 
-        std::cout << "Going backward 5 mm from " << xaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going backward 5 mm from " << xaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         xaxis.setPosition(xaxis.getPosition() - 5);
-        std::cout << "Arrived @ " << xaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << xaxis.getPosition() << std::endl;
     }
 
     IkOptical ik;
@@ -70,15 +70,15 @@ int main(void)
         std::thread readT(readlaser, &yaxis);
         readT.detach();
 
-        std::cout << "Going forward 5 mm from " << yaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going forward 5 mm from " << yaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         yaxis.setPosition(yaxis.getPosition() + 5);
-        std::cout << "Arrived @ " << yaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << yaxis.getPosition() << std::endl;
 
-        std::cout << "Going backward 5 mm from " << yaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going backward 5 mm from " << yaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         yaxis.setPosition(yaxis.getPosition() - 5);
-        std::cout << "Arrived @ " << yaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << yaxis.getPosition() << std::endl;
     }
 
     {
@@ -105,15 +105,15 @@ int main(void)
         std::thread readT(readlaser, &zaxis);
         readT.detach();
 
-        std::cout << "Going forward 5 mm from " << zaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going forward 5 mm from " << zaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         zaxis.setPosition(zaxis.getPosition() + 5);
-        std::cout << "Arrived @ " << zaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << zaxis.getPosition() << std::endl;
 
-        std::cout << "Going backward 5 mm from " << zaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Going backward 5 mm from " << zaxis.getPosition() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         zaxis.setPosition(zaxis.getPosition() - 5);
-        std::cout << "Arrived @ " << zaxis.getPosition() << std::endl;
+        std::cout << "[INFO] Arrived @ " << zaxis.getPosition() << std::endl;
     }
     return 0;
 }

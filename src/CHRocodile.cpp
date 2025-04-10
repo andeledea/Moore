@@ -16,10 +16,10 @@ void CHRocodile::connect()
 		nRes = OpenConnection(strConnInfo.c_str(), 1, &handle);
 	if (nRes < 0) //connection error
 	{
-		std::cout << "CHR not connected" << std::endl;
+		std::cout << "[ERROR] CHR not connected" << std::endl;
 		throw std::runtime_error("Connection not estblished");
 	}
-	else std::cout << "CHR connected" << std::endl;
+	else std::cout << "[INFO] CHR connected" << std::endl;
 }
 
 void CHRocodile::setParams()

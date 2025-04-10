@@ -11,7 +11,7 @@ int main(void)
     ik.connect();
     ik.setParams();
 
-    std::cout << "Starting ik220 test, press q for 1 second to close." << std::endl;
+    std::cout << "[INFO] Starting ik220 test, press q for 1 second to close." << std::endl;
     while (true)
     {
         // Check if a key has been pressed

@@ -11,11 +11,11 @@ void Moore::init()
 	char port[] = "COM7";
 	if (ser.OpenSerialPort(port, CBR_57600)) // apro la com seriale
 	{
-		std::cout << "Asse connesso" << std::endl;
+		std::cout << "[INFO] STM32 connesso" << std::endl;
 	}
 	else
 	{
-		std::cout << "Asse NON connesso" << std::endl;
+		std::cout << "[ERROR] STM32 non connesso" << std::endl;
 		throw std::runtime_error("Unable to connect micro");
 	}
 
@@ -36,6 +36,8 @@ void Moore::init()
 
 	// INIT THE CARY
 	cary.connect();
+
+	Xaxis.setMeasInstrument((PosInstr*) &cary);
 
 	// acc, start, max, stop 
 	Xaxis.setRamp(70000, 4000, 65535, 20);
@@ -63,6 +65,15 @@ void Moore::updatePosition()
 	rel = abs - zeroPos;
 }
 
+pos Moore::getAbsPositionWithInstr()
+{
+    return (pos){
+		.x = Xaxis.getPositionWithInstr(),
+		.y = Yaxis.getPositionWithInstr(),
+		.z = Zaxis.getPositionWithInstr()
+	};
+}
+
 void Moore::defineZero()
 {
 	zeroPos = getAbsPosition();
@@ -77,6 +88,15 @@ void Moore::setRelPosition(pos target)
 void Moore::moveInstr(double target)
 {
 	// TODO
+}
+
+void Moore::keyboardMove()
+{
+	std::thread xt(&Asse::keyboardControl, &Xaxis, 'a', 'd');
+	std::thread yt(&Asse::keyboardControl, &Yaxis, 'w', 's');
+
+	xt.join();
+	yt.join();
 }
 
 Moore::~Moore()

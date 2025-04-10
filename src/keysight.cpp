@@ -46,7 +46,7 @@ double Keysight::readSamplesAvg(int n_samples_to_read)
         sum += samples[i].LaserPos;
     }
     readAverageSamples = (sum)/(n_samples_to_read);
-    // std::cout << "the average is:" << readAverageSamples<< std::endl;
+    // std::cout << "[INFO] the average is:" << readAverageSamples<< std::endl;
 
     for(int j=0; j< n_samples_to_read; j++)
     {

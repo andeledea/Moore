@@ -3,7 +3,7 @@
 void Voltmeter::connect()
 {
 	handle = ibdev(0, 22, 0, 11, 1, 0x140A);
-	std::cout << "Voltmeter connected @ " << handle << std::endl;
+	std::cout << "[INFO] Voltmeter connected @ " << handle << std::endl;
 }
 
 void Voltmeter::setParams()

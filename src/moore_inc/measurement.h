@@ -14,10 +14,13 @@ public:
     void approach(bool direction, double target, int speed);
 
     void setSafeLevel();
+    void reachSafeLevel();
+
+    virtual void setSamplePosition() {};
     
     ~Measurement() {};
 
-private:
+protected:
     Moore * moore;
     Sample * sample;
 
@@ -28,6 +31,8 @@ class SphereMeasurement : public Measurement
 {
 public:
     using Measurement::Measurement;
+
+    void setSamplePosition();
 
 private:
     int n_repetitions;

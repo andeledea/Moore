@@ -22,6 +22,12 @@ double SphereSample::getRadius()
     return this->radius;
 }
 
+void SphereSample::setContactPosition(pos c)
+{
+    this->contact_position = c;
+    this->center = c - (pos) {.x = this->radius, .y = 0, .z = 0};
+}
+
 pos SphereSample::getSideCoordinate(bool direction)
 {
     return (pos) {

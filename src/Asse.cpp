@@ -4,6 +4,7 @@
 #include <limits>
 #include <chrono>
 #include <cmath>
+#include <conio.h>
 #include "Asse.h"
 
 bool Asse::measuring = false;
@@ -44,6 +45,12 @@ double Asse::getPosition()
 	} while (std::isnan(tempP));
 	position = tempP;
 	return position;
+}
+
+double Asse::getPositionWithInstr()
+{
+	if (this->measPT == nullptr) return this->getPosition();
+    return this->getPosition() - this->measPT->preciseRead(5);
 }
 
 void Asse::setPos(double targetPosition, const char instr)
@@ -126,96 +133,75 @@ void Asse::sendVelocityToMicro()
 	ser.WriteSerialPort(toSend.c_str());
 }
 
-// void Asse::retension(float pos, int v)
-// {
-// 	this->startMove(v, dir_up);
-// 	while(instrPT -> readInstr() < pos) {}
-// 	this->stopMove();
-// }
-
-// void Asse::track(float pos)
-// {
-// 	float current, disp;
-// 	float k = maxV / (measPT -> max - measPT -> min); // constant for speed
-// 	//constant calculated to have max speed if disp == range
-	
-// 	lock = false;
-// 	bool prevDir = dir_up;
-	
-// 	direction = dir_up;
-// 	sendCommandToMicro();
-	
-// 	while (Asse::measuring)
-// 	{
-// 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-// 		current = measPT -> readInstr();
-// 		disp = current - pos;  // distance from target
-		
-// 		// calculate direction
-// 		if (disp > 0) direction = dir_down;
-// 		else direction = dir_up;
-		
-// 		if (direction != prevDir) // if change direction 
-// 		{
-// 			//std::cout << "change!!" << std::endl;
-// 			velocity = 0;
-// 			sendVelocityToMicro();
-// 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-// 			sendCommandToMicro();
-// 		}
-// 		velocity = (unsigned int) (abs(disp) * k);
-// 		//std::cout << velocity << std::endl;
-// 		if (velocity != 0) sendVelocityToMicro();
-		
-// 		prevDir = direction;
-// 	}
-// 	velocity = 0;
-// 	sendVelocityToMicro();
-// 	lock = true;
-// 	sendCommandToMicro();
-// }
-
-// void Asse::findMeasCenter()
-// {
-// 	float c = (measPT -> max + measPT -> min) / 2;
-	
-// 	startMove(startV, dir_down);
-// 	float p;
-// 	do {
-// 		try
-// 		{
-// 			p = measPT -> readInstr();
-// 		}
-// 		catch (...)
-// 		{
-// 			p = std::numeric_limits<float>::infinity();
-// 		}
-// 	} while(p > c);
-// 	stopMove();
-// 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-// 	setInstrPosition(c);
-// }
-
-void Asse::startMove(int v, bool d)
+void Asse::timeBaseAccRamp(unsigned int minV, unsigned int maxV, bool d, int step)
 {
 	lock = false;
-	Asse::measuring = true;
-	if (d) //decido la direzione del movimento
-		direction = dir_fore;
-	else
-		direction = dir_back;
 
-	velocity = v;
+	if (d) direction = dir_fore;
+	else direction = dir_back;
+
+	while (velocity < maxV) {
+		std::this_thread::sleep_for(std::chrono::microseconds(100));
+		velocity += step;
+		sendVelocityToMicro();
+	}
+}
+
+void Asse::timeBaseDecRamp(unsigned int minV, unsigned int maxV, bool d, int step)
+{
+	if (d) direction = dir_fore;
+	else direction = dir_back;
+
+	velocity = maxV;
+	while (velocity > stopV) {
+		std::this_thread::sleep_for(std::chrono::microseconds(100));
+		sendVelocityToMicro();
+		velocity -= step;
+	}
+
+	velocity = 0;
+	lock = true;
 	sendVelocityToMicro();
 }
 
-void Asse::stopMove()
+void Asse::keyboardControl(int forwardKey, int backwardKey)
 {
-	Asse::measuring = false;
-	
-	velocity = 0;
-	sendVelocityToMicro();
-	lock = true;
+	bool forwardPressed = false;
+    bool backwardPressed = false;
+
+    std::cout << "[INFO] Keyboard control enabled axis " << this->axisName << std::endl;
+
+    while (true) {
+        if (_kbhit()) {
+            int key = _getch();
+
+            // Check for forward key
+            if (key == forwardKey && !backwardPressed) {
+                if (!forwardPressed) {
+                    timeBaseAccRamp(500, 40000, dir_fore, 20); // Call with direction forward
+                    forwardPressed = true; // Mark as pressed
+                } else {
+                    timeBaseDecRamp(500, 40000, dir_fore, 20); // Call with direction forward
+                    forwardPressed = false; // Mark as not pressed
+                }
+            }
+            // Check for backward key
+            else if (key == backwardKey && !forwardPressed) {
+                if (!backwardPressed) {
+                    timeBaseAccRamp(500, 40000, dir_back, 20); // Call with direction backward
+                    backwardPressed = true; // Mark as pressed
+                } else {
+                    timeBaseDecRamp(500, 40000, dir_back, 20); // Call with direction backward
+                    backwardPressed = false; // Mark as not pressed
+                }
+            }
+            // Exit on Escape key
+            else if (key == 27) {
+                std::cout << "[INFO] Keyboard control disabled" << std::endl;
+                break;
+            }
+        }
+    }
 }
 
 Asse::~Asse()

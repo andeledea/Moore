@@ -10,7 +10,7 @@ int main(void)
 
     m.init();
 
-    std::cout << "Starting moore test, press q for 1 second to close." << std::endl;
+    std::cout << "[INFO] Starting moore test, press q for 1 second to close." << std::endl;
 
     auto readAllInstr = [](Moore *m) {
         while (true)
@@ -23,13 +23,13 @@ int main(void)
     readT.detach();
     
     pos start = m.getAbsPosition();
-    std::cout << "Starting from: " << start << std::endl;
+    std::cout << "[INFO] Starting from: " << start << std::endl;
 
     pos end = start + (pos){ .x = 5, .y = 5, .z = 5};
     m.setAbsPosition(end);
 
-    std::cout << "Final position: " << m.getAbsPosition() << std::endl;
-    std::cout << "Going back to start" << std::endl;
+    std::cout << "[INFO] Final position: " << m.getAbsPosition() << std::endl;
+    std::cout << "[INFO] Going back to start" << std::endl;
     m.setAbsPosition(start);
 
     return 0;

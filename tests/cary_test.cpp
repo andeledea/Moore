@@ -11,7 +11,7 @@ int main(void)
     cary.connect();
     // cary.setRange(RNG_50);
 
-    std::cout << "Starting cary test, press q for 1 second to close." << std::endl;
+    std::cout << "[INFO] Starting cary test, press q for 1 second to close." << std::endl;
     while (true)
     {
         // Check if a key has been pressed
@@ -21,7 +21,7 @@ int main(void)
                 break; // Exit the loop
             }
         }
-        std::cout << "Cary reading: " << cary.readInstr() << std::endl;
+        std::cout << "[INFO] Cary reading: " << cary.readInstr() << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
     return 0;

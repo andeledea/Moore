@@ -35,9 +35,17 @@ help:
 axis: 
 	$(CXX) axis_test.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/SimpleSerial.cpp ../src/Asse.cpp ../src/keysight.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/axis_test
 
+.PHONY: timeramp
+timeramp: 
+	$(CXX) timeramp_test.cpp ../src/SimpleSerial.cpp ../src/Asse.cpp ../src/keysight.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/timeramp_test
+
 .PHONY: moore
 moore:
 	$(CXX) moore_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/moore_test
+
+.PHONY: keycontrol
+keycontrol:
+	$(CXX) keycontrol_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/keycontrol_test
 
 .PHONY: cary
 cary:
@@ -62,6 +70,10 @@ nilox:
 .PHONY: marker_origin
 marker_origin:
 	$(CXX) marker_origin_test.cpp ../src/Moore.cpp ../src/Nilox.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(OPENCV_LIBS) $(ADD_LIBS) -o bin/marker_origin_test
+
+.PHONY: approach
+approach:
+	$(CXX) approach_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/approach_test
 
 .PHONY: mkdir
 mkdir:

@@ -118,7 +118,7 @@ int Initialize_E1735A_DLL()
   if (Handle_E1735A_DLL == NULL)
   {
     Handle_E1735A_DLL = LoadLibrary(_T("E1735A.dll"));
-    std::cout << "E1735A import error: " << GetLastError() << "\n";
+    std::cout << "[INFO] E1735A import error: " << GetLastError() << "\n";
     if (Handle_E1735A_DLL != NULL)
     {
       FuncAddr_E1735A_ReadDeviceCount = GetProcAddress(Handle_E1735A_DLL, "E1735A_ReadDeviceCount");

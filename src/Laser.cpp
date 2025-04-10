@@ -4,7 +4,7 @@
 
 void Laser::connect() {
 	handle = ibdev(0, 3, 0, 11, 1, 0x140A);
-	std::cout << "Laser connected" << std::endl;
+	std::cout << "[INFO] Laser connected" << std::endl;
 }
 
 double Laser::readInstr()

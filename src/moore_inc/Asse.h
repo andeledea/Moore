@@ -76,6 +76,14 @@ public:
 	double getPosition(); //ritorna la pos attuale
 
 	/**
+	* Reads the absolute encoder value and adds the measurement of the attached
+	* instrument
+	* 
+	* @return Position: The position of the axis relative to the measurement
+	* */
+	double getPositionWithInstr();
+
+	/**
 	* Set the position of the axis relative
 	* to the encoder position
 	* 
@@ -110,20 +118,8 @@ public:
 	* */
 	// void retension(float pos, int v);
 
-	/**
-	* Moves the axis at constant speed in the given direction
-	* 
-	* @param v: the speed of the movement
-	* @param d: the direction of the movement
-	*	Predefined direction macros: dir_fore, dir_back, dir_up, dir_down
-	* */
-	void startMove(int v = 500, bool d = dir_fore);
-
-	/**
-	* Stops the constant movement and
-	* locks the motor
-	* */
-	void stopMove();
+	void timeBaseAccRamp(unsigned int minV, unsigned int maxV, bool d, int step=10);
+	void timeBaseDecRamp(unsigned int minV, unsigned int maxV, bool d, int step=10);
 
 	static bool measuring;
 
@@ -131,6 +127,8 @@ public:
 	* Another way to call setPosition(B)
 	* */
 	inline void operator= (double& B) { this -> setPosition(B); }
+
+	void keyboardControl(int forwardKey, int backwardKey);
 	
 	~Asse();
 

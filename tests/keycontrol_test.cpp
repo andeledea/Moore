@@ -3,17 +3,12 @@
 #include <chrono>
 #include <conio.h>
 #include "Moore.h"
-#include "measurement.h"
-#include "sample.h"
 
 int main(void)
 {
-    Moore moore;
-    SphereSample sample;
-    SphereMeasurement meas;
+    Moore m;
 
-    moore.init();
-    sample.setRadius(22.5);
+    m.init();
 
     auto readAllInstr = [](Moore *m) {
         while (true)
@@ -22,13 +17,10 @@ int main(void)
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     };
-    std::thread readT(readAllInstr, &moore);
+    std::thread readT(readAllInstr, &m);
     readT.detach();
 
-    meas.setMooreSample(&moore, &sample);
-    meas.setSafeLevel();
-
-    meas.setSamplePosition();
+    m.keyboardMove();
 
     return 0;
 }

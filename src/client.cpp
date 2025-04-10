@@ -19,7 +19,7 @@ bool tcp_client::conn(std::string address, int port)
             perror("Could not create socket");
         }
 
-        std::cout << "Socket created\n";
+        std::cout << "[INFO] Socket created\n";
     }
     else { /* OK , nothing */ }
 
@@ -34,7 +34,7 @@ bool tcp_client::conn(std::string address, int port)
         {
             //gethostbyname failed
             perror("gethostbyname");
-            std::cout << "Failed to resolve hostname\n";
+            std::cout << "[ERROR] Failed to resolve hostname\n";
 
             return false;
         }
@@ -69,7 +69,7 @@ bool tcp_client::conn(std::string address, int port)
         return false;
     }
 
-    std::cout << "Connected\n";
+    std::cout << "[INFO] Client connected\n";
     return true;
 }
 

@@ -10,19 +10,19 @@
 void move(Asse& asse)
 {
 	std::cout << std::fixed << std::setw(11) << std::setprecision(6) << std::setfill('0');
-	std::cout << "You are at: " << asse.getPosition() << std::endl;
+	std::cout << "[INFO] You are at: " << asse.getPosition() << std::endl;
 
 	float pos;
-	std::cout << "Where to go? ";
+	std::cout << "[INFO] Where to go? ";
 	std::cin >> pos;
 	asse.setPosition(pos);
-	std::cout << "You are at: " << asse.getPosition() << std::endl;
+	std::cout << "[INFO] You are at: " << asse.getPosition() << std::endl;
 }
 
 void measure(Asse& asseX, Asse&asseY, Laser& las, CHRocodile& CHR)
 {
 	std::string nome_file;
-	std::cout << "Insert measure name: ";
+	std::cout << "[INFO] Insert measure name: ";
 	std::cin >> nome_file;
 
 	std::ofstream ost, stitching_ost;
@@ -46,7 +46,7 @@ void measure(Asse& asseX, Asse&asseY, Laser& las, CHRocodile& CHR)
 	float startP = asseX.getPosition();
 	float sampleLength = 45; // mm
 
-	std::cout << "Starting from: " << startP << std::endl;
+	std::cout << "[INFO] Starting from: " << startP << std::endl;
 
 	while (!end)
 	{
@@ -136,7 +136,7 @@ void findCHRz(Asse& asse, CHRocodile& CHR, bool lr)
 	asse.stopMove();
 
 	//ho raggiunto lo 0 del CHR
-	std::cout << "You are at CHR = " << CHR.readInstr() << ", program will continue in 2s" << std::endl;
+	std::cout << "[INFO] You are at CHR = " << CHR.readInstr() << ", program will continue in 2s" << std::endl;
 	Sleep(2000);
 }
 

@@ -17,14 +17,16 @@ public:
     void setName(std::string name);
     void setId(std::string id);
 
-    virtual pos getSideCoordinate(bool direction) {};
-    virtual void setCenterPosition();
+    virtual pos getSideCoordinate(bool direction) { return (pos) {}; };
+    virtual void setContactPosition(pos c) {};
 
     ~Sample() {};
-
-private:
+    
+protected:
     std::string name;
     std::string id;
+
+    pos contact_position;
 };
 
 class SphereSample : public Sample
@@ -34,6 +36,8 @@ public:
 
     void setRadius(double r);
     double getRadius();
+
+    void setContactPosition(pos c);
 
     pos getSideCoordinate(bool direction);
 

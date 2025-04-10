@@ -12,11 +12,11 @@ void Fluke::connect()
 
 	if (client.conn(addr, port)) // apro la com seriale
 	{
-		std::cout << "Fluke connected" << std::endl;
+		std::cout << "[INFO] Fluke connected" << std::endl;
 	}
 	else
 	{
-		std::cout << "Fluke NOT connected" << std::endl;
+		std::cout << "[ERROR] Fluke not connected" << std::endl;
 		throw std::runtime_error("Unable to connect FLUKE");
 	}
 }
@@ -40,14 +40,14 @@ void Fluke::setParams()
 
 std::vector<double> Fluke::readAllInstr()
 {
-	std::cout << "Reading Fluke" << std::endl;
+	std::cout << "[INFO] Reading Fluke" << std::endl;
 	auto sendRec = [this](char const* cmd)
 	{
 		std::string rec;
 		this->client.send_data(cmd);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		rec = client.receive();
-		std::cout << "Fluke received: " << rec << std::endl;
+		std::cout << "[INFO] Fluke received: " << rec << std::endl;
 		return rec;
 	};
 	

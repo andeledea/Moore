@@ -61,8 +61,8 @@ void Nilox::calibrate()
     cv::Mat frame, gray;
     char key = 0;
 
-    std::cout << "Press 'a' to capture an image for calibration." << std::endl;
-    std::cout << "Press 's' to start calibration and save parameters." << std::endl;
+    std::cout << "[INFO] Press 'a' to capture an image for calibration." << std::endl;
+    std::cout << "[ACTION] Press 's' to start calibration and save parameters." << std::endl;
 
     while (key != 'q')
     { // Press 'q' to quit
@@ -265,7 +265,7 @@ float Nilox::detect(std::vector<cv::Point2f> &markerPos, std::vector<int> &ids, 
                 // std::cout << "[INFO] Scale: " << scale << " L: " << l << "N: " << n << std::endl;
                 // std::cout << "[INFO] Centers: " << std::endl;
                 // for (int i = 0; i < ids.size(); i++)
-                //     std::cout << "ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
+                //     std::cout << "[INFO] ID: " << ids[i] << " -> " << markerPos[i] * scale << "\t";
                 // std::cout << std::endl;
                 return scale;
             }

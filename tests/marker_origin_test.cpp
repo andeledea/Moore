@@ -2,14 +2,14 @@
 #include "Nilox.h"
 
 pos niloxPointToMoore(cv::Point2f p) {
-    std::cout << "converting: " << p << std::endl;
+    std::cout << "[INFO] converting: " << p << std::endl;
     pos retp = (pos) {
         .x = p.x,
         .y = -p.y,
         .z = 0
     };
 
-    std::cout << "pospos: " << retp << std::endl;
+    std::cout << "[INFO] pospos: " << retp << std::endl;
     return retp;
 }
 
@@ -22,7 +22,7 @@ int main(void)
     m.init();
     m.defineZero();
 
-    std::cout << "Starting marker origin test" << std::endl;
+    std::cout << "[INFO] Starting marker origin test" << std::endl;
 
     auto readAllInstr = [](Moore *m) {
         while (true)
@@ -37,10 +37,10 @@ int main(void)
     std::vector<cv::Point2f> markerPos;
     std::vector<int> ids;
     float scale = nil.detect(markerPos, ids);
-    std::cout << "Found " << ids.size() << " markers" << std::endl;
+    std::cout << "[INFO] Found " << ids.size() << " markers" << std::endl;
 
     for (int i = 0; i < ids.size(); i++) {
-        std::cout << "Moving to ID: " << ids[i] << " -> " << markerPos[i] * scale << std::endl;
+        std::cout << "[INFO] Moving to ID: " << ids[i] << " -> " << markerPos[i] * scale << std::endl;
         m.setRelPosition(niloxPointToMoore(-markerPos[i] * scale));
         cv::waitKey(2000);
     }
