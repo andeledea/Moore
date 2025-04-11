@@ -32,8 +32,8 @@ int main(void)
         std::thread readT(readlaser, &xaxis);
         readT.detach();
 
-        xaxis.timeBaseAccRamp(500, 40000, dir_fore, 20);
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        xaxis.timeBaseDecRamp(500, 40000, dir_fore, 20);
+        xaxis.timeBaseAccRamp(500, 500, dir_fore, 20);
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        xaxis.timeBaseDecRamp(500, dir_fore, 20);
     }
 }

@@ -90,13 +90,16 @@ void Moore::moveInstr(double target)
 	// TODO
 }
 
-void Moore::keyboardMove()
+void Moore::keyboardMove(bool z_contr)
 {
-	std::thread xt(&Asse::keyboardControl, &Xaxis, 'a', 'd');
+	std::thread zt;
+	std::thread xt(&Asse::keyboardControl, &Xaxis, 'd', 'a');
 	std::thread yt(&Asse::keyboardControl, &Yaxis, 'w', 's');
+	if (z_contr) zt = std::thread(&Asse::keyboardControl, &Zaxis, 'f', 'r');
 
 	xt.join();
 	yt.join();
+	if (z_contr) zt.join();
 }
 
 Moore::~Moore()

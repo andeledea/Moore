@@ -20,7 +20,7 @@ int main(void)
     std::thread readT(readAllInstr, &m);
     readT.detach();
 
-    m.keyboardMove();
+    m.keyboardMove(true);
 
     return 0;
 }

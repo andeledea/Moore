@@ -81,7 +81,7 @@ public:
 	* */
 	void moveInstr(double target);
 
-	void keyboardMove();
+	void keyboardMove(bool z_contr = false);
 	
 	~Moore();
 

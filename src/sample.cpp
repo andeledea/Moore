@@ -22,6 +22,16 @@ double SphereSample::getRadius()
     return this->radius;
 }
 
+pos SphereSample::getCenter()
+{
+    return this->center;
+}
+
+void SphereSample::setCenter(pos c)
+{
+    this->center = c;
+}
+
 void SphereSample::setContactPosition(pos c)
 {
     this->contact_position = c;
@@ -35,4 +45,30 @@ pos SphereSample::getSideCoordinate(bool direction)
         .y = this->center.y,
         .z = this->center.z
     };
+}
+
+//////////////////////// BLOCK /////////////////////
+
+void BlockSample::setLength(double l)
+{
+    this->length = l;
+}
+
+double BlockSample::getLength()
+{
+    return this->length;
+}
+
+pos BlockSample::getSideCoordinate(bool direction)
+{
+    return (pos) {
+        .x = (direction == SIDE_LEFT) ? this->contact_position.x - this->length : this->contact_position.x,
+        .y = this->contact_position.y,
+        .z = this->contact_position.z
+    };
+}
+
+void BlockSample::setContactPosition(pos c)
+{
+    this->contact_position = c;
 }

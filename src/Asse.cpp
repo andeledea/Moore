@@ -8,6 +8,7 @@
 #include "Asse.h"
 
 bool Asse::measuring = false;
+int Asse::keyboard_speed = MAX_KEY_SPEED * 0.1;
 
 Asse::Asse()
 {
@@ -140,20 +141,18 @@ void Asse::timeBaseAccRamp(unsigned int minV, unsigned int maxV, bool d, int ste
 	if (d) direction = dir_fore;
 	else direction = dir_back;
 
-	while (velocity < maxV) {
+	velocity = minV;
+
+	while (velocity <= maxV) {
 		std::this_thread::sleep_for(std::chrono::microseconds(100));
-		velocity += step;
 		sendVelocityToMicro();
+		velocity += step;
 	}
 }
 
-void Asse::timeBaseDecRamp(unsigned int minV, unsigned int maxV, bool d, int step)
+void Asse::timeBaseDecRamp(unsigned int minV, int step)
 {
-	if (d) direction = dir_fore;
-	else direction = dir_back;
-
-	velocity = maxV;
-	while (velocity > stopV) {
+	while (velocity >= minV) {
 		std::this_thread::sleep_for(std::chrono::microseconds(100));
 		sendVelocityToMicro();
 		velocity -= step;
@@ -172,26 +171,42 @@ void Asse::keyboardControl(int forwardKey, int backwardKey)
     std::cout << "[INFO] Keyboard control enabled axis " << this->axisName << std::endl;
 
     while (true) {
-        if (_kbhit()) {
-            int key = _getch();
+		if (_kbhit()) {
+			int key = _getch();
+			
+			if (key <= '9' && key >= '0') {
+				switch (key) {
+					case '0': keyboard_speed = MAX_KEY_SPEED; break;
+					case '1': keyboard_speed = MAX_KEY_SPEED * 0.1; break;
+					case '2': keyboard_speed = MAX_KEY_SPEED * 0.2; break;
+					case '3': keyboard_speed = MAX_KEY_SPEED * 0.3; break;
+					case '4': keyboard_speed = MAX_KEY_SPEED * 0.4; break;
+					case '5': keyboard_speed = MAX_KEY_SPEED * 0.5; break;
+					case '6': keyboard_speed = MAX_KEY_SPEED * 0.6; break;
+					case '7': keyboard_speed = MAX_KEY_SPEED * 0.7; break;
+					case '8': keyboard_speed = MAX_KEY_SPEED * 0.8; break;
+					case '9': keyboard_speed = MAX_KEY_SPEED * 0.9; break;
+				}
+				std::cout << "[INFO] Ready with speed: " << std::setfill('-') << std::setw(6) << keyboard_speed << '\r';
+			}
 
             // Check for forward key
             if (key == forwardKey && !backwardPressed) {
                 if (!forwardPressed) {
-                    timeBaseAccRamp(500, 40000, dir_fore, 20); // Call with direction forward
+                    timeBaseAccRamp(500, keyboard_speed, dir_fore, 20); // Call with direction forward
                     forwardPressed = true; // Mark as pressed
                 } else {
-                    timeBaseDecRamp(500, 40000, dir_fore, 20); // Call with direction forward
+                    timeBaseDecRamp(500, 20); // Call with direction forward
                     forwardPressed = false; // Mark as not pressed
                 }
             }
             // Check for backward key
             else if (key == backwardKey && !forwardPressed) {
                 if (!backwardPressed) {
-                    timeBaseAccRamp(500, 40000, dir_back, 20); // Call with direction backward
+                    timeBaseAccRamp(500, keyboard_speed, dir_back, 20); // Call with direction backward
                     backwardPressed = true; // Mark as pressed
                 } else {
-                    timeBaseDecRamp(500, 40000, dir_back, 20); // Call with direction backward
+                    timeBaseDecRamp(500, 20); // Call with direction backward
                     backwardPressed = false; // Mark as not pressed
                 }
             }

@@ -4,6 +4,8 @@
 #include "SimpleSerial.h"
 #include "PosInstr.h"
 
+#define MAX_KEY_SPEED 60000
+
 #define dir_back true
 #define dir_fore false
 
@@ -66,7 +68,7 @@ public:
 	* 
 	* @param targetPos: The position that has to be reached
 	* */
-	void setInstrPosition(float targetPos) { setPos(targetPos, 'm'); }
+	void setInstrPosition(double targetPos) { setPos(targetPos, 'm'); }
 
 	/**
 	* Reads the absolute encoder value
@@ -119,7 +121,7 @@ public:
 	// void retension(float pos, int v);
 
 	void timeBaseAccRamp(unsigned int minV, unsigned int maxV, bool d, int step=10);
-	void timeBaseDecRamp(unsigned int minV, unsigned int maxV, bool d, int step=10);
+	void timeBaseDecRamp(unsigned int minV, int step=10);
 
 	static bool measuring;
 
@@ -129,6 +131,7 @@ public:
 	inline void operator= (double& B) { this -> setPosition(B); }
 
 	void keyboardControl(int forwardKey, int backwardKey);
+	static int keyboard_speed;
 	
 	~Asse();
 

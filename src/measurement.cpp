@@ -1,11 +1,13 @@
 #include <cmath>
 #include <cassert>
+#include <iomanip>
 #include "measurement.h"
 
-void Measurement::setMooreSample(Moore * m, Sample * s)
+void Measurement::setMooreSampleProbe(Moore * m, Sample * s, Probe* p)
 {
     this->moore = m;
     this->sample = s;
+    this->probe = p;
 }
 
 void Measurement::approach(bool direction, double target, int speed)
@@ -15,7 +17,7 @@ void Measurement::approach(bool direction, double target, int speed)
     // move horizontally in x and y on top of the target
     pos target_sample = this->sample->getSideCoordinate(direction);
 
-    target_sample.x = (direction == SIDE_LEFT) ? target_sample.x - 5 : target_sample.x + 5;
+    target_sample.x = (direction == SIDE_LEFT) ? target_sample.x - probe->radius - 0.5 : target_sample.x + probe->radius + 0.5;
     target_sample.z = z_safe_level;
     this->moore->setAbsPosition(target_sample);
 
@@ -23,10 +25,20 @@ void Measurement::approach(bool direction, double target, int speed)
     target_sample = this->sample->getSideCoordinate(direction);
     this->moore->Zaxis.setPosition(target_sample.z);
 
-    // do the final approach
-    this->moore->Xaxis.startMove(speed, direction);
-    while(fabs(this->moore->cary.readInstr()) < target) {};
-    this->moore->Xaxis.stopMove();
+    this->caryApproach(direction, target, speed);
+}
+
+void Measurement::caryApproach(bool direction, double target, int speed)
+{
+    this->moore->Xaxis.timeBaseAccRamp(speed, speed, !direction);
+
+    double cary = abs(this->moore->cary.preciseRead(3));
+    while (cary < target) {
+        cary = abs(this->moore->cary.preciseRead(3));
+        std::cout << "[INFO] Cary approach: " << std::setfill('#') << std::setw(6) << cary << '/' << target << '\r';
+    }
+
+    this->moore->Xaxis.timeBaseDecRamp(speed);
 }
 
 void Measurement::setSafeLevel()
@@ -39,7 +51,7 @@ void Measurement::setSafeLevel()
 
 void Measurement::reachSafeLevel()
 {
-    assert(this->z_safe_level != NULL && "[ASSERTION_FAIL] z safe level must be set before approaching");
+    assert(this->z_safe_level < std::numeric_limits<double>::infinity() && "[ASSERTION_FAIL] z safe level must be set before approaching");
     // go up to avoid collisions
     this->moore->Zaxis.setPosition(z_safe_level);
 }
@@ -48,10 +60,26 @@ void Measurement::reachSafeLevel()
 
 void SphereMeasurement::setSamplePosition()
 {
-    std::cout << "[ACTION] Position the machine in contact with the sphere. Press ENTER";
-    std::cin.ignore();
+    std::cout << "[ACTION] Position the machine in contact with the sphere. ESC + ESC to end" << std::endl;
+    this->moore->keyboardMove();
+
     pos contact_position = this->moore->getAbsPositionWithInstr();
+    contact_position.x -= this->probe->radius;
     
     this->sample->setContactPosition(contact_position);
     std::cout << "[INFO] Sphere contact set to: " << contact_position << std::endl;
+}
+
+///////////////// BLOCK MEAS ///////////////////////
+
+void BlockMeasurement::setSamplePosition()
+{
+    std::cout << "[ACTION] Position the machine in contact with the block. ESC + ESC to end" << std::endl;
+    this->moore->keyboardMove();
+
+    pos contact_position = this->moore->getAbsPositionWithInstr();
+    contact_position.x -= this->probe->radius;
+    
+    this->sample->setContactPosition(contact_position);
+    std::cout << "[INFO] Block contact set to: " << contact_position << std::endl;
 }

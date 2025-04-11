@@ -11,6 +11,7 @@ int main(void)
     Moore moore;
     SphereSample sample;
     SphereMeasurement meas;
+    Probe probe(2.0, 20.0);
 
     moore.init();
     sample.setRadius(22.5);
@@ -25,10 +26,18 @@ int main(void)
     std::thread readT(readAllInstr, &moore);
     readT.detach();
 
-    meas.setMooreSample(&moore, &sample);
-    meas.setSafeLevel();
+    meas.setMooreSampleProbe(&moore, &sample, &probe);
+    // meas.setSafeLevel();
 
-    meas.setSamplePosition();
+    // meas.setSamplePosition();
+    // meas.reachSafeLevel();
+    
+    // moore.keyboardMove();
+    // meas.approach(APPROACH_RIGHT, 0.006, 1000);
+    // std::this_thread::sleep_for(std::chrono::seconds(10));
+    
+    meas.caryApproach(APPROACH_LEFT, 0.006, 1000);
+    std::this_thread::sleep_for(std::chrono::seconds(10));
 
     return 0;
 }

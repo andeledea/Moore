@@ -29,6 +29,21 @@ protected:
     pos contact_position;
 };
 
+class BlockSample : public Sample
+{
+public:
+    using Sample::Sample;
+    
+    void setLength(double l);
+    double getLength();
+
+    pos getSideCoordinate(bool direction);
+    void setContactPosition(pos c);
+
+private:
+    double length;
+};
+
 class SphereSample : public Sample
 {
 public:
@@ -37,9 +52,11 @@ public:
     void setRadius(double r);
     double getRadius();
 
-    void setContactPosition(pos c);
+    pos getCenter();
+    void setCenter(pos c);
 
     pos getSideCoordinate(bool direction);
+    void setContactPosition(pos c);
 
 private:
     double radius;
