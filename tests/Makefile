@@ -77,7 +77,11 @@ approach:
 
 .PHONY: find_max
 find_max:
-	$(CXX) find_max_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/find_max_test
+	$(CXX) find_max_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll -I../src/GUI_inc -IC:/Users/X/AppData/Local/Programs/Python/Python311/include -LC:/Users/X/AppData/Local/Programs/Python/Python311/libs -lpython311 $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/find_max_test
+
+.PHONY: mpl
+mpl:
+	$(CXX) mpl_test.cpp -I../src/GUI_inc -IC:/Users/X/AppData/Local/Programs/Python/Python311/include -LC:/Users/X/AppData/Local/Programs/Python/Python311/libs -lpython311 -lstdc++ -o bin/mpl_test
 
 .PHONY: mkdir
 mkdir:

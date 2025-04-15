@@ -31,7 +31,7 @@ int main(void)
     meas.setSafeLevel();
 
     meas.setSamplePosition();
-    meas.reachSafeLevel();
+    // meas.reachSafeLevel();
 
     meas.findMax(APPROACH_RIGHT);
     return 0;
