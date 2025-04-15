@@ -8,6 +8,8 @@ void Measurement::setMooreSampleProbe(Moore * m, Sample * s, Probe* p)
     this->moore = m;
     this->sample = s;
     this->probe = p;
+
+    this->setSpecializedSample();
 }
 
 void Measurement::approach(bool direction, double target, int speed)
@@ -17,7 +19,7 @@ void Measurement::approach(bool direction, double target, int speed)
     // move horizontally in x and y on top of the target
     pos target_sample = this->sample->getSideCoordinate(direction);
 
-    target_sample.x = (direction == SIDE_LEFT) ? target_sample.x - probe->radius - 0.5 : target_sample.x + probe->radius + 0.5;
+    target_sample.x = (direction == SIDE_LEFT) ? target_sample.x - probe->radius - 0.1 : target_sample.x + probe->radius + 0.1;
     target_sample.z = z_safe_level;
     this->moore->setAbsPosition(target_sample);
 
@@ -30,15 +32,29 @@ void Measurement::approach(bool direction, double target, int speed)
 
 void Measurement::caryApproach(bool direction, double target, int speed)
 {
+    // TODO: dosent work when called fom approach LEFT (probably cary value read is wrong)
+    // maybe we need to flush the serial after eac approach?? (purgePort())
     this->moore->Xaxis.timeBaseAccRamp(speed, speed, !direction);
-
-    double cary = abs(this->moore->cary.preciseRead(3));
+    
+    double cary = abs(this->moore->cary.readInstr());
+    std::cout << "[INFO] Cary approach started" << std::endl;
     while (cary < target) {
-        cary = abs(this->moore->cary.preciseRead(3));
-        std::cout << "[INFO] Cary approach: " << std::setfill('#') << std::setw(6) << cary << '/' << target << '\r';
+        if (cary > 0.002) this->moore->Xaxis.timeBaseAccRamp(15, 15, !direction);
+        cary = abs(this->moore->cary.readInstr());
+        std::cout << "[INFO] Cary approach: " << cary << '\r';
     }
 
     this->moore->Xaxis.timeBaseDecRamp(speed);
+}
+
+void Measurement::caryUnload(double distance)
+{
+    double cary = this->moore->cary.readInstr();
+    if (abs(cary) < 0.001) return; // the cary is not approached
+    double pos = this->moore->Xaxis.getPosition();
+    if(cary > 0) this->moore->Xaxis.setPosition(pos - distance);
+    if(cary < 0) this->moore->Xaxis.setPosition(pos + distance);
+    if (abs(cary) > 0.001) this->caryUnload(distance); // the dist was not enough
 }
 
 void Measurement::setSafeLevel()

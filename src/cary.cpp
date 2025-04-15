@@ -38,6 +38,7 @@ void Cary::connect()
 double Cary::readInstr()
 {
     char toSend[] = "?\r"; // Request for displayed value.
+    ser.PurgePort();
     ser.WriteSerialPort(toSend);
 
     return ser.ReadSerialPortWithConversion<double>(1, [](const std::string &s) { return std::stod(s); });
@@ -63,7 +64,7 @@ double Cary::preciseRead(int n_samples_to_read)
         stan_deviation += pow(samp_buff[i] - average, 2);
     }
     calculate_sd = sqrt(stan_deviation / (n_samples_to_read));
-    if (stan_deviation > 0.5)
+    if (stan_deviation > 0.0005)
     {
         return this->preciseRead(n_samples_to_read);
     }

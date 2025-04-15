@@ -9,12 +9,12 @@
 int main(void)
 {
     Moore moore;
-    BlockSample sample;
-    BlockMeasurement meas;
+    SphereSample sample;
+    SphereMeasurement meas;
     Probe probe(2.0, 20.0);
 
     moore.init();
-    sample.setLength(10.0);
+    sample.setRadius(22.5);
 
     auto readAllInstr = [](Moore *m)
     {
@@ -33,16 +33,6 @@ int main(void)
     meas.setSamplePosition();
     meas.reachSafeLevel();
 
-    // moore.keyboardMove();
-    for (int i = 0; i < 1; i++)
-    {
-        meas.approach(APPROACH_RIGHT, 0.006, 800);
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-        meas.caryUnload();
-        
-        meas.approach(APPROACH_LEFT, 0.006, 800);
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-        meas.caryUnload();
-    }
+    meas.findMax(APPROACH_RIGHT);
     return 0;
 }
