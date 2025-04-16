@@ -29,7 +29,25 @@ public:
 
 		return *this;
 	}
+	pos& operator*=(const double& lr)
+	{
+		this->x *= lr;
+		this->y *= lr;
+		this->z *= lr;
+
+		return *this;
+	}
+	pos& operator/=(const double& lr)
+	{
+		this->x /= lr;
+		this->y /= lr;
+		this->z /= lr;
+
+		return *this;
+	}
 	friend std::ostream& operator<<(std::ostream&, const pos&);
 	friend pos operator+(pos l, const pos& r);
 	friend pos operator-(pos l, const pos& r);
+	friend pos operator*(pos l, const double& r);
+	friend pos operator/(pos l, const double& r);
 };

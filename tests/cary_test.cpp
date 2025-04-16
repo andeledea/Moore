@@ -21,8 +21,8 @@ int main(void)
                 break; // Exit the loop
             }
         }
-        std::cout << "[INFO] Cary reading: " << cary.readInstr() << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::cout << "[INFO] Cary reading: " << cary.readInstr() << '\r';
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
     return 0;
 }

@@ -17,12 +17,19 @@ enum {
 class Cary : PosInstr 
 {
 public:
+    Cary();
+
     void connect();
     double readInstr();
     double preciseRead(int n_samples_to_read);
     int getRange();
     void setRange(int rng);
 
+    ~Cary();
+    static int faults;
+    static std::chrono::_V2::system_clock::time_point start;
+    
 private:
     SimpleSerial ser;
+
 };

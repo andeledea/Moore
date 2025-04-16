@@ -4,6 +4,15 @@
 #include <sstream>
 #include <math.h>
 
+int Cary::faults = 0;
+std::chrono::_V2::system_clock::time_point Cary::start;
+
+Cary::Cary()
+{
+    faults = 0;
+    start = std::chrono::_V2::high_resolution_clock::now();
+}
+
 void Cary::connect()
 {
     DCB dcbSerialParams = {0};
@@ -40,8 +49,19 @@ double Cary::readInstr()
     char toSend[] = "?\r"; // Request for displayed value.
     ser.PurgePort();
     ser.WriteSerialPort(toSend);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-    return ser.ReadSerialPortWithConversion<double>(1, [](const std::string &s) { return std::stod(s); });
+    double val = ser.ReadSerialPortWithConversion<double>(1, [](const std::string &s)
+                                                          { return std::stod(s); });
+    if (val == 0.0 || val > 0.5)
+    {
+        faults++;
+        return this->readInstr();
+    }
+    // do not accept 0 reading it is always an error
+    // also values > 0.5 mm are definitely errors TODO (check if there is a better sol)
+
+    return val;
 }
 
 double Cary::preciseRead(int n_samples_to_read)
@@ -87,4 +107,10 @@ void Cary::setRange(int rng)
     tosend += std::to_string(rng);
     tosend += "\r\n";
     ser.WriteSerialPort(tosend.c_str());
+}
+
+Cary::~Cary()
+{
+    std::chrono::duration<double> lifetime = (std::chrono::_V2::high_resolution_clock::now() - start);
+    std::cout << "[WARN] Cary faults during object lifetime: " << faults << " / " << lifetime.count() << " = " << faults / (lifetime.count()) << " [faults / s]" << std::endl;
 }

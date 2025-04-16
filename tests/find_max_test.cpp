@@ -33,6 +33,6 @@ int main(void)
     meas.setSamplePosition();
     // meas.reachSafeLevel();
 
-    meas.findMax(APPROACH_RIGHT);
+    meas.findCenter(0.01);
     return 0;
 }

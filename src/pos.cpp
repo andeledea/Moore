@@ -20,3 +20,15 @@ pos operator-(pos l, const pos& r)
 	l -= r;
 	return l;
 }
+
+pos operator*(pos l, const double &r)
+{
+    l *= r;
+	return l;
+}
+
+pos operator/(pos l, const double &r)
+{
+    l /= r;
+	return l;
+}
