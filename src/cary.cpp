@@ -1,8 +1,9 @@
-#include "cary.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
 #include <math.h>
+
+#include "cary.h"
 
 int Cary::faults = 0;
 std::chrono::_V2::system_clock::time_point Cary::start;
@@ -51,17 +52,14 @@ double Cary::readInstr()
     ser.WriteSerialPort(toSend);
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-    double val = ser.ReadSerialPortWithConversion<double>(1, [](const std::string &s)
+    this->value = ser.ReadSerialPortWithConversion<double>(1, [](const std::string &s)
                                                           { return std::stod(s); });
-    if (val == 0.0 || val > 0.5)
+    if (this->value == 0.0 || this->value > 0.5)
     {
         faults++;
         return this->readInstr();
     }
-    // do not accept 0 reading it is always an error
-    // also values > 0.5 mm are definitely errors TODO (check if there is a better sol)
-
-    return val;
+    return this->value;
 }
 
 double Cary::preciseRead(int n_samples_to_read)

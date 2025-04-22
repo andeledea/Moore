@@ -3,6 +3,8 @@
 #include <conio.h>
 #include <direct.h>
 #include <string>
+#include <cmath>
+
 #include "Moore.h"
 
 void Moore::init()
@@ -36,6 +38,13 @@ void Moore::init()
 
 	// INIT THE CARY
 	cary.connect();
+    // std::thread cary_safety_t([this](){
+    //     while(true) {
+    //         cary.readInstr();
+    //         if (abs(cary.getValue()) > 0.05) this->emergencyStop();
+    //     };
+    // });
+    // cary_safety_t.detach();
 
 	Xaxis.setMeasInstrument((PosInstr*) &cary);
 
@@ -58,11 +67,11 @@ void Moore::setAbsPosition(pos target)
 
 void Moore::updatePosition()
 {
-	abs.x = this->Xaxis.getPosition();
-	abs.y = this->Yaxis.getPosition();
-	abs.z = this->Zaxis.getPosition();
+	abs_val.x = this->Xaxis.getPosition();
+	abs_val.y = this->Yaxis.getPosition();
+	abs_val.z = this->Zaxis.getPosition();
 
-	rel = abs - zeroPos;
+	rel_val = abs_val - zeroPos;
 }
 
 pos Moore::getAbsPositionWithInstr()
@@ -100,6 +109,14 @@ void Moore::keyboardMove(bool z_contr)
 	xt.join();
 	yt.join();
 	if (z_contr) zt.join();
+}
+
+void Moore::emergencyStop()
+{
+	std::cout << "[ERROR] Emergency stop activated!!"  << std::endl;
+	this->Xaxis.setLock(true);
+	this->Yaxis.setLock(true);
+	this->Zaxis.setLock(true);
 }
 
 Moore::~Moore()
