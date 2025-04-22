@@ -33,7 +33,7 @@ public:
 	
 	/**
 	* Reads the position from the encoders and
-	* set the abs and relative variables to match
+	* set the abs_val and relative variables to match
 	* the physical position of the machine
 	* */
 	void updatePosition();
@@ -41,9 +41,9 @@ public:
 	/**
 	* Returns the absolute position
 	* 
-	* @return abs: the absolute position
+	* @return abs_val: the absolute position
 	* */
-	pos getAbsPosition() { return abs; };
+	pos getAbsPosition() { return abs_val; };
 
 	pos getAbsPositionWithInstr();
 
@@ -52,9 +52,9 @@ public:
 	* if zero has not been defined returns
 	* the absolute position
 	* 
-	* @return rel: the relative position
+	* @return rel_val: the relative position
 	* */
-	pos getRelPosition() { return rel; };
+	pos getRelPosition() { return rel_val; };
 
 	/**
 	* Moves the machine to reach the target
@@ -82,6 +82,8 @@ public:
 	void moveInstr(double target);
 
 	void keyboardMove(bool z_contr = false);
+
+	void emergencyStop();
 	
 	~Moore();
 
@@ -96,5 +98,5 @@ public:
 	Cary cary;
 
 private:
-	pos zeroPos, abs, rel;
+	pos zeroPos, abs_val, rel_val;
 };

@@ -111,6 +111,7 @@ public:
 	* @return lock: if true the motor is locked
 	* */
 	bool isLocked() { return lock; };
+	void setLock(bool lock) { this->lock = lock; this->sendVelocityToMicro(); };
 
 	/**
 	* Only used for z movement ( if the movement must be precise )

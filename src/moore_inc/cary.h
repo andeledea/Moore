@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+
 #include "SimpleSerial.h"
 #include "PosInstr.h"
 
@@ -17,6 +18,7 @@ enum {
 class Cary : PosInstr 
 {
 public:
+    // using PosInstr :: PosInstr;
     Cary();
 
     void connect();
@@ -24,6 +26,8 @@ public:
     double preciseRead(int n_samples_to_read);
     int getRange();
     void setRange(int rng);
+
+    double getValue() { return value; };
 
     ~Cary();
     static int faults;

@@ -3,6 +3,7 @@
 
 #define WITHOUT_NUMPY
 #include "matplotlibcpp.h"
+#include "linregr.h"
 
 #include "sample.h"
 #include "Moore.h"
@@ -29,7 +30,7 @@ public:
     void setMooreSampleProbe(Moore* m, Sample* s, Probe* p);
     virtual void setSpecializedSample() {};
 
-    void approach(bool direction, double target, int speed);
+    void approach(bool direction, double target, int speed, bool safe_needed=true);
     void caryApproach(bool direction, double target, int speed);
     void caryUnload(double distance=0.5);
 
@@ -51,7 +52,7 @@ public:
 protected:
     Moore * moore;
     Sample * sample;
-    Probe * probe;
+    static Probe * probe; // the probe is the same for all measurements
 
     double z_safe_level = std::numeric_limits<double>::infinity();
 };
@@ -67,6 +68,9 @@ class BlockMeasurement : public Measurement
      * The contact must be made to the right 
      */
     void setSamplePosition();
+    
+    void caryFlex(bool direction, double min=0.002, double max=0.02, int n=5);
+    void caryRubyRadius() {};
 
 private:
     BlockSample* block;

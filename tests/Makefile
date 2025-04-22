@@ -17,6 +17,7 @@ ADD_LIBS := -lm -lstdc++
 INC_PATH := $(INC_PATH_WIN)
 LIB_PATH := $(LIB_PATH_WIN)
 OPENCV_LIBS := $(OPENCV_LIBS_WIN)
+PY_LIBS :=  -IC:/Users/X/AppData/Local/Programs/Python/Python311/include -LC:/Users/X/AppData/Local/Programs/Python/Python311/libs -lpython311
 
 
 default: help
@@ -47,6 +48,10 @@ moore:
 keycontrol:
 	$(CXX) keycontrol_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/keycontrol_test
 
+.PHONY: pos_unc
+pos_unc:
+	$(CXX) pos_unc_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(ADD_LIBS) -o bin/pos_unc_test
+
 .PHONY: cary
 cary:
 	$(CXX) cary_test.cpp ../src/cary.cpp ../src/SimpleSerial.cpp -I../src/moore_inc $(ADD_LIBS) -o bin/cary_test
@@ -73,15 +78,19 @@ marker_origin:
 
 .PHONY: approach
 approach:
-	$(CXX) approach_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/approach_test
+	$(CXX) approach_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -I../src/GUI_inc -L../lib/gcc_dll $(PY_LIBS) $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/approach_test
+
+.PHONY: flex
+flex:
+	$(CXX) flex_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -I../src/GUI_inc -L../lib/gcc_dll $(PY_LIBS) $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/flex_test
 
 .PHONY: find_max
 find_max:
-	$(CXX) find_max_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll -I../src/GUI_inc -IC:/Users/X/AppData/Local/Programs/Python/Python311/include -LC:/Users/X/AppData/Local/Programs/Python/Python311/libs -lpython311 $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/find_max_test
+	$(CXX) find_max_test.cpp ../src/Moore.cpp ../src/Asse.cpp ../src/SimpleSerial.cpp ../src/Laser.cpp ../src/IkOptical.cpp ../src/Scale.cpp ../src/keysight.cpp ../src/pos.cpp ../src/cary.cpp ../src/measurement.cpp ../src/sample.cpp -I../src/moore_inc -L../lib/gcc_dll -I../src/GUI_inc $(PY_LIBS) $(MOORE_LIBS) $(INC_PATH) $(LIB_PATH) -lstdc++ $(ADD_LIBS) -o bin/find_max_test
 
 .PHONY: mpl
 mpl:
-	$(CXX) mpl_test.cpp -I../src/GUI_inc -IC:/Users/X/AppData/Local/Programs/Python/Python311/include -LC:/Users/X/AppData/Local/Programs/Python/Python311/libs -lpython311 -lstdc++ -o bin/mpl_test
+	$(CXX) mpl_test.cpp -I../src/GUI_inc -IC:/Users/X/AppData/Local/Programs/Python/Python311/include $(PY_LIBS) -lstdc++ -o bin/mpl_test
 
 .PHONY: mkdir
 mkdir:

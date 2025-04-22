@@ -1,13 +1,12 @@
 #include <cmath>
 #include <cassert>
 #include <iomanip>
+
 #include "measurement.h"
 
+namespace plt = matplotlibcpp;
 double averageFromVectors(std::vector<double> &x, std::vector<double> &y)
 {
-    namespace plt = matplotlibcpp;
-    plt::plot(x, y, "-r");
-
     std::vector<int> indices(x.size());
     for (int i = 0; i < x.size(); ++i)
     {
@@ -15,8 +14,8 @@ double averageFromVectors(std::vector<double> &x, std::vector<double> &y)
     }
     // Sort indices based on the values in vec1
     std::sort(indices.begin(), indices.end(), [&y](int a, int b)
-              { return y[a] > y[b]; });
-
+    { return y[a] > y[b]; });
+    
     // TODO average all symmetrical max
     int i = 0;
     int n_max_points = 1;
@@ -27,19 +26,23 @@ double averageFromVectors(std::vector<double> &x, std::vector<double> &y)
         n_max_points++;
         i++;
         if (i == indices.size())
-            break;
+        break;
     }
     max_avg /= n_max_points;
-
-    plt::axvline(max_avg);
     std::cout << "[INFO] Found max at " << max_avg << std::endl;
-
-    plt::xlabel("Scan axis position [mm]");
-    plt::ylabel("Scan cary position [mm]");
+    
+    plt::figure();
+    plt::plot(x, y, "-r");
+    plt::fill(x, y, {{"color", "#FF000033"}});
+    plt::axvline(max_avg);
+    plt::xlabel("Scan axis position x [mm]");
+    plt::ylabel("Scan cary position y [mm]");
     plt::show();
 
     return max_avg;
 }
+
+Probe *Measurement::probe = nullptr;
 
 void Measurement::setMooreSampleProbe(Moore *m, Sample *s, Probe *p)
 {
@@ -50,28 +53,27 @@ void Measurement::setMooreSampleProbe(Moore *m, Sample *s, Probe *p)
     this->setSpecializedSample();
 }
 
-void Measurement::approach(bool direction, double target, int speed)
+void Measurement::approach(bool direction, double target, int speed, bool safe_needed)
 {
-    this->reachSafeLevel();
+    if(safe_needed) this->reachSafeLevel();
 
     // move horizontally in x and y on top of the target
     pos target_sample = this->sample->getSideCoordinate(direction);
-
     target_sample.x = (direction == SIDE_LEFT) ? target_sample.x - probe->radius - 0.1 : target_sample.x + probe->radius + 0.1;
-    target_sample.z = z_safe_level;
+    if(safe_needed) target_sample.z = z_safe_level;
+
     this->moore->setAbsPosition(target_sample);
 
     // move down back to the sample height
-    target_sample = this->sample->getSideCoordinate(direction);
-    this->moore->Zaxis.setPosition(target_sample.z);
-
+    if(safe_needed) {
+        target_sample = this->sample->getSideCoordinate(direction);
+        this->moore->Zaxis.setPosition(target_sample.z);
+    }
     this->caryApproach(direction, target, speed);
 }
 
 void Measurement::caryApproach(bool direction, double target, int speed)
 {
-    // TODO: dosent work when called fom approach LEFT (probably cary value read is wrong)
-    // maybe we need to flush the serial after eac approach?? (purgePort())
     this->moore->Xaxis.timeBaseAccRamp(speed, speed, !direction);
 
     double cary = abs(this->moore->cary.readInstr());
@@ -112,7 +114,6 @@ void Measurement::setSafeLevel()
 void Measurement::reachSafeLevel()
 {
     assert(this->z_safe_level < std::numeric_limits<double>::infinity() && "[ASSERTION_FAIL] z safe level must be set before approaching");
-    // go up to avoid collisions
     this->moore->Zaxis.setPosition(z_safe_level);
 }
 
@@ -129,7 +130,7 @@ double Measurement::findAxisMax(Asse *axis, double max_cary_disp, bool scan_dir)
 
     auto carySafety = [axis, max_cary_disp](double val)
     {
-        if (val > max_cary_disp * 1.5)
+        if (val > 0.05)
         {
             axis->timeBaseDecRamp(SCAN_SPEED);
             throw std::runtime_error("[ERROR] Cary max search safety limit reached.");
@@ -190,7 +191,7 @@ pos SphereMeasurement::findMax(bool direction, double max_cary_disp)
     y_center += this->findAxisMax(&this->moore->Yaxis, max_cary_disp, dir_back);
     this->caryUnload();
     
-    this->approach(direction, max_cary_disp, 800);
+    this->approach(direction, max_cary_disp, 800, false);
     std::this_thread::sleep_for(std::chrono::seconds(5));
     y_center += this->findAxisMax(&this->moore->Yaxis, max_cary_disp, dir_fore);
     this->caryUnload();
@@ -198,12 +199,12 @@ pos SphereMeasurement::findMax(bool direction, double max_cary_disp)
     y_center /= 2;
     
     double z_center = 0.0;
-    this->approach(direction, max_cary_disp, 800);
+    this->approach(direction, max_cary_disp, 800, false);
     std::this_thread::sleep_for(std::chrono::seconds(5));
     z_center += this->findAxisMax(&this->moore->Zaxis, max_cary_disp, dir_up);
     this->caryUnload();
     
-    this->approach(direction, max_cary_disp, 800);
+    this->approach(direction, max_cary_disp, 800, false);
     std::this_thread::sleep_for(std::chrono::seconds(5));
     z_center += this->findAxisMax(&this->moore->Zaxis, max_cary_disp, dir_down);
     this->caryUnload();
@@ -218,6 +219,8 @@ void SphereMeasurement::findCenter(double max_cary_disp)
     // TODO: test the whole thing
     pos pos_right = this->findMax(APPROACH_RIGHT, max_cary_disp);
     pos pos_left = this->findMax(APPROACH_LEFT, max_cary_disp);
+    std::cout << "[INFO] Right max @: " << pos_right  << std::endl;
+    std::cout << "[INFO] Left max @: " << pos_left  << std::endl;
 
     pos center = (pos_left + pos_right) / 2.0;
     center.x = this->sphere->getCenter().x;  // use init estimate for x center position
@@ -238,4 +241,22 @@ void BlockMeasurement::setSamplePosition()
 
     this->sample->setContactPosition(contact_position);
     std::cout << "[INFO] Block contact set to: " << contact_position << std::endl;
+}
+
+void BlockMeasurement::caryFlex(bool direction, double min, double max, int n)
+{
+    std::vector<double> x(n);
+    std::vector<double> y(n);
+
+    for (int i=0; i < n; i++)
+    {
+        double target = ((max - min) / n) * i + min;
+        this->approach(direction, target, 800, (n == 0) ? true : false);
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        x[i] = this->moore->Xaxis.getPosition();
+        y[i] = this->moore->cary.preciseRead(10);
+        this->caryUnload();
+    }
+    slr regr(x, y);
+    regr.print();
 }
