@@ -100,7 +100,8 @@ def read_grid(file_path):
 
     return target_vector, actual_vector
 
-points, noisy_points = gen_grid(5, 10.0)
+# points, noisy_points = gen_grid(5, 10.0)
+points, noisy_points = read_grid('positions.csv')
 metrics = calculate_deviation_metrics(points, noisy_points)
 print(json.dumps(metrics, indent=4))
 

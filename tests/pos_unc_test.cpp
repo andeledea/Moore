@@ -12,7 +12,8 @@ int main()
 
     m.init();
 
-    auto readAllInstr = [](Moore *m) {
+    auto readAllInstr = [](Moore *m)
+    {
         while (true)
         {
             m->updatePosition();
@@ -22,14 +23,14 @@ int main()
     std::thread readT(readAllInstr, &m);
     readT.detach();
 
-    std::cout << "[INFO] Position the machine at bottom right corner of test zone"  << std::endl;
+    std::cout << "[INFO] Position the machine at center of test zone" << std::endl;
     m.keyboardMove(true);
     std::this_thread::sleep_for(std::chrono::seconds(5));
     m.defineZero();
-    
+
     // Define the grid size and number of points per axis
-    const double grid_size = 10.0;                                                // 10 mm
-    const int points_per_axis = 3;                                                // 3 points for each axis
+    const double grid_size = 30.0; // mm
+    const int points_per_axis = 5;
     const int total_points = points_per_axis * points_per_axis * points_per_axis; // Total positions
 
     // Create a vector to hold the positions
@@ -42,9 +43,9 @@ int main()
         {
             for (int z = 0; z < points_per_axis; ++z)
             {
-                positions.push_back({.x = x * (grid_size / (points_per_axis - 1)),
-                                     .y = y * (grid_size / (points_per_axis - 1)),
-                                     .z = z * (grid_size / (points_per_axis - 1))});
+                positions.push_back({.x = x * (grid_size / (points_per_axis - 1)) - grid_size / 2,
+                                     .y = y * (grid_size / (points_per_axis - 1)) - grid_size / 2,
+                                     .z = z * (grid_size / (points_per_axis - 1)) - grid_size / 2});
             }
         }
     }
@@ -74,7 +75,7 @@ int main()
         std::this_thread::sleep_for(std::chrono::seconds(5));
         pos actual = m.getRelPosition();
         // For this example, we assume the machine's position is the same as the target position
-        csv_file << target << std::endl;
+        csv_file << target << ',';
         csv_file << actual << std::endl;
         std::cout << "[INFO] " << i << " target: " << target << std::endl;
         std::cout << "[INFO] " << i << " actual: " << actual << std::endl;
