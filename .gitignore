@@ -1,9 +1,11 @@
-/include/
-/obj/
 /.vs/
 /.vscode/
-/lib/
-/bin/
-/debug/
-/tests/bin/
 *.yml
+
+# v1 (legacy) build products and local libraries
+/legacy/include/
+/legacy/obj/
+/legacy/lib/
+/legacy/bin/
+/legacy/debug/
+/legacy/tests/bin/
