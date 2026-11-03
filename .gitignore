@@ -9,3 +9,11 @@
 /legacy/bin/
 /legacy/debug/
 /legacy/tests/bin/
+
+/firmware/.vscode/
+/firmware/.settings/
+/firmware/cmake/
+/firmware/build/
+/firmware/Drivers/
+/firmware/.clangd
+/firmware/.mxproject
