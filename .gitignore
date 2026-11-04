@@ -17,3 +17,6 @@
 /firmware/Drivers/
 /firmware/.clangd
 /firmware/.mxproject
+
+# thesis PDF (kept locally)
+/docs/thesis.pdf
