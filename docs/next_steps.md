@@ -131,29 +131,21 @@ The firmware keeps the v1 model: **the PC sets the speed and the micro generates
 steps**. What changes is what it does when something goes wrong.
 
 ### Protocol
-- Raise the baud rate from 9600 to **115200**. At 9600 one command (~9 characters)
-  takes ~9 ms, almost the whole 10 ms update period, and three axes queue up. At
-  115200 it takes <1 ms. This is a firmware setting plus one line in the DLL.
-- Keep it **ASCII and line-based**, so it can be debugged with any serial terminal.
-- **Every command gets a reply** (`OK` / `ERR <code>`). A reply costs ~0.3 ms at 115200.
-- Example command set:
-
-```
-SPD <axis> <±speed>       set speed (sign = direction), 0 = stop
-EN  <axis> <0|1>          enable / free-wheel (AWO)
-RES <axis> <0|1>          step resolution select (CS input)
-STOP <axis|ALL>           stop immediately
-CNT? <axis>               step counter since last reset
-STAT?                     per axis: moving / idle / fault, limits, e-stop
-RESET                     clear a latched fault (explicit, from the PC)
-PING                      heartbeat
-```
+The implemented protocol is documented in [firmware/README.md](../firmware/README.md).
+Main points:
+- **115200 baud**, ASCII lines, so it can be debugged with any serial terminal.
+- Speeds are **step pulses per second**, signed. The PC converts to rpm and mm/s
+  using `config/machine.toml`.
+- **Set commands are silent**, as in v1. The PC streams speed updates without
+  waiting for replies. The board only answers queries (`?`, `I`) and reports
+  errors (`!E`) and fault changes (`!F`) on its own.
+- A test GUI is in `tests/hw/stm32_speed_gui.py` (`--sim` runs it without the board).
 
 ### Safety and robustness (handled in firmware, independent of the PC)
 - **Limit switches** (rewired from the old setup), **Cary over-travel pins** and the
   **red e-stop button** go to EXTI interrupt inputs.
 - Any trigger immediately stops step generation (e-stop: all axes) and **latches a
-  fault**. `SPD` is refused until the PC sends `RESET` and the input has cleared.
+  fault**. Speed commands are refused until the PC sends `R` (reset).
   Moving *away* from a limit is allowed so the axis can be freed.
 - Wire the switches **normally closed**, so a broken cable reads as "triggered".
 - The e-stop should also act **in hardware** (for example cutting driver power or
@@ -346,7 +338,7 @@ Each phase ends with a check that can be run, so progress is measurable.
 | Phase | Content | Done when |
 |---|---|---|
 | 0. Restart | Tag, `v2` branch, `legacy/`, folder skeleton, `machine.toml`, Python simulator | `pytest` runs on simulated hardware |
-| 1. Firmware + new motors | 115200 protocol with replies, safety inputs, watchdog, acceleration limit, step counters; bench test of the new motors | All three axes run with `SPD` from a serial terminal; every safety input and the watchdog stop motion and latch |
+| 1. Firmware + new motors | 115200 protocol, safety inputs, watchdog, acceleration limit, step counters, test GUI; bench test of the new motors | All three axes run from `tests/hw/stm32_speed_gui.py`; every safety input and the watchdog stop motion and latch |
 | 2. Motion core DLL | Port v1 device classes + Asse/Moore motion into `core/`, C API, C++ device tests | Each device reads correctly from its own test exe; one axis moves to a target from a C++ test |
 | 3. Python link | `hw/core.py` (ctypes), `tests/hw/` scripts, env instruments, Edlén | 125-point grid test repeated from Python: X/Y ≤ v1 values |
 | 4. Measurement core | Frames, approach, caryFlex, findMax, probe calibration on gauge block, sphere, ring; journal per step; state file | Calibrated sphere and a ring reproduce known values within uncertainty |

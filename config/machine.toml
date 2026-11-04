@@ -1,0 +1,38 @@
+# Moore machine configuration (v2).
+# Values marked "verify" are assumptions to check on the machine.
+
+[stm32]
+port = ""          # empty = pick the ST-LINK virtual COM port automatically
+baudrate = 115200
+
+# Motor, driver and mechanics of each axis, used to convert the step rate.
+#   max_step_hz            step rate limit used by the GUI (firmware limit: 40000)
+#   pulses_per_rev_cs_off  pulses per motor revolution with CS off (driver STEP switch)
+#   pulses_per_rev_cs_on   pulses per motor revolution with CS on
+#   gear_ratio             motor revolutions per output (screw) revolution
+#   mm_per_rev             axis travel per output revolution, 0 = unknown
+#   has_cs                 driver has the CS input
+
+[axis.x]
+max_step_hz = 20000
+pulses_per_rev_cs_off = 500    # verify: STEP switch setting (500 = 0.72 deg full step)
+pulses_per_rev_cs_on = 500     # verify: resolution selected by CS
+gear_ratio = 30                # PKP564N28B2-TS30
+mm_per_rev = 3.0               # lead screw pitch
+has_cs = true
+
+[axis.y]
+max_step_hz = 20000
+pulses_per_rev_cs_off = 500    # verify
+pulses_per_rev_cs_on = 500     # verify
+gear_ratio = 30
+mm_per_rev = 3.0
+has_cs = true
+
+[axis.z]
+max_step_hz = 7500             # v1 firmware limit for the old Z motor
+pulses_per_rev_cs_off = 500    # verify: old driver resolution
+pulses_per_rev_cs_on = 500
+gear_ratio = 1                 # verify: belts and knob gear
+mm_per_rev = 0                 # unknown: to be measured
+has_cs = false
